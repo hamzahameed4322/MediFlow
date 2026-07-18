@@ -3,7 +3,21 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="description" content="MediFlow - Streamlining patient management and clinic operations with our advanced Healthcare Management System.">
+        <meta name="keywords" content="MediFlow, healthcare management, patient portal, clinic operations, doctor appointment">
+        <meta name="author" content="MediFlow">
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ url('/') }}">
+        <meta property="og:title" content="{{ config('app.name', 'MediFlow') }} - Healthcare Management System">
+        <meta property="og:description" content="Streamlining patient management and clinic operations with our advanced Healthcare Management System.">
+        
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="{{ url('/') }}">
+        <meta property="twitter:title" content="{{ config('app.name', 'MediFlow') }} - Healthcare Management System">
+        <meta property="twitter:description" content="Streamlining patient management and clinic operations with our advanced Healthcare Management System.">
         {{-- Inline script to detect system dark mode preference and apply it immediately --}}
         <script>
             (function() {
