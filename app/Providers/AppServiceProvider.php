@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Mail\Transport\BrevoTransport;
 use Carbon\CarbonImmutable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
@@ -26,11 +28,22 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureMailTransports();
 
         if (! app()->isProduction() && request()->getHost()) {
             config(['app.url' => request()->getSchemeAndHttpHost()]);
             URL::forceRootUrl(request()->getSchemeAndHttpHost());
         }
+    }
+
+    /**
+     * Register custom mail transports.
+     */
+    protected function configureMailTransports(): void
+    {
+        Mail::extend('brevo', function (array $config): BrevoTransport {
+            return new BrevoTransport($config['api_key']);
+        });
     }
 
     /**
