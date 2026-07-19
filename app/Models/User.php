@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendEmailVerificationNotification(): void
     {
         try {
-            $this->notify(new VerifyEmail);
+            $this->notify(new \App\Notifications\QueuedVerifyEmail);
         } catch (TransportExceptionInterface $exception) {
             report($exception);
         }
