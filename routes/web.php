@@ -78,3 +78,4 @@ Route::middleware(['auth', 'verified', 'role:patient'])->prefix('patient')->name
 });
 
 require __DIR__.'/settings.php';
+Route::get('/test-email', function () { try { Illuminate\Support\Facades\Mail::raw('Test from production', function($msg) { $msg->to('hamzahameed4322@gmail.com')->subject('Prod Test'); }); return 'SUCCESS'; } catch (\Exception $e) { return $e->getMessage(); } });

@@ -16,6 +16,7 @@
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.14",
+        "resend/resend-php": "^1.5",
         "symfony/resend-mailer": "^8.1"
     },
     "require-dev": {

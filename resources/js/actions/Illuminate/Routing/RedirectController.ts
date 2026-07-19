@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../wayfinder'
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 const RedirectController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: RedirectController.url(options),
@@ -11,13 +11,13 @@ const RedirectController = (options?: RouteQueryOptions): RouteDefinition<'get'>
 
 RedirectController.definition = {
     methods: ["get","head","post","put","patch","delete","options"],
-    url: 'http://cms.test/settings',
+    url: 'http://localhost/settings',
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.url = (options?: RouteQueryOptions) => {
     return RedirectController.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ RedirectController.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: RedirectController.url(options),
@@ -35,7 +35,7 @@ RedirectController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: RedirectController.url(options),
@@ -44,7 +44,7 @@ RedirectController.head = (options?: RouteQueryOptions): RouteDefinition<'head'>
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: RedirectController.url(options),
@@ -53,7 +53,7 @@ RedirectController.post = (options?: RouteQueryOptions): RouteDefinition<'post'>
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: RedirectController.url(options),
@@ -62,7 +62,7 @@ RedirectController.put = (options?: RouteQueryOptions): RouteDefinition<'put'> =
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: RedirectController.url(options),
@@ -71,7 +71,7 @@ RedirectController.patch = (options?: RouteQueryOptions): RouteDefinition<'patch
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: RedirectController.url(options),
@@ -80,111 +80,10 @@ RedirectController.delete = (options?: RouteQueryOptions): RouteDefinition<'dele
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'http://localhost/settings'
  */
 RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
     url: RedirectController.url(options),
     method: 'options',
 })
-
-    /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-    const RedirectControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: RedirectController.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: RedirectController.url(options),
-            method: 'get',
-        })
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: RedirectController.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: RedirectController.url(options),
-            method: 'post',
-        })
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: RedirectController.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: RedirectController.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PATCH',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: RedirectController.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'DELETE',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-            /**
-* @see \Illuminate\Routing\RedirectController::__invoke
- * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
- */
-        RedirectControllerForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: RedirectController.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'OPTIONS',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    RedirectController.form = RedirectControllerForm
 export default RedirectController

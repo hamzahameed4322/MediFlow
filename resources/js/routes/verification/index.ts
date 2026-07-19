@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
+ * @route 'http://localhost/email/verify'
  */
 export const notice = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: notice.url(options),
@@ -11,13 +11,13 @@ export const notice = (options?: RouteQueryOptions): RouteDefinition<'get'> => (
 
 notice.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/email/verify',
+    url: 'http://localhost/email/verify',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
+ * @route 'http://localhost/email/verify'
  */
 notice.url = (options?: RouteQueryOptions) => {
     return notice.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ notice.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
+ * @route 'http://localhost/email/verify'
  */
 notice.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: notice.url(options),
@@ -35,52 +35,17 @@ notice.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
+ * @route 'http://localhost/email/verify'
  */
 notice.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: notice.url(options),
     method: 'head',
 })
 
-    /**
-* @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
- * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
- */
-    const noticeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: notice.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
- * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
- */
-        noticeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: notice.url(options),
-            method: 'get',
-        })
-            /**
-* @see \Laravel\Fortify\Http\Controllers\EmailVerificationPromptController::notice
- * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationPromptController.php:18
- * @route 'http://cms.test/email/verify'
- */
-        noticeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: notice.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    notice.form = noticeForm
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'http://localhost/email/verify/{id}/{hash}'
  */
 export const verify = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: verify.url(args, options),
@@ -89,13 +54,13 @@ export const verify = (args: { id: string | number, hash: string | number } | [i
 
 verify.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/email/verify/{id}/{hash}',
+    url: 'http://localhost/email/verify/{id}/{hash}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'http://localhost/email/verify/{id}/{hash}'
  */
 verify.url = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
@@ -121,7 +86,7 @@ verify.url = (args: { id: string | number, hash: string | number } | [id: string
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'http://localhost/email/verify/{id}/{hash}'
  */
 verify.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: verify.url(args, options),
@@ -130,52 +95,17 @@ verify.get = (args: { id: string | number, hash: string | number } | [id: string
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'http://localhost/email/verify/{id}/{hash}'
  */
 verify.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: verify.url(args, options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
- * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
- */
-    const verifyForm = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: verify.url(args, options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
- * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
- */
-        verifyForm.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: verify.url(args, options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
- * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
- */
-        verifyForm.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: verify.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    verify.form = verifyForm
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController::send
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationNotificationController.php:19
- * @route 'http://cms.test/email/verification-notification'
+ * @route 'http://localhost/email/verification-notification'
  */
 export const send = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: send.url(options),
@@ -184,13 +114,13 @@ export const send = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 send.definition = {
     methods: ["post"],
-    url: 'http://cms.test/email/verification-notification',
+    url: 'http://localhost/email/verification-notification',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController::send
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationNotificationController.php:19
- * @route 'http://cms.test/email/verification-notification'
+ * @route 'http://localhost/email/verification-notification'
  */
 send.url = (options?: RouteQueryOptions) => {
     return send.definition.url + queryParams(options)
@@ -199,34 +129,12 @@ send.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController::send
  * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationNotificationController.php:19
- * @route 'http://cms.test/email/verification-notification'
+ * @route 'http://localhost/email/verification-notification'
  */
 send.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: send.url(options),
     method: 'post',
 })
-
-    /**
-* @see \Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController::send
- * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationNotificationController.php:19
- * @route 'http://cms.test/email/verification-notification'
- */
-    const sendForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: send.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \Laravel\Fortify\Http\Controllers\EmailVerificationNotificationController::send
- * @see vendor/laravel/fortify/src/Http/Controllers/EmailVerificationNotificationController.php:19
- * @route 'http://cms.test/email/verification-notification'
- */
-        sendForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: send.url(options),
-            method: 'post',
-        })
-    
-    send.form = sendForm
 const verification = {
     notice: Object.assign(notice, notice),
 verify: Object.assign(verify, verify),

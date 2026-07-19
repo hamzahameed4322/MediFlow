@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'http://localhost/admin/dashboard'
  */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -11,13 +11,13 @@ export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 
 dashboard.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/dashboard',
+    url: 'http://localhost/admin/dashboard',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'http://localhost/admin/dashboard'
  */
 dashboard.url = (options?: RouteQueryOptions) => {
     return dashboard.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'http://localhost/admin/dashboard'
  */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -35,52 +35,17 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'http://localhost/admin/dashboard'
  */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: dashboard.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::dashboard
- * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
- */
-    const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: dashboard.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::dashboard
- * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
- */
-        dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: dashboard.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::dashboard
- * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
- */
-        dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: dashboard.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    dashboard.form = dashboardForm
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'http://localhost/admin/users'
  */
 export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: users.url(options),
@@ -89,13 +54,13 @@ export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 users.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/users',
+    url: 'http://localhost/admin/users',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'http://localhost/admin/users'
  */
 users.url = (options?: RouteQueryOptions) => {
     return users.definition.url + queryParams(options)
@@ -104,7 +69,7 @@ users.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'http://localhost/admin/users'
  */
 users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: users.url(options),
@@ -113,52 +78,17 @@ users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'http://localhost/admin/users'
  */
 users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: users.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::users
- * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
- */
-    const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: users.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::users
- * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
- */
-        usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: users.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::users
- * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
- */
-        usersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: users.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    users.form = usersForm
 /**
 * @see \App\Http\Controllers\AdminController::toggleUserStatus
  * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://cms.test/admin/users/{user}/toggle-status'
+ * @route 'http://localhost/admin/users/{user}/toggle-status'
  */
 export const toggleUserStatus = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleUserStatus.url(args, options),
@@ -167,13 +97,13 @@ export const toggleUserStatus = (args: { user: number | { id: number } } | [user
 
 toggleUserStatus.definition = {
     methods: ["post"],
-    url: 'http://cms.test/admin/users/{user}/toggle-status',
+    url: 'http://localhost/admin/users/{user}/toggle-status',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleUserStatus
  * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://cms.test/admin/users/{user}/toggle-status'
+ * @route 'http://localhost/admin/users/{user}/toggle-status'
  */
 toggleUserStatus.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -206,38 +136,17 @@ toggleUserStatus.url = (args: { user: number | { id: number } } | [user: number 
 /**
 * @see \App\Http\Controllers\AdminController::toggleUserStatus
  * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://cms.test/admin/users/{user}/toggle-status'
+ * @route 'http://localhost/admin/users/{user}/toggle-status'
  */
 toggleUserStatus.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleUserStatus.url(args, options),
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::toggleUserStatus
- * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://cms.test/admin/users/{user}/toggle-status'
- */
-    const toggleUserStatusForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: toggleUserStatus.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::toggleUserStatus
- * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://cms.test/admin/users/{user}/toggle-status'
- */
-        toggleUserStatusForm.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: toggleUserStatus.url(args, options),
-            method: 'post',
-        })
-    
-    toggleUserStatus.form = toggleUserStatusForm
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 export const doctors = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: doctors.url(options),
@@ -246,13 +155,13 @@ export const doctors = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 doctors.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/doctors',
+    url: 'http://localhost/admin/doctors',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 doctors.url = (options?: RouteQueryOptions) => {
     return doctors.definition.url + queryParams(options)
@@ -261,7 +170,7 @@ doctors.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 doctors.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: doctors.url(options),
@@ -270,52 +179,17 @@ doctors.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: doctors.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::doctors
- * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
- */
-    const doctorsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: doctors.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::doctors
- * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
- */
-        doctorsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: doctors.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::doctors
- * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
- */
-        doctorsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: doctors.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    doctors.form = doctorsForm
 /**
 * @see \App\Http\Controllers\AdminController::storeDoctor
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 export const storeDoctor = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeDoctor.url(options),
@@ -324,13 +198,13 @@ export const storeDoctor = (options?: RouteQueryOptions): RouteDefinition<'post'
 
 storeDoctor.definition = {
     methods: ["post"],
-    url: 'http://cms.test/admin/doctors',
+    url: 'http://localhost/admin/doctors',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::storeDoctor
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 storeDoctor.url = (options?: RouteQueryOptions) => {
     return storeDoctor.definition.url + queryParams(options)
@@ -339,38 +213,17 @@ storeDoctor.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::storeDoctor
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 storeDoctor.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: storeDoctor.url(options),
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::storeDoctor
- * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
- */
-    const storeDoctorForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: storeDoctor.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::storeDoctor
- * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
- */
-        storeDoctorForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: storeDoctor.url(options),
-            method: 'post',
-        })
-    
-    storeDoctor.form = storeDoctorForm
 /**
 * @see \App\Http\Controllers\AdminController::updateDoctor
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
+ * @route 'http://localhost/admin/doctors/{doctor}'
  */
 export const updateDoctor = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: updateDoctor.url(args, options),
@@ -379,13 +232,13 @@ export const updateDoctor = (args: { doctor: number | { id: number } } | [doctor
 
 updateDoctor.definition = {
     methods: ["put"],
-    url: 'http://cms.test/admin/doctors/{doctor}',
+    url: 'http://localhost/admin/doctors/{doctor}',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::updateDoctor
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
+ * @route 'http://localhost/admin/doctors/{doctor}'
  */
 updateDoctor.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -418,48 +271,17 @@ updateDoctor.url = (args: { doctor: number | { id: number } } | [doctor: number 
 /**
 * @see \App\Http\Controllers\AdminController::updateDoctor
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
+ * @route 'http://localhost/admin/doctors/{doctor}'
  */
 updateDoctor.put = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: updateDoctor.url(args, options),
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::updateDoctor
- * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
- */
-    const updateDoctorForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: updateDoctor.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::updateDoctor
- * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
- */
-        updateDoctorForm.put = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: updateDoctor.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    updateDoctor.form = updateDoctorForm
 /**
 * @see \App\Http\Controllers\AdminController::toggleDoctorStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://localhost/admin/doctors/{doctor}/toggle-status'
  */
 export const toggleDoctorStatus = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleDoctorStatus.url(args, options),
@@ -468,13 +290,13 @@ export const toggleDoctorStatus = (args: { doctor: number | { id: number } } | [
 
 toggleDoctorStatus.definition = {
     methods: ["post"],
-    url: 'http://cms.test/admin/doctors/{doctor}/toggle-status',
+    url: 'http://localhost/admin/doctors/{doctor}/toggle-status',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleDoctorStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://localhost/admin/doctors/{doctor}/toggle-status'
  */
 toggleDoctorStatus.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -507,38 +329,17 @@ toggleDoctorStatus.url = (args: { doctor: number | { id: number } } | [doctor: n
 /**
 * @see \App\Http\Controllers\AdminController::toggleDoctorStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://localhost/admin/doctors/{doctor}/toggle-status'
  */
 toggleDoctorStatus.post = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleDoctorStatus.url(args, options),
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::toggleDoctorStatus
- * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
- */
-    const toggleDoctorStatusForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: toggleDoctorStatus.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::toggleDoctorStatus
- * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
- */
-        toggleDoctorStatusForm.post = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: toggleDoctorStatus.url(args, options),
-            method: 'post',
-        })
-    
-    toggleDoctorStatus.form = toggleDoctorStatusForm
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'http://localhost/admin/appointments'
  */
 export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: appointments.url(options),
@@ -547,13 +348,13 @@ export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 appointments.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/appointments',
+    url: 'http://localhost/admin/appointments',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'http://localhost/admin/appointments'
  */
 appointments.url = (options?: RouteQueryOptions) => {
     return appointments.definition.url + queryParams(options)
@@ -562,7 +363,7 @@ appointments.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'http://localhost/admin/appointments'
  */
 appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: appointments.url(options),
@@ -571,52 +372,17 @@ appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'http://localhost/admin/appointments'
  */
 appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: appointments.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
- */
-    const appointmentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: appointments.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
- */
-        appointmentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: appointments.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
- */
-        appointmentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: appointments.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    appointments.form = appointmentsForm
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'http://localhost/admin/consultations'
  */
 export const consultations = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: consultations.url(options),
@@ -625,13 +391,13 @@ export const consultations = (options?: RouteQueryOptions): RouteDefinition<'get
 
 consultations.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/consultations',
+    url: 'http://localhost/admin/consultations',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'http://localhost/admin/consultations'
  */
 consultations.url = (options?: RouteQueryOptions) => {
     return consultations.definition.url + queryParams(options)
@@ -640,7 +406,7 @@ consultations.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'http://localhost/admin/consultations'
  */
 consultations.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: consultations.url(options),
@@ -649,52 +415,17 @@ consultations.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'http://localhost/admin/consultations'
  */
 consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: consultations.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
- */
-    const consultationsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: consultations.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
- */
-        consultationsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: consultations.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
- */
-        consultationsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: consultations.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    consultations.form = consultationsForm
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'http://localhost/admin/prescriptions'
  */
 export const prescriptions = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prescriptions.url(options),
@@ -703,13 +434,13 @@ export const prescriptions = (options?: RouteQueryOptions): RouteDefinition<'get
 
 prescriptions.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/prescriptions',
+    url: 'http://localhost/admin/prescriptions',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'http://localhost/admin/prescriptions'
  */
 prescriptions.url = (options?: RouteQueryOptions) => {
     return prescriptions.definition.url + queryParams(options)
@@ -718,7 +449,7 @@ prescriptions.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'http://localhost/admin/prescriptions'
  */
 prescriptions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prescriptions.url(options),
@@ -727,52 +458,17 @@ prescriptions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'http://localhost/admin/prescriptions'
  */
 prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: prescriptions.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
- */
-    const prescriptionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: prescriptions.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
- */
-        prescriptionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: prescriptions.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
- */
-        prescriptionsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: prescriptions.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    prescriptions.form = prescriptionsForm
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'http://localhost/admin/bills'
  */
 export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bills.url(options),
@@ -781,13 +477,13 @@ export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 bills.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/bills',
+    url: 'http://localhost/admin/bills',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'http://localhost/admin/bills'
  */
 bills.url = (options?: RouteQueryOptions) => {
     return bills.definition.url + queryParams(options)
@@ -796,7 +492,7 @@ bills.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'http://localhost/admin/bills'
  */
 bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bills.url(options),
@@ -805,52 +501,17 @@ bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'http://localhost/admin/bills'
  */
 bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: bills.url(options),
     method: 'head',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
- */
-    const billsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: bills.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
- */
-        billsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: bills.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
- */
-        billsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: bills.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    bills.form = billsForm
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'http://localhost/admin/reports'
  */
 export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reports.url(options),
@@ -859,13 +520,13 @@ export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 reports.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/reports',
+    url: 'http://localhost/admin/reports',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'http://localhost/admin/reports'
  */
 reports.url = (options?: RouteQueryOptions) => {
     return reports.definition.url + queryParams(options)
@@ -874,7 +535,7 @@ reports.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'http://localhost/admin/reports'
  */
 reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reports.url(options),
@@ -883,48 +544,12 @@ reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'http://localhost/admin/reports'
  */
 reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: reports.url(options),
     method: 'head',
 })
-
-    /**
-* @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
- */
-    const reportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-        action: reports.url(options),
-        method: 'get',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
- */
-        reportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: reports.url(options),
-            method: 'get',
-        })
-            /**
-* @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
- */
-        reportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-            action: reports.url({
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'HEAD',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'get',
-        })
-    
-    reports.form = reportsForm
 const AdminController = { dashboard, users, toggleUserStatus, doctors, storeDoctor, updateDoctor, toggleDoctorStatus, appointments, consultations, prescriptions, bills, reports }
 
 export default AdminController

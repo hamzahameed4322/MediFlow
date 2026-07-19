@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'http://cms.test/admin/doctors',
+    url: 'http://localhost/admin/doctors',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,38 +26,17 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
+ * @route 'http://localhost/admin/doctors'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::store
- * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
- */
-    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: store.url(options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::store
- * @see app/Http/Controllers/AdminController.php:135
- * @route 'http://cms.test/admin/doctors'
- */
-        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: store.url(options),
-            method: 'post',
-        })
-    
-    store.form = storeForm
 /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
+ * @route 'http://localhost/admin/doctors/{doctor}'
  */
 export const update = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
@@ -66,13 +45,13 @@ export const update = (args: { doctor: number | { id: number } } | [doctor: numb
 
 update.definition = {
     methods: ["put"],
-    url: 'http://cms.test/admin/doctors/{doctor}',
+    url: 'http://localhost/admin/doctors/{doctor}',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
+ * @route 'http://localhost/admin/doctors/{doctor}'
  */
 update.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -105,48 +84,17 @@ update.url = (args: { doctor: number | { id: number } } | [doctor: number | { id
 /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
+ * @route 'http://localhost/admin/doctors/{doctor}'
  */
 update.put = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
     method: 'put',
 })
 
-    /**
-* @see \App\Http\Controllers\AdminController::update
- * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
- */
-    const updateForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: update.url(args, {
-                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                        _method: 'PUT',
-                        ...(options?.query ?? options?.mergeQuery ?? {}),
-                    }
-                }),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::update
- * @see app/Http/Controllers/AdminController.php:170
- * @route 'http://cms.test/admin/doctors/{doctor}'
- */
-        updateForm.put = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: update.url(args, {
-                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-                            _method: 'PUT',
-                            ...(options?.query ?? options?.mergeQuery ?? {}),
-                        }
-                    }),
-            method: 'post',
-        })
-    
-    update.form = updateForm
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://localhost/admin/doctors/{doctor}/toggle-status'
  */
 export const toggleStatus = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleStatus.url(args, options),
@@ -155,13 +103,13 @@ export const toggleStatus = (args: { doctor: number | { id: number } } | [doctor
 
 toggleStatus.definition = {
     methods: ["post"],
-    url: 'http://cms.test/admin/doctors/{doctor}/toggle-status',
+    url: 'http://localhost/admin/doctors/{doctor}/toggle-status',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://localhost/admin/doctors/{doctor}/toggle-status'
  */
 toggleStatus.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -194,34 +142,12 @@ toggleStatus.url = (args: { doctor: number | { id: number } } | [doctor: number 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://localhost/admin/doctors/{doctor}/toggle-status'
  */
 toggleStatus.post = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleStatus.url(args, options),
     method: 'post',
 })
-
-    /**
-* @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
- */
-    const toggleStatusForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-        action: toggleStatus.url(args, options),
-        method: 'post',
-    })
-
-            /**
-* @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:195
- * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
- */
-        toggleStatusForm.post = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-            action: toggleStatus.url(args, options),
-            method: 'post',
-        })
-    
-    toggleStatus.form = toggleStatusForm
 const doctors = {
     store: Object.assign(store, store),
 update: Object.assign(update, update),
