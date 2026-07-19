@@ -12,8 +12,7 @@ import {
     Activity,
     CheckCircle,
 } from 'lucide-react';
-// Original toggle kept for reference — see AnimatedThemeToggler note in the nav below.
-// import { ThemeToggle } from '@/components/theme-toggle';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { dashboard, login, register } from '@/routes';
 import { FlickeringGrid } from '@/components/ui/flickering-grid';
 import { BorderBeam } from '@/components/ui/border-beam';
@@ -21,7 +20,7 @@ import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { Marquee } from '@/components/ui/marquee';
 import { Meteors } from '@/components/ui/meteors';
 import { TextAnimate } from '@/components/ui/text-animate';
-import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
+
 import { cn } from '@/lib/utils';
 
 /* ---------------------------------------------------------------------- */
@@ -240,17 +239,7 @@ export default function Welcome({
 
                         {/* Nav Actions */}
                         <nav className="flex items-center gap-1.5 sm:gap-4">
-                            {/*
-                                Swapped in AnimatedThemeToggler for a nicer circular-reveal
-                                dark/light transition. It needs to be wired to your actual
-                                theme state — if your existing <ThemeToggle /> reads/writes
-                                theme via a context or next-themes-style hook, call that same
-                                setter inside AnimatedThemeToggler's onClick instead of the
-                                placeholder toggle logic in its own file. If you'd rather not
-                                touch that wiring right now, just keep the original
-                                <ThemeToggle /> below and skip this swap.
-                            */}
-                            <AnimatedThemeToggler className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" />
+                            <ThemeToggle className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" />
                             {auth?.user ? (
                                 <Link
                                     href={dashboard()}
