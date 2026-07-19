@@ -199,7 +199,11 @@ export const AnimatedThemeToggler = ({
         onThemeChange?.(newTheme ? "dark" : "light")
       } else {
         setInternalIsDark(newTheme)
-        localStorage.setItem("theme", newTheme ? "dark" : "light")
+        // Write to the 'appearance' cookie so the server-side HandleAppearance
+        // middleware reads the correct theme on next page load (prevents flicker).
+        const cookieValue = newTheme ? "dark" : "light"
+        document.cookie = `appearance=${cookieValue}; path=/; max-age=31536000; SameSite=Lax`
+        localStorage.setItem("appearance", cookieValue)
       }
     }
 
