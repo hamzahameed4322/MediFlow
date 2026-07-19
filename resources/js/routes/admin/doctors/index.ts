@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
+ * @route 'http://cms.test/admin/doctors'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/admin/doctors',
+    url: 'http://cms.test/admin/doctors',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
+ * @route 'http://cms.test/admin/doctors'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
+ * @route 'http://cms.test/admin/doctors'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -36,7 +36,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
+ * @route 'http://cms.test/admin/doctors'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -46,7 +46,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::store
  * @see app/Http/Controllers/AdminController.php:135
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
+ * @route 'http://cms.test/admin/doctors'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -57,7 +57,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}'
+ * @route 'http://cms.test/admin/doctors/{doctor}'
  */
 export const update = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
@@ -66,13 +66,13 @@ export const update = (args: { doctor: number | { id: number } } | [doctor: numb
 
 update.definition = {
     methods: ["put"],
-    url: 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}',
+    url: 'http://cms.test/admin/doctors/{doctor}',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}'
+ * @route 'http://cms.test/admin/doctors/{doctor}'
  */
 update.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -105,7 +105,7 @@ update.url = (args: { doctor: number | { id: number } } | [doctor: number | { id
 /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}'
+ * @route 'http://cms.test/admin/doctors/{doctor}'
  */
 update.put = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(args, options),
@@ -115,7 +115,7 @@ update.put = (args: { doctor: number | { id: number } } | [doctor: number | { id
     /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}'
+ * @route 'http://cms.test/admin/doctors/{doctor}'
  */
     const updateForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(args, {
@@ -130,7 +130,7 @@ update.put = (args: { doctor: number | { id: number } } | [doctor: number | { id
             /**
 * @see \App\Http\Controllers\AdminController::update
  * @see app/Http/Controllers/AdminController.php:170
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}'
+ * @route 'http://cms.test/admin/doctors/{doctor}'
  */
         updateForm.put = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(args, {
@@ -146,7 +146,7 @@ update.put = (args: { doctor: number | { id: number } } | [doctor: number | { id
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
  */
 export const toggleStatus = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleStatus.url(args, options),
@@ -155,13 +155,13 @@ export const toggleStatus = (args: { doctor: number | { id: number } } | [doctor
 
 toggleStatus.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}/toggle-status',
+    url: 'http://cms.test/admin/doctors/{doctor}/toggle-status',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
  */
 toggleStatus.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -194,7 +194,7 @@ toggleStatus.url = (args: { doctor: number | { id: number } } | [doctor: number 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
  */
 toggleStatus.post = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleStatus.url(args, options),
@@ -204,7 +204,7 @@ toggleStatus.post = (args: { doctor: number | { id: number } } | [doctor: number
     /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
  */
     const toggleStatusForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: toggleStatus.url(args, options),
@@ -214,7 +214,7 @@ toggleStatus.post = (args: { doctor: number | { id: number } } | [doctor: number
             /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
  * @see app/Http/Controllers/AdminController.php:195
- * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors/{doctor}/toggle-status'
+ * @route 'http://cms.test/admin/doctors/{doctor}/toggle-status'
  */
         toggleStatusForm.post = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: toggleStatus.url(args, options),

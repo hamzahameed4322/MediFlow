@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(options),
@@ -11,13 +11,13 @@ export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 edit.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/patient/profile',
+    url: 'http://cms.test/patient/profile',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 edit.url = (options?: RouteQueryOptions) => {
     return edit.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ edit.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(options),
@@ -35,7 +35,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(options),
@@ -45,7 +45,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
     const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: edit.url(options),
@@ -55,7 +55,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
         editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(options),
@@ -64,7 +64,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\PatientController::edit
  * @see app/Http/Controllers/PatientController.php:78
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
         editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url({
@@ -80,7 +80,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\PatientController::update
  * @see app/Http/Controllers/PatientController.php:112
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -89,13 +89,13 @@ export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => (
 
 update.definition = {
     methods: ["put"],
-    url: 'https://mediflow-production-60a9.up.railway.app/patient/profile',
+    url: 'http://cms.test/patient/profile',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\PatientController::update
  * @see app/Http/Controllers/PatientController.php:112
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 update.url = (options?: RouteQueryOptions) => {
     return update.definition.url + queryParams(options)
@@ -104,7 +104,7 @@ update.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\PatientController::update
  * @see app/Http/Controllers/PatientController.php:112
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
 update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -114,7 +114,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     /**
 * @see \App\Http\Controllers\PatientController::update
  * @see app/Http/Controllers/PatientController.php:112
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
     const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url({
@@ -129,7 +129,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
             /**
 * @see \App\Http\Controllers\PatientController::update
  * @see app/Http/Controllers/PatientController.php:112
- * @route 'https://mediflow-production-60a9.up.railway.app/patient/profile'
+ * @route 'http://cms.test/patient/profile'
  */
         updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url({

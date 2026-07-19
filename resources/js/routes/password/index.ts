@@ -3,7 +3,7 @@ import confirmD7e05f from './confirm'
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 export const request = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: request.url(options),
@@ -12,13 +12,13 @@ export const request = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 request.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/forgot-password',
+    url: 'http://cms.test/forgot-password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 request.url = (options?: RouteQueryOptions) => {
     return request.definition.url + queryParams(options)
@@ -27,7 +27,7 @@ request.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 request.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: request.url(options),
@@ -36,7 +36,7 @@ request.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: request.url(options),
@@ -46,7 +46,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
     const requestForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: request.url(options),
@@ -56,7 +56,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
         requestForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: request.url(options),
@@ -65,7 +65,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::request
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:22
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
         requestForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: request.url({
@@ -81,7 +81,7 @@ request.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
 export const reset = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reset.url(args, options),
@@ -90,13 +90,13 @@ export const reset = (args: { token: string | number } | [token: string | number
 
 reset.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}',
+    url: 'http://cms.test/reset-password/{token}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
 reset.url = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -124,7 +124,7 @@ reset.url = (args: { token: string | number } | [token: string | number ] | stri
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
 reset.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reset.url(args, options),
@@ -133,7 +133,7 @@ reset.get = (args: { token: string | number } | [token: string | number ] | stri
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
 reset.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: reset.url(args, options),
@@ -143,7 +143,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
     /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
     const resetForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: reset.url(args, options),
@@ -153,7 +153,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
             /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
         resetForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reset.url(args, options),
@@ -162,7 +162,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
             /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::reset
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
+ * @route 'http://cms.test/reset-password/{token}'
  */
         resetForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reset.url(args, {
@@ -178,7 +178,7 @@ reset.head = (args: { token: string | number } | [token: string | number ] | str
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::email
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:30
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 export const email = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: email.url(options),
@@ -187,13 +187,13 @@ export const email = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 email.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/forgot-password',
+    url: 'http://cms.test/forgot-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::email
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:30
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 email.url = (options?: RouteQueryOptions) => {
     return email.definition.url + queryParams(options)
@@ -202,7 +202,7 @@ email.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::email
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:30
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
 email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: email.url(options),
@@ -212,7 +212,7 @@ email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::email
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:30
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
     const emailForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: email.url(options),
@@ -222,7 +222,7 @@ email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\PasswordResetLinkController::email
  * @see vendor/laravel/fortify/src/Http/Controllers/PasswordResetLinkController.php:30
- * @route 'https://mediflow-production-60a9.up.railway.app/forgot-password'
+ * @route 'http://cms.test/forgot-password'
  */
         emailForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: email.url(options),
@@ -233,7 +233,7 @@ email.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::update
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
+ * @route 'http://cms.test/reset-password'
  */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(options),
@@ -242,13 +242,13 @@ export const update = (options?: RouteQueryOptions): RouteDefinition<'post'> => 
 
 update.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/reset-password',
+    url: 'http://cms.test/reset-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::update
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
+ * @route 'http://cms.test/reset-password'
  */
 update.url = (options?: RouteQueryOptions) => {
     return update.definition.url + queryParams(options)
@@ -257,7 +257,7 @@ update.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::update
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
+ * @route 'http://cms.test/reset-password'
  */
 update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: update.url(options),
@@ -267,7 +267,7 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::update
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
+ * @route 'http://cms.test/reset-password'
  */
     const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url(options),
@@ -277,7 +277,7 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::update
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
+ * @route 'http://cms.test/reset-password'
  */
         updateForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url(options),
@@ -288,7 +288,7 @@ update.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirm.url(options),
@@ -297,13 +297,13 @@ export const confirm = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 confirm.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/user/confirm-password',
+    url: 'http://cms.test/user/confirm-password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 confirm.url = (options?: RouteQueryOptions) => {
     return confirm.definition.url + queryParams(options)
@@ -312,7 +312,7 @@ confirm.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirm.url(options),
@@ -321,7 +321,7 @@ confirm.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: confirm.url(options),
@@ -331,7 +331,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
     const confirmForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: confirm.url(options),
@@ -341,7 +341,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
         confirmForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirm.url(options),
@@ -350,7 +350,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::confirm
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
         confirmForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirm.url({
@@ -366,7 +366,7 @@ confirm.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
 export const confirmation = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirmation.url(options),
@@ -375,13 +375,13 @@ export const confirmation = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 confirmation.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status',
+    url: 'http://cms.test/user/confirmed-password-status',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
 confirmation.url = (options?: RouteQueryOptions) => {
     return confirmation.definition.url + queryParams(options)
@@ -390,7 +390,7 @@ confirmation.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
 confirmation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: confirmation.url(options),
@@ -399,7 +399,7 @@ confirmation.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
 confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: confirmation.url(options),
@@ -409,7 +409,7 @@ confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
     const confirmationForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: confirmation.url(options),
@@ -419,7 +419,7 @@ confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
         confirmationForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirmation.url(options),
@@ -428,7 +428,7 @@ confirmation.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController::confirmation
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmedPasswordStatusController.php:17
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirmed-password-status'
+ * @route 'http://cms.test/user/confirmed-password-status'
  */
         confirmationForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: confirmation.url({

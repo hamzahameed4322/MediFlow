@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
 const Controller = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: Controller.url(options),
@@ -11,13 +11,13 @@ const Controller = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 Controller.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/settings/appearance',
+    url: 'http://cms.test/settings/appearance',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
 Controller.url = (options?: RouteQueryOptions) => {
     return Controller.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ Controller.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
 Controller.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: Controller.url(options),
@@ -35,7 +35,7 @@ Controller.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
 Controller.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: Controller.url(options),
@@ -45,7 +45,7 @@ Controller.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
     const ControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: Controller.url(options),
@@ -55,7 +55,7 @@ Controller.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
         ControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: Controller.url(options),
@@ -64,7 +64,7 @@ Controller.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Inertia\Controller::__invoke
  * @see vendor/inertiajs/inertia-laravel/src/Controller.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/settings/appearance'
+ * @route 'http://cms.test/settings/appearance'
  */
         ControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: Controller.url({

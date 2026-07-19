@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:33
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications'
+ * @route 'http://cms.test/telescope/telescope-api/notifications'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 index.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications',
+    url: 'http://cms.test/telescope/telescope-api/notifications',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:33
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications'
+ * @route 'http://cms.test/telescope/telescope-api/notifications'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:33
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications'
+ * @route 'http://cms.test/telescope/telescope-api/notifications'
  */
 index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
@@ -36,7 +36,7 @@ index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:33
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications'
+ * @route 'http://cms.test/telescope/telescope-api/notifications'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: index.url(options),
@@ -46,7 +46,7 @@ index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:33
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications'
+ * @route 'http://cms.test/telescope/telescope-api/notifications'
  */
         indexForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: index.url(options),
@@ -57,7 +57,7 @@ index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
 export const show = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -66,13 +66,13 @@ export const show = (args: { telescopeEntryId: string | number } | [telescopeEnt
 
 show.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}',
+    url: 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
 show.url = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -100,7 +100,7 @@ show.url = (args: { telescopeEntryId: string | number } | [telescopeEntryId: str
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
 show.get = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -109,7 +109,7 @@ show.get = (args: { telescopeEntryId: string | number } | [telescopeEntryId: str
 /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
 show.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
@@ -119,7 +119,7 @@ show.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: st
     /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
     const showForm = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(args, options),
@@ -129,7 +129,7 @@ show.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: st
             /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
         showForm.get = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, options),
@@ -138,7 +138,7 @@ show.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: st
             /**
 * @see \Laravel\Telescope\Http\Controllers\NotificationsController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/NotificationsController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/notifications/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/notifications/{telescopeEntryId}'
  */
         showForm.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(args, {

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 export const show = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(options),
@@ -11,13 +11,13 @@ export const show = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 show.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/user/confirm-password',
+    url: 'http://cms.test/user/confirm-password',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 show.url = (options?: RouteQueryOptions) => {
     return show.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ show.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 show.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(options),
@@ -35,7 +35,7 @@ show.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(options),
@@ -45,7 +45,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
     const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: show.url(options),
@@ -55,7 +55,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
         showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url(options),
@@ -64,7 +64,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::show
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:40
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
         showForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: show.url({
@@ -80,7 +80,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -89,13 +89,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/user/confirm-password',
+    url: 'http://cms.test/user/confirm-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -104,7 +104,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -114,7 +114,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -124,7 +124,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\ConfirmablePasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/ConfirmablePasswordController.php:51
- * @route 'https://mediflow-production-60a9.up.railway.app/user/confirm-password'
+ * @route 'http://cms.test/user/confirm-password'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),

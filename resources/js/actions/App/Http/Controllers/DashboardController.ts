@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
 const DashboardController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: DashboardController.url(options),
@@ -11,13 +11,13 @@ const DashboardController = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 DashboardController.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/dashboard',
+    url: 'http://cms.test/dashboard',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
 DashboardController.url = (options?: RouteQueryOptions) => {
     return DashboardController.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ DashboardController.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
 DashboardController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: DashboardController.url(options),
@@ -35,7 +35,7 @@ DashboardController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> 
 /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
 DashboardController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: DashboardController.url(options),
@@ -45,7 +45,7 @@ DashboardController.head = (options?: RouteQueryOptions): RouteDefinition<'head'
     /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
     const DashboardControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: DashboardController.url(options),
@@ -55,7 +55,7 @@ DashboardController.head = (options?: RouteQueryOptions): RouteDefinition<'head'
             /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
         DashboardControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: DashboardController.url(options),
@@ -64,7 +64,7 @@ DashboardController.head = (options?: RouteQueryOptions): RouteDefinition<'head'
             /**
 * @see \App\Http\Controllers\DashboardController::__invoke
  * @see app/Http/Controllers/DashboardController.php:13
- * @route 'https://mediflow-production-60a9.up.railway.app/dashboard'
+ * @route 'http://cms.test/dashboard'
  */
         DashboardControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: DashboardController.url({

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 export const index = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
@@ -11,13 +11,13 @@ export const index = (args?: { view?: string | number } | [view: string | number
 
 index.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}',
+    url: 'http://cms.test/telescope/{view?}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 index.url = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -49,7 +49,7 @@ index.url = (args?: { view?: string | number } | [view: string | number ] | stri
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 index.get = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
@@ -58,7 +58,7 @@ index.get = (args?: { view?: string | number } | [view: string | number ] | stri
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 index.head = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(args, options),
@@ -68,7 +68,7 @@ index.head = (args?: { view?: string | number } | [view: string | number ] | str
     /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
     const indexForm = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: index.url(args, options),
@@ -78,7 +78,7 @@ index.head = (args?: { view?: string | number } | [view: string | number ] | str
             /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
         indexForm.get = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(args, options),
@@ -87,7 +87,7 @@ index.head = (args?: { view?: string | number } | [view: string | number ] | str
             /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
         indexForm.head = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(args, {

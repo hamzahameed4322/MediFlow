@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 index.definition = {
     methods: ["get","head"],
-    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags',
+    url: 'http://cms.test/telescope/telescope-api/monitored-tags',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: index.url(options),
@@ -55,7 +55,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
         indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url(options),
@@ -64,7 +64,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
         indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: index.url({
@@ -80,7 +80,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -89,13 +89,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags',
+    url: 'http://cms.test/telescope/telescope-api/monitored-tags',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -104,7 +104,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -114,7 +114,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -124,7 +124,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -135,7 +135,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: destroy.url(options),
@@ -144,13 +144,13 @@ export const destroy = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
 destroy.definition = {
     methods: ["post"],
-    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags/delete',
+    url: 'http://cms.test/telescope/telescope-api/monitored-tags/delete',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
 destroy.url = (options?: RouteQueryOptions) => {
     return destroy.definition.url + queryParams(options)
@@ -159,7 +159,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
 destroy.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: destroy.url(options),
@@ -169,7 +169,7 @@ destroy.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
     const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(options),
@@ -179,7 +179,7 @@ destroy.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
         destroyForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(options),
