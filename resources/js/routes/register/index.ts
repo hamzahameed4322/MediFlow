@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
- * @route 'http://cms.test/register'
+ * @route 'https://mediflow-production-60a9.up.railway.app/register'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'http://cms.test/register',
+    url: 'https://mediflow-production-60a9.up.railway.app/register',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
- * @route 'http://cms.test/register'
+ * @route 'https://mediflow-production-60a9.up.railway.app/register'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
- * @route 'http://cms.test/register'
+ * @route 'https://mediflow-production-60a9.up.railway.app/register'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -36,7 +36,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
- * @route 'http://cms.test/register'
+ * @route 'https://mediflow-production-60a9.up.railway.app/register'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -46,7 +46,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\RegisteredUserController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/RegisteredUserController.php:53
- * @route 'http://cms.test/register'
+ * @route 'https://mediflow-production-60a9.up.railway.app/register'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:169
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'http://cms.test/doctor/schedules',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/schedules',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:169
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:169
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -36,7 +36,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:169
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -46,7 +46,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:169
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -57,7 +57,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::destroy
  * @see app/Http/Controllers/DoctorController.php:213
- * @route 'http://cms.test/doctor/schedules/{schedule}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules/{schedule}'
  */
 export const destroy = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
@@ -66,13 +66,13 @@ export const destroy = (args: { schedule: number | { id: number } } | [schedule:
 
 destroy.definition = {
     methods: ["delete"],
-    url: 'http://cms.test/doctor/schedules/{schedule}',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/schedules/{schedule}',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::destroy
  * @see app/Http/Controllers/DoctorController.php:213
- * @route 'http://cms.test/doctor/schedules/{schedule}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules/{schedule}'
  */
 destroy.url = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -105,7 +105,7 @@ destroy.url = (args: { schedule: number | { id: number } } | [schedule: number |
 /**
 * @see \App\Http\Controllers\DoctorController::destroy
  * @see app/Http/Controllers/DoctorController.php:213
- * @route 'http://cms.test/doctor/schedules/{schedule}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules/{schedule}'
  */
 destroy.delete = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(args, options),
@@ -115,7 +115,7 @@ destroy.delete = (args: { schedule: number | { id: number } } | [schedule: numbe
     /**
 * @see \App\Http\Controllers\DoctorController::destroy
  * @see app/Http/Controllers/DoctorController.php:213
- * @route 'http://cms.test/doctor/schedules/{schedule}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules/{schedule}'
  */
     const destroyForm = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url(args, {
@@ -130,7 +130,7 @@ destroy.delete = (args: { schedule: number | { id: number } } | [schedule: numbe
             /**
 * @see \App\Http\Controllers\DoctorController::destroy
  * @see app/Http/Controllers/DoctorController.php:213
- * @route 'http://cms.test/doctor/schedules/{schedule}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules/{schedule}'
  */
         destroyForm.delete = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url(args, {

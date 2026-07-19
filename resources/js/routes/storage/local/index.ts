@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/storage/{path}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/storage/{path}'
  */
 export const upload = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: upload.url(args, options),
@@ -10,12 +10,12 @@ export const upload = (args: { path: string | number } | [path: string | number 
 
 upload.definition = {
     methods: ["put"],
-    url: 'http://cms.test/storage/{path}',
+    url: 'https://mediflow-production-60a9.up.railway.app/storage/{path}',
 } satisfies RouteDefinition<["put"]>
 
 /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/storage/{path}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/storage/{path}'
  */
 upload.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -42,7 +42,7 @@ upload.url = (args: { path: string | number } | [path: string | number ] | strin
 
 /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/storage/{path}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/storage/{path}'
  */
 upload.put = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: upload.url(args, options),
@@ -51,7 +51,7 @@ upload.put = (args: { path: string | number } | [path: string | number ] | strin
 
     /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/storage/{path}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/storage/{path}'
  */
     const uploadForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: upload.url(args, {
@@ -65,7 +65,7 @@ upload.put = (args: { path: string | number } | [path: string | number ] | strin
 
             /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/storage/{path}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/storage/{path}'
  */
         uploadForm.put = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: upload.url(args, {

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Telescope\Http\Controllers\EntriesController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/EntriesController.php:16
- * @route 'http://cms.test/telescope/telescope-api/entries'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/entries'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(options),
@@ -11,13 +11,13 @@ export const destroy = (options?: RouteQueryOptions): RouteDefinition<'delete'> 
 
 destroy.definition = {
     methods: ["delete"],
-    url: 'http://cms.test/telescope/telescope-api/entries',
+    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/entries',
 } satisfies RouteDefinition<["delete"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\EntriesController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/EntriesController.php:16
- * @route 'http://cms.test/telescope/telescope-api/entries'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/entries'
  */
 destroy.url = (options?: RouteQueryOptions) => {
     return destroy.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ destroy.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\EntriesController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/EntriesController.php:16
- * @route 'http://cms.test/telescope/telescope-api/entries'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/entries'
  */
 destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: destroy.url(options),
@@ -36,7 +36,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     /**
 * @see \Laravel\Telescope\Http\Controllers\EntriesController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/EntriesController.php:16
- * @route 'http://cms.test/telescope/telescope-api/entries'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/entries'
  */
     const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: destroy.url({
@@ -51,7 +51,7 @@ destroy.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\EntriesController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/EntriesController.php:16
- * @route 'http://cms.test/telescope/telescope-api/entries'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/entries'
  */
         destroyForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: destroy.url({

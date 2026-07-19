@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
 const VerifyEmailController = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: VerifyEmailController.url(args, options),
@@ -11,13 +11,13 @@ const VerifyEmailController = (args: { id: string | number, hash: string | numbe
 
 VerifyEmailController.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/email/verify/{id}/{hash}',
+    url: 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
 VerifyEmailController.url = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
@@ -43,7 +43,7 @@ VerifyEmailController.url = (args: { id: string | number, hash: string | number 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
 VerifyEmailController.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: VerifyEmailController.url(args, options),
@@ -52,7 +52,7 @@ VerifyEmailController.get = (args: { id: string | number, hash: string | number 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
 VerifyEmailController.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: VerifyEmailController.url(args, options),
@@ -62,7 +62,7 @@ VerifyEmailController.head = (args: { id: string | number, hash: string | number
     /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
     const VerifyEmailControllerForm = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: VerifyEmailController.url(args, options),
@@ -72,7 +72,7 @@ VerifyEmailController.head = (args: { id: string | number, hash: string | number
             /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
         VerifyEmailControllerForm.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: VerifyEmailController.url(args, options),
@@ -81,7 +81,7 @@ VerifyEmailController.head = (args: { id: string | number, hash: string | number
             /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://cms.test/email/verify/{id}/{hash}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/email/verify/{id}/{hash}'
  */
         VerifyEmailControllerForm.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: VerifyEmailController.url(args, {

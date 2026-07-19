@@ -6,7 +6,7 @@ import bills795ef8 from './bills'
 /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -15,13 +15,13 @@ export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 
 dashboard.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/doctor/dashboard',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
 dashboard.url = (options?: RouteQueryOptions) => {
     return dashboard.definition.url + queryParams(options)
@@ -30,7 +30,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -39,7 +39,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: dashboard.url(options),
@@ -49,7 +49,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
     const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: dashboard.url(options),
@@ -59,7 +59,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
         dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: dashboard.url(options),
@@ -68,7 +68,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::dashboard
  * @see app/Http/Controllers/DoctorController.php:31
- * @route 'http://cms.test/doctor/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/dashboard'
  */
         dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: dashboard.url({
@@ -84,7 +84,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 export const schedules = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: schedules.url(options),
@@ -93,13 +93,13 @@ export const schedules = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 
 schedules.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/doctor/schedules',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/schedules',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 schedules.url = (options?: RouteQueryOptions) => {
     return schedules.definition.url + queryParams(options)
@@ -108,7 +108,7 @@ schedules.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 schedules.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: schedules.url(options),
@@ -117,7 +117,7 @@ schedules.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
 schedules.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: schedules.url(options),
@@ -127,7 +127,7 @@ schedules.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
     const schedulesForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: schedules.url(options),
@@ -137,7 +137,7 @@ schedules.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
         schedulesForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: schedules.url(options),
@@ -146,7 +146,7 @@ schedules.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::schedules
  * @see app/Http/Controllers/DoctorController.php:142
- * @route 'http://cms.test/doctor/schedules'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/schedules'
  */
         schedulesForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: schedules.url({
@@ -162,7 +162,7 @@ schedules.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
 export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: appointments.url(options),
@@ -171,13 +171,13 @@ export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 appointments.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/doctor/appointments',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/appointments',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
 appointments.url = (options?: RouteQueryOptions) => {
     return appointments.definition.url + queryParams(options)
@@ -186,7 +186,7 @@ appointments.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
 appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: appointments.url(options),
@@ -195,7 +195,7 @@ appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
 appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: appointments.url(options),
@@ -205,7 +205,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
     const appointmentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: appointments.url(options),
@@ -215,7 +215,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
         appointmentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: appointments.url(options),
@@ -224,7 +224,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::appointments
  * @see app/Http/Controllers/DoctorController.php:225
- * @route 'http://cms.test/doctor/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments'
  */
         appointmentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: appointments.url({
@@ -240,7 +240,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
 export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bills.url(options),
@@ -249,13 +249,13 @@ export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 bills.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/doctor/bills',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/bills',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
 bills.url = (options?: RouteQueryOptions) => {
     return bills.definition.url + queryParams(options)
@@ -264,7 +264,7 @@ bills.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
 bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bills.url(options),
@@ -273,7 +273,7 @@ bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
 bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: bills.url(options),
@@ -283,7 +283,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
     const billsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: bills.url(options),
@@ -293,7 +293,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
         billsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: bills.url(options),
@@ -302,7 +302,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\DoctorController::bills
  * @see app/Http/Controllers/DoctorController.php:320
- * @route 'http://cms.test/doctor/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/bills'
  */
         billsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: bills.url({
@@ -318,7 +318,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
 export const patientHistory = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: patientHistory.url(args, options),
@@ -327,13 +327,13 @@ export const patientHistory = (args: { patient: number | { id: number } } | [pat
 
 patientHistory.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/doctor/patient-history/{patient}',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
 patientHistory.url = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -366,7 +366,7 @@ patientHistory.url = (args: { patient: number | { id: number } } | [patient: num
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
 patientHistory.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: patientHistory.url(args, options),
@@ -375,7 +375,7 @@ patientHistory.get = (args: { patient: number | { id: number } } | [patient: num
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
 patientHistory.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: patientHistory.url(args, options),
@@ -385,7 +385,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
     /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
     const patientHistoryForm = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: patientHistory.url(args, options),
@@ -395,7 +395,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
             /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
         patientHistoryForm.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: patientHistory.url(args, options),
@@ -404,7 +404,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
             /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
  * @see app/Http/Controllers/DoctorController.php:366
- * @route 'http://cms.test/doctor/patient-history/{patient}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/patient-history/{patient}'
  */
         patientHistoryForm.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: patientHistory.url(args, {

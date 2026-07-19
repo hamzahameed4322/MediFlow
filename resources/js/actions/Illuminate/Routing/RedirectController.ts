@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 const RedirectController = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: RedirectController.url(options),
@@ -11,13 +11,13 @@ const RedirectController = (options?: RouteQueryOptions): RouteDefinition<'get'>
 
 RedirectController.definition = {
     methods: ["get","head","post","put","patch","delete","options"],
-    url: 'http://cms.test/settings',
+    url: 'https://mediflow-production-60a9.up.railway.app/settings',
 } satisfies RouteDefinition<["get","head","post","put","patch","delete","options"]>
 
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.url = (options?: RouteQueryOptions) => {
     return RedirectController.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ RedirectController.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: RedirectController.url(options),
@@ -35,7 +35,7 @@ RedirectController.get = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: RedirectController.url(options),
@@ -44,7 +44,7 @@ RedirectController.head = (options?: RouteQueryOptions): RouteDefinition<'head'>
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: RedirectController.url(options),
@@ -53,7 +53,7 @@ RedirectController.post = (options?: RouteQueryOptions): RouteDefinition<'post'>
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: RedirectController.url(options),
@@ -62,7 +62,7 @@ RedirectController.put = (options?: RouteQueryOptions): RouteDefinition<'put'> =
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.patch = (options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
     url: RedirectController.url(options),
@@ -71,7 +71,7 @@ RedirectController.patch = (options?: RouteQueryOptions): RouteDefinition<'patch
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.delete = (options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
     url: RedirectController.url(options),
@@ -80,7 +80,7 @@ RedirectController.delete = (options?: RouteQueryOptions): RouteDefinition<'dele
 /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
 RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'options'> => ({
     url: RedirectController.url(options),
@@ -90,7 +90,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
     /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
     const RedirectControllerForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: RedirectController.url(options),
@@ -100,7 +100,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: RedirectController.url(options),
@@ -109,7 +109,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: RedirectController.url({
@@ -123,7 +123,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: RedirectController.url(options),
@@ -132,7 +132,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: RedirectController.url({
@@ -146,7 +146,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.patch = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: RedirectController.url({
@@ -160,7 +160,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.delete = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: RedirectController.url({
@@ -174,7 +174,7 @@ RedirectController.options = (options?: RouteQueryOptions): RouteDefinition<'opt
             /**
 * @see \Illuminate\Routing\RedirectController::__invoke
  * @see vendor/laravel/framework/src/Illuminate/Routing/RedirectController.php:19
- * @route 'http://cms.test/settings'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings'
  */
         RedirectControllerForm.options = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: RedirectController.url({

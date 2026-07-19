@@ -4,7 +4,7 @@ import doctorsD3dd26 from './doctors'
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -13,13 +13,13 @@ export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> =
 
 dashboard.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/dashboard',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/dashboard',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
 dashboard.url = (options?: RouteQueryOptions) => {
     return dashboard.definition.url + queryParams(options)
@@ -28,7 +28,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: dashboard.url(options),
@@ -37,7 +37,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: dashboard.url(options),
@@ -47,7 +47,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
     const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: dashboard.url(options),
@@ -57,7 +57,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
         dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: dashboard.url(options),
@@ -66,7 +66,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:36
- * @route 'http://cms.test/admin/dashboard'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/dashboard'
  */
         dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: dashboard.url({
@@ -82,7 +82,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
 export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: users.url(options),
@@ -91,13 +91,13 @@ export const users = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 users.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/users',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/users',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
 users.url = (options?: RouteQueryOptions) => {
     return users.definition.url + queryParams(options)
@@ -106,7 +106,7 @@ users.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
 users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: users.url(options),
@@ -115,7 +115,7 @@ users.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
 users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: users.url(options),
@@ -125,7 +125,7 @@ users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
     const usersForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: users.url(options),
@@ -135,7 +135,7 @@ users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
         usersForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: users.url(options),
@@ -144,7 +144,7 @@ users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::users
  * @see app/Http/Controllers/AdminController.php:96
- * @route 'http://cms.test/admin/users'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/users'
  */
         usersForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: users.url({
@@ -160,7 +160,7 @@ users.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
 export const doctors = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: doctors.url(options),
@@ -169,13 +169,13 @@ export const doctors = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 doctors.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/doctors',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/doctors',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
 doctors.url = (options?: RouteQueryOptions) => {
     return doctors.definition.url + queryParams(options)
@@ -184,7 +184,7 @@ doctors.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
 doctors.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: doctors.url(options),
@@ -193,7 +193,7 @@ doctors.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
 doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: doctors.url(options),
@@ -203,7 +203,7 @@ doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
     const doctorsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: doctors.url(options),
@@ -213,7 +213,7 @@ doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
         doctorsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: doctors.url(options),
@@ -222,7 +222,7 @@ doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::doctors
  * @see app/Http/Controllers/AdminController.php:123
- * @route 'http://cms.test/admin/doctors'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/doctors'
  */
         doctorsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: doctors.url({
@@ -238,7 +238,7 @@ doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
 export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: appointments.url(options),
@@ -247,13 +247,13 @@ export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'
 
 appointments.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/appointments',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/appointments',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
 appointments.url = (options?: RouteQueryOptions) => {
     return appointments.definition.url + queryParams(options)
@@ -262,7 +262,7 @@ appointments.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
 appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: appointments.url(options),
@@ -271,7 +271,7 @@ appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
 appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: appointments.url(options),
@@ -281,7 +281,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
     const appointmentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: appointments.url(options),
@@ -291,7 +291,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
         appointmentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: appointments.url(options),
@@ -300,7 +300,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::appointments
  * @see app/Http/Controllers/AdminController.php:207
- * @route 'http://cms.test/admin/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/appointments'
  */
         appointmentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: appointments.url({
@@ -316,7 +316,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
 export const consultations = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: consultations.url(options),
@@ -325,13 +325,13 @@ export const consultations = (options?: RouteQueryOptions): RouteDefinition<'get
 
 consultations.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/consultations',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/consultations',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
 consultations.url = (options?: RouteQueryOptions) => {
     return consultations.definition.url + queryParams(options)
@@ -340,7 +340,7 @@ consultations.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
 consultations.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: consultations.url(options),
@@ -349,7 +349,7 @@ consultations.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
 consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: consultations.url(options),
@@ -359,7 +359,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
     const consultationsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: consultations.url(options),
@@ -369,7 +369,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
             /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
         consultationsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: consultations.url(options),
@@ -378,7 +378,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
             /**
 * @see \App\Http\Controllers\AdminController::consultations
  * @see app/Http/Controllers/AdminController.php:223
- * @route 'http://cms.test/admin/consultations'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/consultations'
  */
         consultationsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: consultations.url({
@@ -394,7 +394,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
 export const prescriptions = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prescriptions.url(options),
@@ -403,13 +403,13 @@ export const prescriptions = (options?: RouteQueryOptions): RouteDefinition<'get
 
 prescriptions.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/prescriptions',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
 prescriptions.url = (options?: RouteQueryOptions) => {
     return prescriptions.definition.url + queryParams(options)
@@ -418,7 +418,7 @@ prescriptions.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
 prescriptions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: prescriptions.url(options),
@@ -427,7 +427,7 @@ prescriptions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
 prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: prescriptions.url(options),
@@ -437,7 +437,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
     const prescriptionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: prescriptions.url(options),
@@ -447,7 +447,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
             /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
         prescriptionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: prescriptions.url(options),
@@ -456,7 +456,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
             /**
 * @see \App\Http\Controllers\AdminController::prescriptions
  * @see app/Http/Controllers/AdminController.php:237
- * @route 'http://cms.test/admin/prescriptions'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/prescriptions'
  */
         prescriptionsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: prescriptions.url({
@@ -472,7 +472,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
 export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bills.url(options),
@@ -481,13 +481,13 @@ export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 bills.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/bills',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/bills',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
 bills.url = (options?: RouteQueryOptions) => {
     return bills.definition.url + queryParams(options)
@@ -496,7 +496,7 @@ bills.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
 bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: bills.url(options),
@@ -505,7 +505,7 @@ bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
 bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: bills.url(options),
@@ -515,7 +515,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
     const billsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: bills.url(options),
@@ -525,7 +525,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
         billsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: bills.url(options),
@@ -534,7 +534,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::bills
  * @see app/Http/Controllers/AdminController.php:251
- * @route 'http://cms.test/admin/bills'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/bills'
  */
         billsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: bills.url({
@@ -550,7 +550,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
 export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reports.url(options),
@@ -559,13 +559,13 @@ export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => 
 
 reports.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/admin/reports',
+    url: 'https://mediflow-production-60a9.up.railway.app/admin/reports',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
 reports.url = (options?: RouteQueryOptions) => {
     return reports.definition.url + queryParams(options)
@@ -574,7 +574,7 @@ reports.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
 reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: reports.url(options),
@@ -583,7 +583,7 @@ reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
 reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: reports.url(options),
@@ -593,7 +593,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
     const reportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: reports.url(options),
@@ -603,7 +603,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
         reportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reports.url(options),
@@ -612,7 +612,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\AdminController::reports
  * @see app/Http/Controllers/AdminController.php:265
- * @route 'http://cms.test/admin/reports'
+ * @route 'https://mediflow-production-60a9.up.railway.app/admin/reports'
  */
         reportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: reports.url({

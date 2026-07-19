@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\PatientController::store
  * @see app/Http/Controllers/PatientController.php:186
- * @route 'http://cms.test/patient/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -11,13 +11,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'http://cms.test/patient/appointments',
+    url: 'https://mediflow-production-60a9.up.railway.app/patient/appointments',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\PatientController::store
  * @see app/Http/Controllers/PatientController.php:186
- * @route 'http://cms.test/patient/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\PatientController::store
  * @see app/Http/Controllers/PatientController.php:186
- * @route 'http://cms.test/patient/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -36,7 +36,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \App\Http\Controllers\PatientController::store
  * @see app/Http/Controllers/PatientController.php:186
- * @route 'http://cms.test/patient/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -46,7 +46,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \App\Http\Controllers\PatientController::store
  * @see app/Http/Controllers/PatientController.php:186
- * @route 'http://cms.test/patient/appointments'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),
@@ -57,7 +57,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 /**
 * @see \App\Http\Controllers\PatientController::cancel
  * @see app/Http/Controllers/PatientController.php:216
- * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments/{appointment}/cancel'
  */
 export const cancel = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: cancel.url(args, options),
@@ -66,13 +66,13 @@ export const cancel = (args: { appointment: number | { id: number } } | [appoint
 
 cancel.definition = {
     methods: ["post"],
-    url: 'http://cms.test/patient/appointments/{appointment}/cancel',
+    url: 'https://mediflow-production-60a9.up.railway.app/patient/appointments/{appointment}/cancel',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\PatientController::cancel
  * @see app/Http/Controllers/PatientController.php:216
- * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments/{appointment}/cancel'
  */
 cancel.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -105,7 +105,7 @@ cancel.url = (args: { appointment: number | { id: number } } | [appointment: num
 /**
 * @see \App\Http\Controllers\PatientController::cancel
  * @see app/Http/Controllers/PatientController.php:216
- * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments/{appointment}/cancel'
  */
 cancel.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: cancel.url(args, options),
@@ -115,7 +115,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
     /**
 * @see \App\Http\Controllers\PatientController::cancel
  * @see app/Http/Controllers/PatientController.php:216
- * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments/{appointment}/cancel'
  */
     const cancelForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: cancel.url(args, options),
@@ -125,7 +125,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
             /**
 * @see \App\Http\Controllers\PatientController::cancel
  * @see app/Http/Controllers/PatientController.php:216
- * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/patient/appointments/{appointment}/cancel'
  */
         cancelForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: cancel.url(args, options),

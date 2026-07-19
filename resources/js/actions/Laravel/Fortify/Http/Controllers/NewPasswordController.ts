@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
 export const create = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(args, options),
@@ -11,13 +11,13 @@ export const create = (args: { token: string | number } | [token: string | numbe
 
 create.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/reset-password/{token}',
+    url: 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
 create.url = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -45,7 +45,7 @@ create.url = (args: { token: string | number } | [token: string | number ] | str
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
 create.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: create.url(args, options),
@@ -54,7 +54,7 @@ create.get = (args: { token: string | number } | [token: string | number ] | str
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
 create.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: create.url(args, options),
@@ -64,7 +64,7 @@ create.head = (args: { token: string | number } | [token: string | number ] | st
     /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
     const createForm = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: create.url(args, options),
@@ -74,7 +74,7 @@ create.head = (args: { token: string | number } | [token: string | number ] | st
             /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
         createForm.get = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: create.url(args, options),
@@ -83,7 +83,7 @@ create.head = (args: { token: string | number } | [token: string | number ] | st
             /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::create
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:44
- * @route 'http://cms.test/reset-password/{token}'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password/{token}'
  */
         createForm.head = (args: { token: string | number } | [token: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: create.url(args, {
@@ -99,7 +99,7 @@ create.head = (args: { token: string | number } | [token: string | number ] | st
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'http://cms.test/reset-password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -108,13 +108,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'http://cms.test/reset-password',
+    url: 'https://mediflow-production-60a9.up.railway.app/reset-password',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'http://cms.test/reset-password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -123,7 +123,7 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'http://cms.test/reset-password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -133,7 +133,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'http://cms.test/reset-password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
  */
     const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(options),
@@ -143,7 +143,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Fortify\Http\Controllers\NewPasswordController::store
  * @see vendor/laravel/fortify/src/Http/Controllers/NewPasswordController.php:55
- * @route 'http://cms.test/reset-password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/reset-password'
  */
         storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(options),

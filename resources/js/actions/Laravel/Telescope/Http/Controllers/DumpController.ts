@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://cms.test/telescope/telescope-api/dumps'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/dumps'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 index.definition = {
     methods: ["post"],
-    url: 'http://cms.test/telescope/telescope-api/dumps',
+    url: 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/dumps',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://cms.test/telescope/telescope-api/dumps'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/dumps'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://cms.test/telescope/telescope-api/dumps'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/dumps'
  */
 index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
@@ -36,7 +36,7 @@ index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://cms.test/telescope/telescope-api/dumps'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/dumps'
  */
     const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: index.url(options),
@@ -46,7 +46,7 @@ index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
             /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://cms.test/telescope/telescope-api/dumps'
+ * @route 'https://mediflow-production-60a9.up.railway.app/telescope/telescope-api/dumps'
  */
         indexForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: index.url(options),

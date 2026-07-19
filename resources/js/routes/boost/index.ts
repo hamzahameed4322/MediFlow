@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/_boost/browser-logs'
+ * @route 'https://mediflow-production-60a9.up.railway.app/_boost/browser-logs'
  */
 export const browserLogs = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: browserLogs.url(options),
@@ -10,12 +10,12 @@ export const browserLogs = (options?: RouteQueryOptions): RouteDefinition<'post'
 
 browserLogs.definition = {
     methods: ["post"],
-    url: 'http://cms.test/_boost/browser-logs',
+    url: 'https://mediflow-production-60a9.up.railway.app/_boost/browser-logs',
 } satisfies RouteDefinition<["post"]>
 
 /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/_boost/browser-logs'
+ * @route 'https://mediflow-production-60a9.up.railway.app/_boost/browser-logs'
  */
 browserLogs.url = (options?: RouteQueryOptions) => {
     return browserLogs.definition.url + queryParams(options)
@@ -23,7 +23,7 @@ browserLogs.url = (options?: RouteQueryOptions) => {
 
 /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/_boost/browser-logs'
+ * @route 'https://mediflow-production-60a9.up.railway.app/_boost/browser-logs'
  */
 browserLogs.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: browserLogs.url(options),
@@ -32,7 +32,7 @@ browserLogs.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
     /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/_boost/browser-logs'
+ * @route 'https://mediflow-production-60a9.up.railway.app/_boost/browser-logs'
  */
     const browserLogsForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: browserLogs.url(options),
@@ -41,7 +41,7 @@ browserLogs.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
             /**
  * @see [serialized-closure]:2
- * @route 'http://cms.test/_boost/browser-logs'
+ * @route 'https://mediflow-production-60a9.up.railway.app/_boost/browser-logs'
  */
         browserLogsForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: browserLogs.url(options),

@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
 export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(options),
@@ -11,13 +11,13 @@ export const edit = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 edit.definition = {
     methods: ["get","head"],
-    url: 'http://cms.test/settings/security',
+    url: 'https://mediflow-production-60a9.up.railway.app/settings/security',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
 edit.url = (options?: RouteQueryOptions) => {
     return edit.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ edit.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
 edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: edit.url(options),
@@ -35,7 +35,7 @@ edit.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
 edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: edit.url(options),
@@ -45,7 +45,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
     const editForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
         action: edit.url(options),
@@ -55,7 +55,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
         editForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url(options),
@@ -64,7 +64,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::edit
  * @see app/Http/Controllers/Settings/SecurityController.php:17
- * @route 'http://cms.test/settings/security'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/security'
  */
         editForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
             action: edit.url({
@@ -80,7 +80,7 @@ edit.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::update
  * @see app/Http/Controllers/Settings/SecurityController.php:27
- * @route 'http://cms.test/settings/password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/password'
  */
 export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -89,13 +89,13 @@ export const update = (options?: RouteQueryOptions): RouteDefinition<'put'> => (
 
 update.definition = {
     methods: ["put"],
-    url: 'http://cms.test/settings/password',
+    url: 'https://mediflow-production-60a9.up.railway.app/settings/password',
 } satisfies RouteDefinition<["put"]>
 
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::update
  * @see app/Http/Controllers/Settings/SecurityController.php:27
- * @route 'http://cms.test/settings/password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/password'
  */
 update.url = (options?: RouteQueryOptions) => {
     return update.definition.url + queryParams(options)
@@ -104,7 +104,7 @@ update.url = (options?: RouteQueryOptions) => {
 /**
 * @see \App\Http\Controllers\Settings\SecurityController::update
  * @see app/Http/Controllers/Settings/SecurityController.php:27
- * @route 'http://cms.test/settings/password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/password'
  */
 update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: update.url(options),
@@ -114,7 +114,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     /**
 * @see \App\Http\Controllers\Settings\SecurityController::update
  * @see app/Http/Controllers/Settings/SecurityController.php:27
- * @route 'http://cms.test/settings/password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/password'
  */
     const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: update.url({
@@ -129,7 +129,7 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
             /**
 * @see \App\Http\Controllers\Settings\SecurityController::update
  * @see app/Http/Controllers/Settings/SecurityController.php:27
- * @route 'http://cms.test/settings/password'
+ * @route 'https://mediflow-production-60a9.up.railway.app/settings/password'
  */
         updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: update.url({

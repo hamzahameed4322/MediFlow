@@ -3,7 +3,7 @@ import consultation from './consultation'
 /**
 * @see \App\Http\Controllers\DoctorController::approve
  * @see app/Http/Controllers/DoctorController.php:260
- * @route 'http://cms.test/doctor/appointments/{appointment}/approve'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/approve'
  */
 export const approve = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
@@ -12,13 +12,13 @@ export const approve = (args: { appointment: number | { id: number } } | [appoin
 
 approve.definition = {
     methods: ["post"],
-    url: 'http://cms.test/doctor/appointments/{appointment}/approve',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/approve',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::approve
  * @see app/Http/Controllers/DoctorController.php:260
- * @route 'http://cms.test/doctor/appointments/{appointment}/approve'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/approve'
  */
 approve.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -51,7 +51,7 @@ approve.url = (args: { appointment: number | { id: number } } | [appointment: nu
 /**
 * @see \App\Http\Controllers\DoctorController::approve
  * @see app/Http/Controllers/DoctorController.php:260
- * @route 'http://cms.test/doctor/appointments/{appointment}/approve'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/approve'
  */
 approve.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: approve.url(args, options),
@@ -61,7 +61,7 @@ approve.post = (args: { appointment: number | { id: number } } | [appointment: n
     /**
 * @see \App\Http\Controllers\DoctorController::approve
  * @see app/Http/Controllers/DoctorController.php:260
- * @route 'http://cms.test/doctor/appointments/{appointment}/approve'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/approve'
  */
     const approveForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: approve.url(args, options),
@@ -71,7 +71,7 @@ approve.post = (args: { appointment: number | { id: number } } | [appointment: n
             /**
 * @see \App\Http\Controllers\DoctorController::approve
  * @see app/Http/Controllers/DoctorController.php:260
- * @route 'http://cms.test/doctor/appointments/{appointment}/approve'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/approve'
  */
         approveForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: approve.url(args, options),
@@ -82,7 +82,7 @@ approve.post = (args: { appointment: number | { id: number } } | [appointment: n
 /**
 * @see \App\Http\Controllers\DoctorController::reject
  * @see app/Http/Controllers/DoctorController.php:272
- * @route 'http://cms.test/doctor/appointments/{appointment}/reject'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/reject'
  */
 export const reject = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
@@ -91,13 +91,13 @@ export const reject = (args: { appointment: number | { id: number } } | [appoint
 
 reject.definition = {
     methods: ["post"],
-    url: 'http://cms.test/doctor/appointments/{appointment}/reject',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/reject',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::reject
  * @see app/Http/Controllers/DoctorController.php:272
- * @route 'http://cms.test/doctor/appointments/{appointment}/reject'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/reject'
  */
 reject.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -130,7 +130,7 @@ reject.url = (args: { appointment: number | { id: number } } | [appointment: num
 /**
 * @see \App\Http\Controllers\DoctorController::reject
  * @see app/Http/Controllers/DoctorController.php:272
- * @route 'http://cms.test/doctor/appointments/{appointment}/reject'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/reject'
  */
 reject.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: reject.url(args, options),
@@ -140,7 +140,7 @@ reject.post = (args: { appointment: number | { id: number } } | [appointment: nu
     /**
 * @see \App\Http\Controllers\DoctorController::reject
  * @see app/Http/Controllers/DoctorController.php:272
- * @route 'http://cms.test/doctor/appointments/{appointment}/reject'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/reject'
  */
     const rejectForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: reject.url(args, options),
@@ -150,7 +150,7 @@ reject.post = (args: { appointment: number | { id: number } } | [appointment: nu
             /**
 * @see \App\Http\Controllers\DoctorController::reject
  * @see app/Http/Controllers/DoctorController.php:272
- * @route 'http://cms.test/doctor/appointments/{appointment}/reject'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/reject'
  */
         rejectForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: reject.url(args, options),
@@ -161,7 +161,7 @@ reject.post = (args: { appointment: number | { id: number } } | [appointment: nu
 /**
 * @see \App\Http\Controllers\DoctorController::cancel
  * @see app/Http/Controllers/DoctorController.php:284
- * @route 'http://cms.test/doctor/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/cancel'
  */
 export const cancel = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: cancel.url(args, options),
@@ -170,13 +170,13 @@ export const cancel = (args: { appointment: number | { id: number } } | [appoint
 
 cancel.definition = {
     methods: ["post"],
-    url: 'http://cms.test/doctor/appointments/{appointment}/cancel',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/cancel',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::cancel
  * @see app/Http/Controllers/DoctorController.php:284
- * @route 'http://cms.test/doctor/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/cancel'
  */
 cancel.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -209,7 +209,7 @@ cancel.url = (args: { appointment: number | { id: number } } | [appointment: num
 /**
 * @see \App\Http\Controllers\DoctorController::cancel
  * @see app/Http/Controllers/DoctorController.php:284
- * @route 'http://cms.test/doctor/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/cancel'
  */
 cancel.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: cancel.url(args, options),
@@ -219,7 +219,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
     /**
 * @see \App\Http\Controllers\DoctorController::cancel
  * @see app/Http/Controllers/DoctorController.php:284
- * @route 'http://cms.test/doctor/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/cancel'
  */
     const cancelForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: cancel.url(args, options),
@@ -229,7 +229,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
             /**
 * @see \App\Http\Controllers\DoctorController::cancel
  * @see app/Http/Controllers/DoctorController.php:284
- * @route 'http://cms.test/doctor/appointments/{appointment}/cancel'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/cancel'
  */
         cancelForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: cancel.url(args, options),
@@ -240,7 +240,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
 /**
 * @see \App\Http\Controllers\DoctorController::noShow
  * @see app/Http/Controllers/DoctorController.php:296
- * @route 'http://cms.test/doctor/appointments/{appointment}/no-show'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/no-show'
  */
 export const noShow = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: noShow.url(args, options),
@@ -249,13 +249,13 @@ export const noShow = (args: { appointment: number | { id: number } } | [appoint
 
 noShow.definition = {
     methods: ["post"],
-    url: 'http://cms.test/doctor/appointments/{appointment}/no-show',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/no-show',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::noShow
  * @see app/Http/Controllers/DoctorController.php:296
- * @route 'http://cms.test/doctor/appointments/{appointment}/no-show'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/no-show'
  */
 noShow.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -288,7 +288,7 @@ noShow.url = (args: { appointment: number | { id: number } } | [appointment: num
 /**
 * @see \App\Http\Controllers\DoctorController::noShow
  * @see app/Http/Controllers/DoctorController.php:296
- * @route 'http://cms.test/doctor/appointments/{appointment}/no-show'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/no-show'
  */
 noShow.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: noShow.url(args, options),
@@ -298,7 +298,7 @@ noShow.post = (args: { appointment: number | { id: number } } | [appointment: nu
     /**
 * @see \App\Http\Controllers\DoctorController::noShow
  * @see app/Http/Controllers/DoctorController.php:296
- * @route 'http://cms.test/doctor/appointments/{appointment}/no-show'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/no-show'
  */
     const noShowForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: noShow.url(args, options),
@@ -308,7 +308,7 @@ noShow.post = (args: { appointment: number | { id: number } } | [appointment: nu
             /**
 * @see \App\Http\Controllers\DoctorController::noShow
  * @see app/Http/Controllers/DoctorController.php:296
- * @route 'http://cms.test/doctor/appointments/{appointment}/no-show'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/no-show'
  */
         noShowForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: noShow.url(args, options),

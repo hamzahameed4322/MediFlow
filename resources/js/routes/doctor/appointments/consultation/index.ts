@@ -2,7 +2,7 @@ import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFo
 /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:308
- * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/consultation'
  */
 export const store = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -11,13 +11,13 @@ export const store = (args: { appointment: number | { id: number } } | [appointm
 
 store.definition = {
     methods: ["post"],
-    url: 'http://cms.test/doctor/appointments/{appointment}/consultation',
+    url: 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/consultation',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:308
- * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/consultation'
  */
 store.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -50,7 +50,7 @@ store.url = (args: { appointment: number | { id: number } } | [appointment: numb
 /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:308
- * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/consultation'
  */
 store.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(args, options),
@@ -60,7 +60,7 @@ store.post = (args: { appointment: number | { id: number } } | [appointment: num
     /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:308
- * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/consultation'
  */
     const storeForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
         action: store.url(args, options),
@@ -70,7 +70,7 @@ store.post = (args: { appointment: number | { id: number } } | [appointment: num
             /**
 * @see \App\Http\Controllers\DoctorController::store
  * @see app/Http/Controllers/DoctorController.php:308
- * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
+ * @route 'https://mediflow-production-60a9.up.railway.app/doctor/appointments/{appointment}/consultation'
  */
         storeForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
             action: store.url(args, options),
