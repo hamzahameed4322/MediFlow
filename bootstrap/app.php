@@ -9,6 +9,8 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -18,6 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        $middleware->trustProxies(at: '*');
+
         $middleware->alias([
             'role' => CheckRole::class,
         ]);
@@ -38,13 +42,13 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
-        $exceptions->respond(function (\Symfony\Component\HttpFoundation\Response $response, \Throwable $exception, Request $request) {
+        $exceptions->respond(function (Response $response, Throwable $exception, Request $request) {
             if (! app()->environment(['local', 'testing']) && in_array($response->getStatusCode(), [500, 503, 403])) {
-                return \Inertia\Inertia::render('errors/error', ['status' => $response->getStatusCode()])
+                return Inertia::render('errors/error', ['status' => $response->getStatusCode()])
                     ->toResponse($request)
                     ->setStatusCode($response->getStatusCode());
             } elseif ($response->getStatusCode() === 404) {
-                return \Inertia\Inertia::render('errors/404', ['status' => 404])
+                return Inertia::render('errors/404', ['status' => 404])
                     ->toResponse($request)
                     ->setStatusCode(404);
             }
