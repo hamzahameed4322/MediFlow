@@ -5,7 +5,7 @@
     "buildEnvironment": "V3"
   },
   "deploy": {
-    "startCommand": "php artisan migrate --force && /start-container.sh",
+    "startCommand": "php artisan migrate --force && php artisan queue:work & /start-container.sh",
     "runtime": "V2",
     "numReplicas": 1,
     "sleepApplication": false,
