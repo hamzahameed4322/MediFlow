@@ -89,6 +89,54 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 
 ---
 
+## 🚦 State Machine & Business Rules
+
+### Appointment Lifecycle
+The appointment system operates on a strictly enforced state machine, managed exclusively via the `ClinicWorkflowService`.
+
+```text
+                          PATIENT
+                             │
+                             ▼
+                          PENDING
+                         /       \
+                        ▼         ▼
+                 CANCELLED    DOCTOR REVIEW
+                                    │
+                        ┌───────────┼────────────┐
+                        │           │            │
+                        ▼           ▼            ▼
+                   REJECTED    CONFIRMED    CANCELLED
+                                              (Doctor)
+                                       │
+                          ┌────────────┼────────────┐
+                          │            │            │
+                          ▼            ▼            ▼
+                    CANCELLED      NO_SHOW    CONSULTATION
+                     (Patient)                   │
+                                                 ▼
+                                            PRESCRIPTION
+                                                 │
+                                                 ▼
+                                                BILL
+                                                 │
+                                                 ▼
+                                             COMPLETED
+```
+
+### Core Business Rules
+The application strictly enforces the following domain logic at the service layer:
+
+- **BR-1 (Doctor Availability):** Patients can only book appointments with doctors whose account status is `active`.
+- **BR-2 (Patient Collision):** A patient cannot have more than one `pending` or `confirmed` appointment for the exact same date and time, regardless of the doctor.
+- **BR-3 (Slot Exclusivity):** A doctor's time slot cannot be booked if it already has a `pending`, `confirmed`, or `completed` appointment.
+- **BR-4 (Cancellation Window):** Appointments can only be cancelled (by patient or doctor) if their current status is `pending` or `confirmed`.
+- **BR-5 (Strict Approvals):** Only `pending` appointments can be approved or rejected by the assigned doctor.
+- **BR-6 (No-Show & Consultations):** Only `confirmed` appointments can transition into `no_show` or proceed to `completed` via a consultation.
+- **BR-7 (Consultation Artifacts):** Successfully completing a consultation automatically transitions the appointment to `completed` and synchronously generates a Consultation record, a Digital Prescription, and an `unpaid` Bill.
+
+---
+
 ## 💾 Domain Model (Database Schema)
 
 The core domain relies on highly normalized relationships managed by Eloquent ORM.
