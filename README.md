@@ -47,35 +47,43 @@ flowchart LR
 
 ## ✨ Implemented Features
 
-The system is strictly compartmentalized using Laravel Middleware and Fortify to serve three primary user roles: **Admin**, **Doctor**, and **Patient**.
+The system operates on a strictly compartmentalized architecture governed by Laravel Middleware and Fortify, serving three distinct operational roles. Every feature listed below is 100% functional and verified in the current codebase.
 
-### 🔒 Core System & Security
-- **Authentication**: Secure login, registration, and email verification powered by Laravel Fortify.
-- **Authorization**: Role-based access control (RBAC) ensuring strict boundaries between patients, doctors, and clinic administrators.
-- **Asynchronous Processing**: Background job processing via database queues (used for dispatching emails and heavy operations).
-- **Debugging**: Integrated **Laravel Telescope** for deep local debugging of queries, jobs, and requests.
+### 🔒 Core Infrastructure
+| Category | Technical Implementation |
+|----------|--------------------------|
+| **🔐 Authentication** | Secure session-based auth, user registration, and email verification (powered by `Laravel Fortify`). |
+| **🛡️ Authorization** | Strict Role-Based Access Control (RBAC) preventing cross-role access (Admin, Doctor, Patient). |
+| **⚡ Async Processing**| Database-driven job queues for non-blocking operations like dispatching transactional emails. |
+| **🐛 Developer Tooling**| Built-in `Laravel Telescope` integration for deep query, request, and background job debugging. |
 
-### 👑 Admin Workspace
-- **Clinic Overview**: High-level dashboard tracking clinic metrics.
-- **User Management**: View user tables, inspect roles, and seamlessly toggle user account active status.
-- **Doctor Management**: Onboard new doctors, assign specialties, define consultation fees, and toggle active working status.
-- **Clinical Oversight**: Full read-access to clinic-wide Appointments, Consultations, Prescriptions, and Bills.
-- **Financial & Operational Reports**: Generate and view systematic clinic reports.
+### 👑 Administrator Capabilities
+| Feature | Operational Scope |
+|---------|-------------------|
+| **📊 Clinic Dashboard** | High-level metrics tracking active users, total doctors, and daily appointments. |
+| **👥 User Management** | View comprehensive user tables and instantly toggle account access (`active`/`suspended`). |
+| **🩺 Doctor Onboarding**| Register new doctors, assign exact medical specialties, set consultation fees, and toggle employment status. |
+| **👁️ Clinical Oversight**| Unrestricted read-access to clinic-wide data (Appointments, Consultations, Prescriptions, and Bills). |
+| **📈 Reporting** | Generate and review systematic clinic performance and financial reports. |
 
 ### 🩺 Doctor Workspace
-- **Schedule Management**: Define recurring weekly availability slots (Day, Start/End Time, Slot Duration).
-- **Appointment Queue**: Real-time view of pending requests, with the ability to **Approve**, **Reject**, **Cancel**, or mark patients as **No-Show**.
-- **Consultation Workflow**: Conduct consultations, record symptoms, create diagnoses, and log private medical notes.
-- **Prescription Issuance**: Issue structured prescriptions containing multiple medication items (dosage, frequency, duration).
-- **Patient History**: Access the complete, historical medical records of assigned patients.
-- **Billing Management**: Track generated consultation bills and mark patient bills as Paid.
+| Feature | Operational Scope |
+|---------|-------------------|
+| **📅 Schedule Control** | Dynamically define weekly availability (Day of week, Start/End time, and precise slot duration in minutes). |
+| **📥 Appointment Queue**| Real-time processing of pending patient requests. Doctors can `Approve`, `Reject`, `Cancel`, or flag as `No-Show`. |
+| **⚕️ Clinical Consultations**| Dedicated workflow to record patient symptoms, formal diagnosis, and private doctor-only notes. |
+| **💊 Digital Prescriptions**| Issue structured medical prescriptions supporting multiple line items (Medicine Name, Dosage, Frequency, Duration). |
+| **📂 Patient History** | Instant access to the historical timeline of an assigned patient's past appointments and prescriptions. |
+| **💳 Billing Oversight** | View auto-generated consultation bills and manually mark them as `Paid` upon collection. |
 
-### 🧑‍⚕️ Patient Workspace
-- **Doctor Discovery**: Browse the clinic's directory of active doctors by specialization and consultation fee.
-- **Live Scheduling**: View dynamically generated, real-time available time slots based on doctor schedules and existing appointments.
-- **Appointment Lifecycle**: Book new appointments and cancel pending ones.
-- **Medical Records**: Access personal historical data, including past consultations, recorded diagnoses, and issued prescriptions.
-- **Billing Transparency**: View pending and paid consultation bills.
+### 🧑‍⚕️ Patient Portal
+| Feature | Operational Scope |
+|---------|-------------------|
+| **🔍 Doctor Discovery** | Browse the active clinic directory filtered by doctor specialization and upfront consultation fees. |
+| **⏱️ Live Booking** | View real-time, conflict-free time slots derived from the doctor's predefined schedule and current bookings. |
+| **📆 Appointment Lifecycle**| Submit new booking requests and cancel existing pending appointments directly from the dashboard. |
+| **🏥 Medical Records** | Access a permanent personal archive of past consultations, doctor diagnoses, and digital prescriptions. |
+| **🧾 Financial Ledger** | Transparent view of all pending and cleared consultation bills. |
 
 ---
 
@@ -95,6 +103,100 @@ erDiagram
     Consultation ||--o| Prescription : "receives (1:1)"
     Prescription ||--o{ PrescriptionItem : "contains (1:N)"
 ```
+
+### 🗄 Data Dictionary
+
+Below is the strict structural definition of the core entities, including data types, constraints, and allowed domains (enums).
+
+#### `users`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `name` | string | | |
+| `email` | string | Unique | |
+| `password` | string | | Hashed |
+| `role` | enum | | `admin`, `doctor`, `patient` |
+| `status` | enum | Default: `active` | `active`, `inactive`, `suspended` |
+
+#### `patient_profiles`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `user_id` | bigint | FK (`users.id`) | Unique (1:1), Cascade Delete |
+| `phone` | string | | |
+| `gender` | enum | | `male`, `female`, `other` |
+| `dob` | date | Nullable | |
+| `address` | text | Nullable | |
+| `allergies` | text | Nullable | |
+| `major_diseases` | text | Nullable | |
+
+#### `doctor_profiles`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `user_id` | bigint | FK (`users.id`) | Unique (1:1), Cascade Delete |
+| `specialization` | string | | |
+| `qualification` | string | | |
+| `experience` | integer | | Years of experience |
+| `consultation_fee` | decimal(8,2)| | |
+
+#### `doctor_schedules`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `doctor_id` | bigint | FK (`doctor_profiles.id`) | Cascade Delete |
+| `day` | enum | | `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`, `Sunday` |
+| `start_time` | time | | |
+| `end_time` | time | | |
+| `duration` | integer | | Slot duration in minutes |
+
+#### `appointments`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `patient_id` | bigint | FK (`patient_profiles.id`) | Cascade Delete |
+| `doctor_id` | bigint | FK (`doctor_profiles.id`) | Cascade Delete |
+| `appointment_date` | date | | |
+| `appointment_time` | time | | |
+| `reason` | text | Nullable | |
+| `status` | enum | Default: `pending` | `pending`, `confirmed`, `rejected`, `cancelled`, `no_show`, `completed` |
+| `cancelled_by` | enum | Nullable | `patient`, `doctor` |
+| `cancel_reason` | text | Nullable | |
+| `reject_reason` | text | Nullable | |
+
+#### `consultations`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `appointment_id` | bigint | FK (`appointments.id`) | Unique (1:1), Cascade Delete |
+| `symptoms` | text | | |
+| `diagnosis` | text | | |
+| `notes` | text | Nullable | Private doctor notes |
+
+#### `prescriptions`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `consultation_id`| bigint | FK (`consultations.id`) | Unique (1:1), Cascade Delete |
+| `instructions` | text | Nullable | General usage instructions |
+
+#### `prescription_items`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `prescription_id`| bigint | FK (`prescriptions.id`) | Cascade Delete |
+| `medicine_name` | string | | |
+| `dosage` | string | | e.g., "500mg" |
+| `frequency` | string | | e.g., "1-0-1" or "Twice daily" |
+| `duration` | string | | e.g., "5 Days" |
+
+#### `bills`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `appointment_id` | bigint | FK (`appointments.id`) | Unique (1:1), Cascade Delete |
+| `amount` | decimal(8,2)| | Auto-populated from doctor profile |
+| `status` | enum | Default: `unpaid` | `unpaid`, `paid` |
 
 ---
 
@@ -118,7 +220,7 @@ erDiagram
 - **Bundler**: Vite `^8.0`
 
 ### Recommended Local Tools
-- **Laravel Herd**: For an effortless, zero-configuration local PHP development environment.
+- **Laravel Herd**: If you want to avoid manually setting up PHP, Node.js, and Composer, Herd provides an effortless, zero-configuration environment with everything bundled out-of-the-box.
 - **DBngin** & **DBeaver**: For database service management and inspection.
 
 ---
@@ -162,7 +264,7 @@ MediFlow/
 Follow these steps to quickly scaffold the application in a local environment. 
 
 > [!NOTE]
-> **Recommended Environment**: We highly recommend using [Laravel Herd](https://herd.laravel.com/) for an effortless, zero-config PHP environment, alongside **DBngin** or **DBeaver** for database inspection.
+> **Recommended Environment**: If you want to avoid the hassle of manually installing PHP, Node.js, and Composer, we highly recommend using [Laravel Herd](https://herd.laravel.com/). It provides a complete, zero-configuration development environment. We also recommend **DBngin** or **DBeaver** for database management.
 
 ### 1. Prerequisites
 Ensure your local machine has:
