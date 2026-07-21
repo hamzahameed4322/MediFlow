@@ -123,16 +123,37 @@ erDiagram
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Directory Structure
 
-The repository follows a standard Laravel + React monolithic structure, emphasizing strict separation of concerns between backend business logic and frontend presentation.
+The repository follows a standard Laravel + React monolithic structure, emphasizing a strict separation of concerns between backend business logic and frontend presentation.
 
-- **`app/`**: The core backend engine. Contains all business logic including Eloquent `Models`, API `Controllers`, Request validation, `Middleware` for role protection, and `Policies`.
-- **`resources/js/`**: The entire React frontend workspace. It houses Inertia `pages` mapped to specific roles, reusable Radix/Tailwind UI `components`, and page `layouts`.
-- **`database/`**: Defines the application's data layer. Includes schema `migrations`, model `factories` for testing, and `seeders` for scaffolding local development databases.
-- **`routes/`**: Defines HTTP entry points. `web.php` maps URLs directly to specific controller actions and Inertia page components.
-- **`config/`**: Centralized configuration for services like database connections, mailers (Brevo), queues, and Fortify authentication.
-- **`public/`**: Publicly accessible assets and the entry point `index.php`. Vite compiles the React assets into this directory via `npm run build`.
+```text
+MediFlow/
+├── app/                        # Backend Engine (Laravel)
+│   ├── Http/
+│   │   └── Controllers/        # API Request Handlers (Admin, Doctor, Patient)
+│   ├── Models/                 # Eloquent Database Models (User, Appointment, etc.)
+│   └── Providers/              # Service Providers
+├── config/                     # Centralized configuration (Database, Mail, Fortify)
+├── database/                   # Data Layer
+│   ├── migrations/             # Database Schema Definitions
+│   └── seeders/                # Test Data Generation
+├── public/                     # Publicly accessible assets & entry point
+├── resources/                  
+│   └── js/                     # Frontend Workspace (React + TypeScript)
+│       ├── components/         # Reusable UI (Radix, Tailwind, shadcn/ui)
+│       ├── layouts/            # Shared Page Layouts
+│       └── pages/              # Inertia Page Components
+│           ├── admin/          # Admin Views
+│           ├── doctor/         # Doctor Views
+│           └── patient/        # Patient Views
+├── routes/                     # HTTP Routing
+│   └── web.php                 # Web & Inertia Routes
+├── .env.example                # Environment Configuration Template
+├── composer.json               # PHP Dependencies
+├── package.json                # Node/NPM Dependencies
+└── vite.config.ts              # Vite Bundler Configuration
+```
 
 ---
 
