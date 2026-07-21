@@ -6,7 +6,7 @@ import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'MediFlow';
+const appName = import.meta.env.VITE_APP_NAME && import.meta.env.VITE_APP_NAME !== '${APP_NAME}' ? import.meta.env.VITE_APP_NAME : 'MediFlow';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),
