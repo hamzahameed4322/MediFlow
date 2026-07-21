@@ -116,7 +116,7 @@ Below is the strict structural definition of the core entities, including data t
 | `email` | string | Unique | |
 | `password` | string | | Hashed |
 | `role` | enum | | `admin`, `doctor`, `patient` |
-| `status` | enum | Default: `active` | `active`, `inactive`, `suspended` |
+| `status` | enum | Default: `active` | `active`, `suspended` |
 
 #### `patient_profiles`
 | Attribute | Type | Key/Constraint | Domain / Notes |
