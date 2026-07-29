@@ -1,5 +1,5 @@
 import { Badge } from '@/components/ui/badge';
-import type { AppointmentStatus, BillStatus } from '@/types';
+import type { AppointmentStatus, BillStatus, CancelledBy } from '@/types';
 
 // ─── Appointment Status ─────────────────────────────────────────────────────
 
@@ -45,4 +45,19 @@ export function UserStatusBadge({ status }: { status: string }) {
     const config = userStatusConfig[status] ?? { label: status, className: '' };
 
     return <Badge className={`capitalize border text-xs font-medium ${config.className}`}>{config.label}</Badge>;
+}
+
+// ─── Cancelled By Badge ──────────────────────────────────────────────────────
+
+const cancelledByConfig: Record<CancelledBy, { label: string; className: string }> = {
+    patient: { label: 'Cancelled by Patient', className: 'bg-orange-100 text-orange-700 border-orange-300 dark:bg-orange-900/30 dark:text-orange-400 dark:border-orange-700' },
+    doctor:  { label: 'Cancelled by Doctor',  className: 'bg-blue-100 text-blue-700 border-blue-300 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-700' },
+};
+
+export function CancelledByBadge({ cancelledBy }: { cancelledBy: CancelledBy | null }) {
+    if (!cancelledBy) return null;
+
+    const config = cancelledByConfig[cancelledBy];
+
+    return <Badge className={`border text-xs font-medium ${config.className}`}>{config.label}</Badge>;
 }

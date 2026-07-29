@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
-import { AppointmentStatusBadge } from '@/components/status-badge';
+import { AppointmentStatusBadge, CancelledByBadge } from '@/components/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -202,9 +202,12 @@ export default function AppointmentsIndex({ appointments }: Props) {
                                                         </p>
                                                         <div className="mt-1 flex flex-wrap gap-1">
                                                             {appointment.cancel_reason && (
-                                                                <Badge variant="outline">
-                                                                    Cancelled: {appointment.cancel_reason}
-                                                                </Badge>
+                                                                <>
+                                                                    <CancelledByBadge cancelledBy={appointment.cancelled_by} />
+                                                                    <Badge variant="outline">
+                                                                        Cancelled: {appointment.cancel_reason}
+                                                                    </Badge>
+                                                                </>
                                                             )}
                                                             {appointment.reject_reason && (
                                                                 <Badge variant="outline">

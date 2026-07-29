@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { toast } from 'sonner';
 import { EmptyState } from '@/components/empty-state';
 import InputError from '@/components/input-error';
-import { AppointmentStatusBadge } from '@/components/status-badge';
+import { AppointmentStatusBadge, CancelledByBadge } from '@/components/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -151,7 +151,10 @@ return;
                                                     <p className="mt-1.5 text-xs text-muted-foreground italic">"{appt.reason}"</p>
                                                 )}
                                                 {appt.cancel_reason && (
-                                                    <p className="mt-1.5 text-xs text-red-500">Cancelled: {appt.cancel_reason}</p>
+                                                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                                                        <CancelledByBadge cancelledBy={appt.cancelled_by} />
+                                                        <p className="text-xs text-red-500">Reason: {appt.cancel_reason}</p>
+                                                    </div>
                                                 )}
                                                 {appt.reject_reason && (
                                                     <p className="mt-1.5 text-xs text-red-500">Rejected: {appt.reject_reason}</p>
