@@ -149,6 +149,18 @@ The application strictly enforces the following domain logic at the service laye
 | **BR-7** | **Consultation Artifacts** | Successfully completing a consultation automatically transitions the appointment to `completed` and synchronously generates a Consultation record, a Digital Prescription, and an `unpaid` Bill. |
 | **BR-8** | **Doctor Reviews & Ratings** | Patients can rate and review doctors after completed appointments. Reviews support optional anonymity (`is_anonymous`), with scores bounded between 1 and 5 stars. |
 | **BR-9** | **Cancellation Attribution** | Whenever an appointment is cancelled by either party, the system permanently records the origin (`cancelled_by: patient | doctor`) and optional cancellation reason. |
+| **BR-10** | **Asynchronous Notifications** | The system automatically dispatches queued email notifications on critical lifecycle events: cancellations (cross-notified to the opposing party), rejections, no-shows, and doctor onboarding. |
+
+### Automated Transactional Notifications
+The system integrates asynchronous transactional email notifications (via Laravel Notifications and Brevo/SMTP) triggered on specific state machine transitions:
+
+| Lifecycle Event | Recipient | Notification Class | Action & Behavior |
+|---|---|---|---|
+| **Appointment Cancelled (by Patient)** | Doctor | `AppointmentCancelledNotification` | Cross-notifies the doctor immediately with the patient's name, appointment timestamp, and cancellation reason. |
+| **Appointment Cancelled (by Doctor)** | Patient | `AppointmentCancelledNotification` | Cross-notifies the patient immediately with the doctor's name, appointment timestamp, and cancellation reason. |
+| **Appointment Rejected** | Patient | `AppointmentRejectedNotification` | Notifies the patient that their pending request was declined, including the doctor's explanation. |
+| **Appointment Marked No-Show** | Patient | `AppointmentNoShowNotification` | Alerts the patient that they missed a confirmed clinical visit. |
+| **Doctor Account Onboarded** | Doctor | `DoctorCredentialsNotification` | Delivers initial system credentials to newly onboarded clinical staff. |
 
 ---
 
