@@ -78,14 +78,23 @@ class DoctorReviewSeeder extends Seeder
             }
         }
 
-        // Now seed reviews for all completed appointments that don't have one yet
+        // Now seed reviews for completed appointments, but leave 1 un-reviewed appointment per patient
+        // so that patients can test writing new reviews on the /patient/reviews page.
         $completedAppointments = Appointment::with(['doctor.user', 'patient'])
             ->where('status', 'completed')
+            ->orderByDesc('appointment_date')
             ->get();
 
+        $skippedPatients = [];
         $count = 0;
         foreach ($completedAppointments as $appointment) {
             if (DoctorReview::where('appointment_id', $appointment->id)->exists()) {
+                continue;
+            }
+
+            // Keep the latest completed appointment un-reviewed for each patient for interactive testing
+            if (! in_array($appointment->patient_id, $skippedPatients)) {
+                $skippedPatients[] = $appointment->patient_id;
                 continue;
             }
 
@@ -112,6 +121,32 @@ class DoctorReviewSeeder extends Seeder
             $count++;
         }
 
+        // Create 2 guaranteed un-reviewed completed appointments for Alice Green and Charlie Brown
+        // so they can immediately click "Write Review" on their /patient/reviews dashboard
+        foreach ([$patients->first(), $patients->get(1)] as $idx => $patient) {
+            if ($patient && $doctors->first()) {
+                $date = Carbon::now()->subDays($idx + 1);
+                $app = Appointment::create([
+                    'patient_id' => $patient->id,
+                    'doctor_id' => $doctors->first()->id,
+                    'appointment_date' => $date->toDateString(),
+                    'appointment_time' => '16:00:00',
+                    'reason' => 'Post-treatment evaluation (Ready for Review)',
+                    'status' => 'completed',
+                    'created_at' => $date,
+                    'updated_at' => $date,
+                ]);
+
+                Consultation::create([
+                    'appointment_id' => $app->id,
+                    'symptoms' => 'Mild recovery symptoms.',
+                    'diagnosis' => 'Complete recovery observed.',
+                    'notes' => 'Patient eligible to submit feedback review.',
+                ]);
+            }
+        }
+
         $this->command->info("Successfully seeded {$count} professional reviews across all doctors!");
     }
 }
+
