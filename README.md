@@ -61,7 +61,6 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 | **🛡️ Authorization** | Strict Role-Based Access Control (RBAC) preventing cross-role access (Admin, Doctor, Patient). |
 | **⚡ Async Processing**| Database-driven job queues for non-blocking operations like dispatching transactional emails. |
 | **🐛 Developer Tooling**| Built-in `Laravel Telescope` integration for deep query, request, and background job debugging. |
-| **✨ Aesthetic UI** | Curated primary teal/emerald design system (`#14b8a6`), interactive `FlickeringGrid`, responsive layouts, and dark mode support. |
 
 ### 👑 Administrator Capabilities
 | Feature | Operational Scope |
@@ -159,18 +158,16 @@ The core domain relies on highly normalized relationships managed by Eloquent OR
 
 ```mermaid
 erDiagram
-    User ||--o| PatientProfile : "has (1:1)"
     User ||--o| DoctorProfile : "has (1:1)"
+    User ||--o| PatientProfile : "has (1:1)"
     DoctorProfile ||--o{ DoctorSchedule : "defines (1:N)"
-    PatientProfile ||--o{ Appointment : "books (1:N)"
     DoctorProfile ||--o{ Appointment : "assigned to (1:N)"
+    PatientProfile ||--o{ Appointment : "books (1:N)"
     Appointment ||--o| Consultation : "results in (1:1)"
     Appointment ||--o| Bill : "generates (1:1)"
+    Appointment ||--o| DoctorReview : "reviewed in (0:1)"
     Consultation ||--o| Prescription : "receives (1:1)"
     Prescription ||--o{ PrescriptionItem : "contains (1:N)"
-    PatientProfile ||--o{ DoctorReview : "submits (1:N)"
-    DoctorProfile ||--o{ DoctorReview : "receives (1:N)"
-    Appointment ||--o| DoctorReview : "reviewed in (0:1)"
 ```
 
 ### 🗄 Data Dictionary
