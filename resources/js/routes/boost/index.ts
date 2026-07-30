@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
- * @see [serialized-closure]:2
- * @route 'http://localhost/_boost/browser-logs'
+ * @see vendor/laravel/boost/src/BoostServiceProvider.php:95
+ * @route 'http://cms.test/_boost/browser-logs'
  */
 export const browserLogs = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: browserLogs.url(options),
@@ -10,25 +10,45 @@ export const browserLogs = (options?: RouteQueryOptions): RouteDefinition<'post'
 
 browserLogs.definition = {
     methods: ["post"],
-    url: 'http://localhost/_boost/browser-logs',
+    url: 'http://cms.test/_boost/browser-logs',
 } satisfies RouteDefinition<["post"]>
 
 /**
- * @see [serialized-closure]:2
- * @route 'http://localhost/_boost/browser-logs'
+ * @see vendor/laravel/boost/src/BoostServiceProvider.php:95
+ * @route 'http://cms.test/_boost/browser-logs'
  */
 browserLogs.url = (options?: RouteQueryOptions) => {
     return browserLogs.definition.url + queryParams(options)
 }
 
 /**
- * @see [serialized-closure]:2
- * @route 'http://localhost/_boost/browser-logs'
+ * @see vendor/laravel/boost/src/BoostServiceProvider.php:95
+ * @route 'http://cms.test/_boost/browser-logs'
  */
 browserLogs.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: browserLogs.url(options),
     method: 'post',
 })
+
+    /**
+ * @see vendor/laravel/boost/src/BoostServiceProvider.php:95
+ * @route 'http://cms.test/_boost/browser-logs'
+ */
+    const browserLogsForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: browserLogs.url(options),
+        method: 'post',
+    })
+
+            /**
+ * @see vendor/laravel/boost/src/BoostServiceProvider.php:95
+ * @route 'http://cms.test/_boost/browser-logs'
+ */
+        browserLogsForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: browserLogs.url(options),
+            method: 'post',
+        })
+    
+    browserLogs.form = browserLogsForm
 const boost = {
     browserLogs: Object.assign(browserLogs, browserLogs),
 }

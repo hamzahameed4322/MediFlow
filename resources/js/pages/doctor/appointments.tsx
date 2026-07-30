@@ -7,11 +7,11 @@ import {
     XCircle,
     Search,
 } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FormEvent, ReactNode } from 'react';
 import { EmptyState } from '@/components/empty-state';
 import InputError from '@/components/input-error';
-import { AppointmentStatusBadge } from '@/components/status-badge';
+import { AppointmentStatusBadge, CancelledByBadge } from '@/components/status-badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -25,10 +25,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { appointments as doctorAppointments } from '@/routes/doctor';
 import {
     approve as approveAppointment,
+    cancel as cancelAppointment,
     noShow as noShowAppointment,
     reject as rejectAppointment,
 } from '@/routes/doctor/appointments';
@@ -66,25 +68,42 @@ export default function Appointments({ appointments, filters }: Props) {
     });
     const [activeAppointment, setActiveAppointment] =
         useState<Appointment | null>(null);
-    const [mode, setMode] = useState<'review' | 'consultation' | null>(null);
-    const [searchQuery, setSearchQuery] = useState(filters?.search || '');
+    const [mode, setMode] = useState<'review' | 'consultation' | 'cancel' | null>(
+        null,
+    );
+    const [searchQuery, setSearchQuery] = useState(filters?.search ?? '');
+    const [isSearching, setIsSearching] = useState(false);
+    const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     function applyFilters(status?: string, search?: string) {
+        const q = search !== undefined ? search : searchQuery;
+        const s = status !== undefined ? status : (filters?.status ?? 'all');
         router.get(
             doctorAppointments.url(),
+            { search: q, status: s },
             {
-                search: search ?? searchQuery,
-                status: status ?? filters?.status ?? 'all',
-            },
-            { preserveState: true, preserveScroll: true, replace: true }
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+                onFinish: () => setIsSearching(false),
+            }
         );
     }
 
-    function handleSearch(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === 'Enter') {
-            applyFilters(undefined, searchQuery);
+    // Debounced auto-search — fires 450ms after the user stops typing
+    useEffect(() => {
+        if (debounceRef.current) {
+            clearTimeout(debounceRef.current);
         }
-    }
+        setIsSearching(true);
+        debounceRef.current = setTimeout(() => {
+            applyFilters(undefined, searchQuery);
+        }, 450);
+        return () => {
+            if (debounceRef.current) clearTimeout(debounceRef.current);
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchQuery]);
 
     function openReview(appointment: Appointment) {
         setActiveAppointment(appointment);
@@ -96,6 +115,12 @@ export default function Appointments({ appointments, filters }: Props) {
         setActiveAppointment(appointment);
         reviewForm.reset();
         setMode('consultation');
+    }
+
+    function openCancel(appointment: Appointment) {
+        setActiveAppointment(appointment);
+        reviewForm.reset();
+        setMode('cancel');
     }
 
     function close() {
@@ -141,6 +166,24 @@ export default function Appointments({ appointments, filters }: Props) {
         }
 
         reviewForm.post(rejectAppointment.url(activeAppointment.id), {
+            preserveScroll: true,
+            onSuccess: close,
+        });
+    }
+
+    function cancelAppointmentSubmit(e: FormEvent) {
+        e.preventDefault();
+
+        if (!activeAppointment) {
+            return;
+        }
+
+        if (!reviewForm.data.cancel_reason.trim()) {
+            reviewForm.setError('cancel_reason', 'Cancellation reason is required.');
+            return;
+        }
+
+        reviewForm.post(cancelAppointment.url(activeAppointment.id), {
             preserveScroll: true,
             onSuccess: close,
         });
@@ -222,21 +265,24 @@ export default function Appointments({ appointments, filters }: Props) {
                 </section>
 
                 <div className="flex flex-col sm:flex-row gap-4 items-center justify-between bg-card p-4 rounded-xl border shadow-sm">
-                    <div className="relative w-full sm:max-w-xs">
+                        <div className="relative w-full sm:max-w-xs">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
                         <Input
+                            id="appointments-search"
                             type="text"
                             placeholder="Search patients..."
                             className="pl-9"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            onKeyDown={handleSearch}
                         />
                     </div>
                     <div className="w-full sm:w-auto flex items-center gap-2">
                         <Select
-                            value={filters?.status || 'all'}
-                            onValueChange={(value) => applyFilters(value)}
+                            value={filters?.status ?? 'all'}
+                            onValueChange={(value) => {
+                                setIsSearching(true);
+                                applyFilters(value, searchQuery);
+                            }}
                         >
                             <SelectTrigger className="w-full sm:w-[180px]">
                                 <SelectValue placeholder="Filter by status" />
@@ -246,7 +292,9 @@ export default function Appointments({ appointments, filters }: Props) {
                                 <SelectItem value="pending">Pending</SelectItem>
                                 <SelectItem value="confirmed">Confirmed</SelectItem>
                                 <SelectItem value="completed">Completed</SelectItem>
-                                <SelectItem value="cancelled">Cancelled</SelectItem>
+                                <SelectItem value="cancelled">Cancelled (All)</SelectItem>
+                                <SelectItem value="cancelled_by_doctor">Cancelled by Me</SelectItem>
+                                <SelectItem value="cancelled_by_patient">Cancelled by Patient</SelectItem>
                                 <SelectItem value="rejected">Rejected</SelectItem>
                                 <SelectItem value="no-show">No Show</SelectItem>
                             </SelectContent>
@@ -265,7 +313,27 @@ export default function Appointments({ appointments, filters }: Props) {
                     </div>
                 </div>
 
-                {appointments?.data?.length === 0 ? (
+                {isSearching ? (
+                    <div className="grid gap-4 lg:grid-cols-2">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                            <Card key={i}>
+                                <CardContent className="space-y-4 p-5">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div className="space-y-2">
+                                            <Skeleton className="h-4 w-36" />
+                                            <Skeleton className="h-3 w-28" />
+                                        </div>
+                                        <Skeleton className="h-5 w-20 rounded-full" />
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <Skeleton className="h-8 w-20 rounded-lg" />
+                                        <Skeleton className="h-8 w-32 rounded-lg" />
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        ))}
+                    </div>
+                ) : appointments?.data?.length === 0 ? (
                     <EmptyState
                         icon={CalendarClock}
                         title="No appointments yet"
@@ -297,6 +365,27 @@ export default function Appointments({ appointments, filters }: Props) {
                                                     <p className="mt-2 text-sm text-muted-foreground">
                                                         {appointment.reason}
                                                     </p>
+                                                )}
+                                                {(appointment.status === 'cancelled' || appointment.cancelled_by) && (
+                                                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                                                        <CancelledByBadge
+                                                            cancelledBy={
+                                                                appointment.cancelled_by
+                                                            }
+                                                        />
+                                                        {appointment.cancel_reason && (
+                                                            <span className="text-xs font-medium text-destructive">
+                                                                Reason: {appointment.cancel_reason}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                {appointment.reject_reason && (
+                                                    <div className="mt-2 flex flex-wrap items-center gap-2">
+                                                        <span className="text-xs font-medium text-destructive">
+                                                            Rejected: {appointment.reject_reason}
+                                                        </span>
+                                                    </div>
                                                 )}
                                             </div>
                                             <AppointmentStatusBadge
@@ -339,12 +428,24 @@ export default function Appointments({ appointments, filters }: Props) {
                                                     Mark no-show
                                                 </Button>
                                             )}
+                                            {appointment.status === 'confirmed' && (
+                                                <Button
+                                                    size="sm"
+                                                    variant="destructive"
+                                                    onClick={() =>
+                                                        openCancel(appointment)
+                                                    }
+                                                >
+                                                    <XCircle className="mr-2 size-4" />
+                                                    Cancel appointment
+                                                </Button>
+                                            )}
                                         </div>
                                     </CardContent>
                                 </Card>
                             ))}
                         </div>
-                        <Pagination links={appointments?.meta?.links || []} meta={appointments?.meta} />
+                        <Pagination links={appointments?.meta?.links ?? []} meta={appointments?.meta} />
                     </div>
                 )}
             </div>
@@ -632,6 +733,70 @@ export default function Appointments({ appointments, filters }: Props) {
                                     <Spinner className="mr-2 size-4" />
                                 )}
                                 Save consultation
+                            </Button>
+                        </DialogFooter>
+                    </form>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog
+                open={mode === 'cancel'}
+                onOpenChange={(open) => {
+                    if (!open) {
+                        close();
+                    }
+                }}
+            >
+                <DialogContent className="max-h-[calc(100vh-2rem)] overflow-y-auto sm:max-w-lg">
+                    <DialogHeader>
+                        <DialogTitle>Cancel appointment</DialogTitle>
+                        <DialogDescription>
+                            {activeAppointment?.patient?.user?.name} •{' '}
+                            {activeAppointment?.appointment_date} at{' '}
+                            {activeAppointment?.appointment_time.slice(0, 5)}
+                        </DialogDescription>
+                    </DialogHeader>
+                    <form onSubmit={cancelAppointmentSubmit} className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="cancel_reason">
+                                Cancellation reason
+                            </Label>
+                            <textarea
+                                id="cancel_reason"
+                                value={reviewForm.data.cancel_reason}
+                                onChange={(e) =>
+                                    reviewForm.setData(
+                                        'cancel_reason',
+                                        e.target.value,
+                                    )
+                                }
+                                placeholder="Please provide a reason for cancelling this appointment..."
+                                className="min-h-24 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                                required
+                            />
+                            <InputError
+                                message={reviewForm.errors.cancel_reason}
+                            />
+                        </div>
+                        <DialogFooter>
+                            <Button
+                                type="button"
+                                variant="outline"
+                                onClick={close}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="destructive"
+                                disabled={reviewForm.processing}
+                            >
+                                {reviewForm.processing ? (
+                                    <Spinner className="mr-2 size-4" />
+                                ) : (
+                                    <XCircle className="mr-2 size-4" />
+                                )}
+                                Confirm cancellation
                             </Button>
                         </DialogFooter>
                     </form>

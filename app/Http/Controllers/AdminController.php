@@ -14,6 +14,7 @@ use App\Models\Appointment;
 use App\Models\Bill;
 use App\Models\Consultation;
 use App\Models\DoctorProfile;
+use App\Models\DoctorReview;
 use App\Models\PatientProfile;
 use App\Models\Prescription;
 use App\Models\User;
@@ -218,16 +219,42 @@ class AdminController extends Controller
     }
 
     /**
+     * View all reviews for a specific doctor (admin).
+     */
+    public function doctorReviews(DoctorProfile $doctor): Response
+    {
+        $reviews = DoctorReview::query()
+            ->where('doctor_id', $doctor->id)
+            ->with([
+                'patient.user:id,name,email',
+                'appointment:id,appointment_date,appointment_time',
+            ])
+            ->latest()
+            ->paginate(15);
+
+        $stats = [
+            'average_rating' => round((float) DoctorReview::where('doctor_id', $doctor->id)->avg('rating'), 1),
+            'total_reviews' => DoctorReview::where('doctor_id', $doctor->id)->count(),
+        ];
+
+        return Inertia::render('admin/doctor-reviews', [
+            'doctor' => $doctor->load('user:id,name,email'),
+            'reviews' => $reviews,
+            'stats' => $stats,
+        ]);
+    }
+
+    /**
      * View all consultations.
      */
     public function consultations(): Response
     {
         return Inertia::render('admin/consultations', [
-            'consultations' => Inertia::defer(fn () => ConsultationResource::collection(
+            'consultations' => ConsultationResource::collection(
                 Consultation::with(['appointment.patient.user', 'appointment.doctor.user'])
                     ->orderBy('created_at', 'desc')
                     ->paginate(10)
-            ), rescue: true),
+            ),
         ]);
     }
 
@@ -237,11 +264,11 @@ class AdminController extends Controller
     public function prescriptions(): Response
     {
         return Inertia::render('admin/prescriptions', [
-            'prescriptions' => Inertia::defer(fn () => PrescriptionResource::collection(
+            'prescriptions' => PrescriptionResource::collection(
                 Prescription::with(['consultation.appointment.patient.user', 'consultation.appointment.doctor.user', 'items'])
                     ->orderBy('created_at', 'desc')
                     ->paginate(10)
-            ), rescue: true),
+            ),
         ]);
     }
 
@@ -251,11 +278,11 @@ class AdminController extends Controller
     public function bills(): Response
     {
         return Inertia::render('admin/bills', [
-            'bills' => Inertia::defer(fn () => BillResource::collection(
+            'bills' => BillResource::collection(
                 Bill::with(['appointment.patient.user', 'appointment.doctor.user'])
                     ->orderBy('created_at', 'desc')
                     ->paginate(10)
-            ), rescue: true),
+            ),
         ]);
     }
 
@@ -286,8 +313,26 @@ class AdminController extends Controller
             ], $counts->toArray());
         });
 
+        $totalReviews = DoctorReview::count();
+        $doctorReviewStats = [
+            'total_reviews' => $totalReviews,
+            'average_rating' => round((float) DoctorReview::avg('rating'), 1),
+            'five_star_percentage' => $totalReviews > 0
+                ? round((DoctorReview::where('rating', 5)->count() / $totalReviews) * 100)
+                : 0,
+            'with_comments_count' => DoctorReview::whereNotNull('comment')->where('comment', '!=', '')->count(),
+            'rating_distribution' => [
+                ['name' => '5 Stars', 'count' => DoctorReview::where('rating', 5)->count(), 'fill' => '#10b981'],
+                ['name' => '4 Stars', 'count' => DoctorReview::where('rating', 4)->count(), 'fill' => '#14b8a6'],
+                ['name' => '3 Stars', 'count' => DoctorReview::where('rating', 3)->count(), 'fill' => '#f59e0b'],
+                ['name' => '2 Stars', 'count' => DoctorReview::where('rating', 2)->count(), 'fill' => '#f97316'],
+                ['name' => '1 Star',  'count' => DoctorReview::where('rating', 1)->count(), 'fill' => '#ef4444'],
+            ],
+        ];
+
         return Inertia::render('admin/reports', [
             'appointmentStats' => $appointmentStats,
+            'doctorReviewStats' => $doctorReviewStats,
             'filters' => [
                 'date_from' => $dateFrom->toDateString(),
                 'date_to' => $dateTo->toDateString(),

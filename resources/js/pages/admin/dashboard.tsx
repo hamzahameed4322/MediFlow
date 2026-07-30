@@ -10,7 +10,6 @@ import {
     Users,
 } from 'lucide-react';
 import { Area, AreaChart, CartesianGrid, Cell, Pie, PieChart, XAxis } from 'recharts';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import {
@@ -50,18 +49,16 @@ const bookingsChartConfig = {
 
 // Status -> semantic color. Keep this list in sync with your appointment status enum.
 const STATUS_COLORS: Record<string, string> = {
-    pending: '#f59e0b',
-    confirmed: '#2563eb',
-    completed: '#0d9488',
-    cancelled: '#e11d48',
-    no_show: '#64748b',
+    pending: '#f59e0b',   // Amber
+    confirmed: '#3b82f6', // Blue
+    completed: '#0d9488', // Teal (Primary)
+    cancelled: '#64748b', // Slate
+    rejected: '#f43f5e',  // Rose / Red
+    no_show: '#e11d48',   // Crimson / Dark Red
 };
-const FALLBACK_COLORS = ['#2563eb', '#0d9488', '#f59e0b', '#e11d48', '#64748b', '#7c3aed'];
+const FALLBACK_COLORS = ['#3b82f6', '#0d9488', '#f59e0b', '#f43f5e', '#64748b', '#e11d48'];
 
-// Shared card chrome so it isn't repeated on every <Card> below.
-// min-w-0 is critical here: without it, Recharts' ResponsiveContainer refuses
-// to shrink below its content's intrinsic width inside a CSS grid column,
-// which is what causes the horizontal break-out on mobile.
+
 const CARD_CLASSES = 'min-w-0 overflow-hidden border-border shadow-sm';
 
 const fadeUp = {
@@ -91,7 +88,7 @@ export default function Dashboard({ stats, monthlyBookings, statusDistribution }
                 {/* Hero */}
                 <section className="relative overflow-hidden rounded-[1.5rem] border border-border bg-card shadow-sm sm:rounded-[2rem]">
                     <PulseLine />
-                    <div className="relative grid gap-6 p-5 sm:gap-8 sm:p-8 lg:grid-cols-[1.35fr_0.65fr] lg:p-10">
+                    <div className="relative z-10 grid gap-6 p-5 pb-14 sm:gap-8 sm:p-8 sm:pb-16 lg:grid-cols-[1.35fr_0.65fr] lg:p-10">
                         <div className="min-w-0 space-y-5 sm:space-y-6">
                             <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium tracking-wide text-primary">
                                 <HeartPulse className="size-3.5 shrink-0" />
@@ -157,18 +154,18 @@ export default function Dashboard({ stats, monthlyBookings, statusDistribution }
                             <CardDescription>Appointment volume across the clinic calendar.</CardDescription>
                         </CardHeader>
                         <CardContent className="flex min-w-0 flex-1 flex-col">
-                            <Deferred data="monthlyBookings" fallback={<Skeleton className="min-h-[16rem] w-full flex-1 rounded-2xl" />}>
+                            <Deferred data="monthlyBookings" fallback={<Skeleton className="h-60 sm:h-64 w-full rounded-2xl" />}>
                                 {bookingData.length === 0 ? (
-                                    <div className="flex min-h-[16rem] w-full flex-1 items-center justify-center rounded-2xl border border-dashed text-sm text-muted-foreground">
+                                    <div className="flex h-60 sm:h-64 w-full items-center justify-center rounded-2xl border border-dashed text-sm text-muted-foreground">
                                         No booking data yet.
                                     </div>
                                 ) : (
-                                    <ChartContainer config={bookingsChartConfig} className="aspect-auto min-h-[16rem] w-full min-w-0 flex-1">
+                                    <ChartContainer config={bookingsChartConfig} className="aspect-auto h-60 sm:h-64 w-full min-w-0">
                                         <AreaChart data={bookingData} margin={{ left: 0, right: 8, top: 12 }}>
                                             <defs>
                                                 <linearGradient id="bookingsFill" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="#2563eb" stopOpacity={0.35} />
-                                                    <stop offset="95%" stopColor="#2563eb" stopOpacity={0.02} />
+                                                    <stop offset="5%" stopColor="var(--color-primary)" stopOpacity={0.35} />
+                                                    <stop offset="95%" stopColor="var(--color-primary)" stopOpacity={0.02} />
                                                 </linearGradient>
                                             </defs>
                                             <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border" />
@@ -185,7 +182,7 @@ export default function Dashboard({ stats, monthlyBookings, statusDistribution }
                                             <Area
                                                 dataKey="count"
                                                 type="monotone"
-                                                stroke="#2563eb"
+                                                stroke="var(--color-primary)"
                                                 strokeWidth={2}
                                                 fill="url(#bookingsFill)"
                                             />
@@ -212,8 +209,8 @@ export default function Dashboard({ stats, monthlyBookings, statusDistribution }
                                     </div>
                                 }
                             >
-                                <div className="flex min-w-0 flex-col items-center gap-6 sm:flex-row lg:flex-col 2xl:flex-row">
-                                    <ChartContainer config={bookingsChartConfig} className="mx-auto aspect-square h-48 shrink-0 lg:h-56 2xl:h-48">
+                                <div className="flex min-w-0 flex-col items-center gap-6 sm:flex-row sm:items-center">
+                                    <ChartContainer config={bookingsChartConfig} className="mx-auto aspect-square h-44 shrink-0 sm:h-48">
                                         <PieChart>
                                             <ChartTooltip content={<ChartTooltipContent hideLabel />} />
                                             <Pie
@@ -233,29 +230,24 @@ export default function Dashboard({ stats, monthlyBookings, statusDistribution }
                                         </PieChart>
                                     </ChartContainer>
 
-                                    <div className="flex-1 w-full min-w-0 space-y-2">
+                                    <div className="flex-1 w-full min-w-0 space-y-1.5">
                                         {pieData.map((entry) => (
                                             <div
                                                 key={entry.status}
-                                                className="flex min-w-0 items-center justify-between gap-2 rounded-xl border border-border px-3 py-2"
+                                                className="flex min-w-0 items-center justify-between gap-3 rounded-xl border border-border px-3 py-1.5"
                                             >
-                                                <div className="flex min-w-0 items-center gap-2">
+                                                <div className="flex min-w-0 items-center gap-2.5">
                                                     <span
                                                         className="size-2.5 shrink-0 rounded-full"
                                                         style={{ backgroundColor: entry.fill }}
                                                     />
-                                                    <span className="truncate text-sm font-medium capitalize">
+                                                    <span className="text-sm font-medium capitalize text-foreground whitespace-nowrap">
                                                         {entry.status.replaceAll('_', ' ')}
                                                     </span>
                                                 </div>
-                                                <div className="flex shrink-0 items-center gap-2">
-                                                    <span className="text-xs text-muted-foreground tabular-nums">
-                                                        {statusTotal > 0 ? Math.round((entry.count / statusTotal) * 100) : 0}%
-                                                    </span>
-                                                    <Badge variant="secondary" className="tabular-nums">
-                                                        {entry.count}
-                                                    </Badge>
-                                                </div>
+                                                <span className="text-xs font-semibold text-muted-foreground tabular-nums">
+                                                    {statusTotal > 0 ? Math.round((entry.count / statusTotal) * 100) : 0}%
+                                                </span>
                                             </div>
                                         ))}
                                     </div>
@@ -280,10 +272,10 @@ export default function Dashboard({ stats, monthlyBookings, statusDistribution }
 type Tone = 'blue' | 'teal' | 'amber' | 'rose';
 
 const TONE_CLASSES: Record<Tone, string> = {
-    blue: 'bg-primary/10 text-primary',
+    blue: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
     teal: 'bg-primary/10 text-primary',
-    amber: 'bg-primary/10 text-primary',
-    rose: 'bg-primary/10 text-primary',
+    amber: 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
+    rose: 'bg-rose-500/10 text-rose-600 dark:text-rose-400',
 };
 
 function MetricCard({
@@ -307,9 +299,10 @@ function MetricCard({
             initial="hidden"
             animate="show"
             custom={index}
+            className="h-full"
         >
-            <Card className={`${CARD_CLASSES} transition-colors hover:border-border`}>
-                <CardContent className="flex min-w-0 items-center gap-4 p-4 sm:p-5">
+            <Card className={`${CARD_CLASSES} h-full transition-colors hover:border-border`}>
+                <CardContent className="flex h-full min-w-0 items-center gap-4 p-4 sm:p-5">
                     <div className={`flex size-11 shrink-0 items-center justify-center rounded-2xl sm:size-12 ${TONE_CLASSES[tone]}`}>
                         <Icon className="size-5 sm:size-6" />
                     </div>
@@ -334,23 +327,23 @@ function PulseLine() {
             aria-hidden="true"
             viewBox="0 0 800 60"
             preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-10 w-full opacity-30 sm:h-14"
+            className="pointer-events-none absolute inset-x-0 bottom-1 z-0 h-12 w-full opacity-50 sm:bottom-2 sm:h-14"
         >
             <path
                 d="M0 30 H260 L280 30 L295 10 L310 50 L325 30 L340 30 H500 L520 30 L535 12 L550 48 L565 30 L580 30 H800"
                 fill="none"
                 stroke="var(--primary)"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeDasharray="900"
                 strokeDashoffset="900"
-                style={{ animation: 'mediflow-pulse-draw 3.5s ease-in-out infinite' }}
+                style={{ animation: 'mediflow-pulse-draw 6s linear infinite' }}
             />
             <style>{`
                 @keyframes mediflow-pulse-draw {
                     0% { stroke-dashoffset: 900; }
-                    45% { stroke-dashoffset: 0; }
+                    50% { stroke-dashoffset: 0; }
                     100% { stroke-dashoffset: -900; }
                 }
             `}</style>

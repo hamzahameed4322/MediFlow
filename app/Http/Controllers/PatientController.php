@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Patient\BookAppointmentRequest;
 use App\Http\Requests\Patient\CancelAppointmentRequest;
 use App\Http\Requests\Patient\UpdatePatientProfileRequest;
+use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Models\Bill;
 use App\Models\DoctorProfile;
+use App\Models\DoctorReview;
 use App\Models\Prescription;
 use App\Services\ClinicWorkflowService;
 use Illuminate\Http\JsonResponse;
@@ -136,12 +138,19 @@ class PatientController extends Controller
      */
     public function browseDoctors(Request $request): Response
     {
+        $patientProfile = Auth::user()->patientProfile;
+
         $query = DoctorProfile::query()
             ->select(['id', 'user_id', 'specialization', 'qualification', 'experience', 'consultation_fee', 'created_at', 'updated_at'])
             ->with([
                 'user:id,name,email,status',
                 'schedules:id,doctor_id,day,start_time,end_time,duration,created_at,updated_at',
+                'reviews' => function ($q) {
+                    $q->with('patient.user:id,name')->latest()->take(5);
+                },
             ])
+            ->withAvg('reviews', 'rating')
+            ->withCount('reviews')
             ->whereHas('user', function ($q) {
                 $q->where('status', 'active');
             });
@@ -150,10 +159,10 @@ class PatientController extends Controller
             $search = $request->input('search');
             $query->where(function ($q) use ($search) {
                 $q->where('specialization', 'like', "%{$search}%")
-                  ->orWhere('qualification', 'like', "%{$search}%")
-                  ->orWhereHas('user', function ($u) use ($search) {
-                      $u->where('name', 'like', "%{$search}%");
-                  });
+                    ->orWhere('qualification', 'like', "%{$search}%")
+                    ->orWhereHas('user', function ($u) use ($search) {
+                        $u->where('name', 'like', "%{$search}%");
+                    });
             });
         }
 
@@ -162,9 +171,15 @@ class PatientController extends Controller
             ->paginate(12)
             ->withQueryString();
 
+        // Which appointments has this patient already reviewed?
+        $reviewedAppointmentIds = DoctorReview::where('patient_id', $patientProfile->id)
+            ->pluck('appointment_id')
+            ->toArray();
+
         return Inertia::render('patient/doctors', [
             'doctors' => $doctors,
             'filters' => $request->only('search'),
+            'reviewedAppointmentIds' => $reviewedAppointmentIds,
         ]);
     }
 
@@ -193,20 +208,41 @@ class PatientController extends Controller
     /**
      * View appointments list.
      */
-    public function appointments(): Response
+    public function appointments(Request $request): Response
     {
         $patientProfile = Auth::user()->patientProfile;
 
-        $appointments = Appointment::query()
+        $query = Appointment::query()
             ->select(['id', 'patient_id', 'doctor_id', 'appointment_date', 'appointment_time', 'reason', 'status', 'cancelled_by', 'cancel_reason', 'reject_reason', 'created_at', 'updated_at'])
             ->with(['doctor.user:id,name,email', 'doctor:id,user_id,specialization,qualification,experience,consultation_fee'])
-            ->where('patient_id', $patientProfile->id)
-            ->orderByDesc('appointment_date')
+            ->where('patient_id', $patientProfile->id);
+
+        if ($request->filled('status') && $request->input('status') !== 'all') {
+            $status = $request->input('status');
+
+            if ($status === 'cancelled_by_patient') {
+                $query->where('status', 'cancelled')->where('cancelled_by', 'patient');
+            } elseif ($status === 'cancelled_by_doctor') {
+                $query->where('status', 'cancelled')->where('cancelled_by', 'doctor');
+            } else {
+                $query->where('status', $status);
+            }
+        }
+
+        $appointments = $query->orderByDesc('appointment_date')
             ->orderByDesc('appointment_time')
-            ->get();
+            ->paginate(10)
+            ->withQueryString();
+
+        $counts = [
+            'pending' => Appointment::where('patient_id', $patientProfile->id)->where('status', 'pending')->count(),
+            'confirmed' => Appointment::where('patient_id', $patientProfile->id)->where('status', 'confirmed')->count(),
+        ];
 
         return Inertia::render('patient/appointments', [
-            'appointments' => $appointments,
+            'appointments' => AppointmentResource::collection($appointments),
+            'filters' => $request->only(['status']),
+            'counts' => $counts,
         ]);
     }
 
@@ -218,6 +254,40 @@ class PatientController extends Controller
         $workflow->cancelAppointment($request->user(), $appointment, $request->validated()['cancel_reason'], 'patient');
 
         return redirect()->back()->with('status', 'Appointment cancelled successfully!');
+    }
+
+    /**
+     * View My Reviews page (pending + submitted).
+     */
+    public function reviews(): Response
+    {
+        $patientProfile = Auth::user()->patientProfile;
+
+        // Completed appointments that don't have a review yet
+        $pendingReviews = Appointment::query()
+            ->select(['id', 'patient_id', 'doctor_id', 'appointment_date', 'appointment_time', 'status'])
+            ->with(['doctor.user:id,name,email', 'doctor:id,user_id,specialization'])
+            ->where('patient_id', $patientProfile->id)
+            ->where('status', 'completed')
+            ->whereDoesntHave('review')
+            ->orderByDesc('appointment_date')
+            ->get();
+
+        // Reviews already submitted by this patient
+        $submittedReviews = DoctorReview::query()
+            ->where('patient_id', $patientProfile->id)
+            ->with([
+                'doctor.user:id,name,email',
+                'doctor:id,user_id,specialization',
+                'appointment:id,appointment_date',
+            ])
+            ->latest()
+            ->get();
+
+        return Inertia::render('patient/reviews', [
+            'pendingReviews' => $pendingReviews,
+            'submittedReviews' => $submittedReviews,
+        ]);
     }
 
     /**

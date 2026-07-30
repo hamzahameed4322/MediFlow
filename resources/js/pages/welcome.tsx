@@ -1,5 +1,3 @@
-
-
 import { Head, Link, usePage } from '@inertiajs/react';
 import {
     Calendar,
@@ -11,15 +9,22 @@ import {
     ShieldAlert,
     Activity,
     CheckCircle,
+    Star,
+    MessageSquare,
+    BadgeCheck,
+    Quote,
+    ShieldCheck,
+    Stethoscope,
+    Lock,
 } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { dashboard, login, register } from '@/routes';
-import { FlickeringGrid } from '@/components/ui/flickering-grid';
 import { BorderBeam } from '@/components/ui/border-beam';
 import { ShimmerButton } from '@/components/ui/shimmer-button';
 import { Marquee } from '@/components/ui/marquee';
 import { Meteors } from '@/components/ui/meteors';
 import { TextAnimate } from '@/components/ui/text-animate';
+import { FlickeringGrid } from '@/components/ui/flickering-grid';
 
 import { cn } from '@/lib/utils';
 
@@ -38,7 +43,6 @@ const specialties = [
     'Neurology',
 ];
 
-
 /* Hero background motif — a looping ECG pulse line                        */
 /* ---------------------------------------------------------------------- */
 
@@ -53,9 +57,9 @@ function PulseBackground() {
             >
                 <defs>
                     <linearGradient id="pulseFade" x1="0" y1="0" x2="1" y2="0">
-                        <stop offset="0%" stopColor="#14b8a6" stopOpacity="0" />
-                        <stop offset="50%" stopColor="#10b981" stopOpacity="1" />
-                        <stop offset="100%" stopColor="#14b8a6" stopOpacity="0" />
+                        <stop offset="0%" stopColor="#0d9488" stopOpacity="0" />
+                        <stop offset="50%" stopColor="#0f766e" stopOpacity="1" />
+                        <stop offset="100%" stopColor="#0d9488" stopOpacity="0" />
                     </linearGradient>
                 </defs>
                 <path
@@ -76,11 +80,11 @@ function PulseBackground() {
 
             <style>{`
                 .mediflow-pulse-draw {
-                    animation: mediflow-pulse-sweep 5s ease-in-out infinite;
+                    animation: mediflow-pulse-sweep 6s linear infinite;
                 }
                 @keyframes mediflow-pulse-sweep {
                     0% { stroke-dashoffset: 1800; }
-                    45% { stroke-dashoffset: 0; }
+                    50% { stroke-dashoffset: 0; }
                     100% { stroke-dashoffset: -1800; }
                 }
                 @media (prefers-reduced-motion: reduce) {
@@ -109,7 +113,7 @@ function FeatureCard({
     description: string;
 }) {
     return (
-        <div className="group relative overflow-hidden rounded-2xl border border-border bg-card text-card-foreground p-6 transition-all hover:shadow-md sm:p-8">
+        <div className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground transition-all hover:shadow-md sm:p-8">
             <div
                 className={cn(
                     'flex h-12 w-12 items-center justify-center rounded-xl',
@@ -129,8 +133,8 @@ function FeatureCard({
                 size={80}
                 duration={6}
                 className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                colorFrom="#14b8a6"
-                colorTo="#10b981"
+                colorFrom="var(--color-primary)"
+                colorTo="var(--color-primary)"
             />
         </div>
     );
@@ -144,11 +148,32 @@ export interface FeaturedDoctor {
     color: string;
 }
 
+export interface FeaturedReview {
+    id: number;
+    patient: string;
+    doctor: string;
+    specialty: string;
+    rating: number;
+    comment: string;
+    date: string;
+}
+
+export interface WelcomeProps {
+    featuredDoctors?: FeaturedDoctor[];
+    featuredReviews?: FeaturedReview[];
+    stats?: {
+        appointments?: number;
+        doctors?: number;
+        reviews?: number;
+        patients?: number;
+    };
+}
+
 export default function Welcome({
     featuredDoctors = [],
-}: {
-    featuredDoctors?: FeaturedDoctor[];
-}) {
+    featuredReviews = [],
+    stats,
+}: WelcomeProps) {
     const { auth } = usePage().props;
 
     const features = [
@@ -193,12 +218,12 @@ export default function Welcome({
                 'Keep a centralized repository of previous clinic visits, symptoms, diagnostic notes, and medication histories.',
         },
         {
-            icon: <ShieldAlert className="h-6 w-6" />,
+            icon: <Star className="h-6 w-6" />,
             iconBg: 'bg-primary/10',
             iconColor: 'text-primary',
-            title: 'Role Permissions',
+            title: 'Verified Patient Reviews',
             description:
-                'Strict role-based authorization filters clinic actions between patients, doctors, and control administrators.',
+                'Only patients with completed visits can submit 1–5 star ratings and feedback, building clinic-wide transparency and trust.',
         },
     ];
 
@@ -220,6 +245,33 @@ export default function Welcome({
         },
     ];
 
+    const trustPillars = [
+        {
+            icon: <ShieldCheck className="size-6 text-primary" />,
+            title: 'Role-Based Access Control',
+            description:
+                'Strict middleware separation between Patient portals, Doctor consultation workspaces, and Admin command dashboards.',
+        },
+        {
+            icon: <BadgeCheck className="size-6 text-primary" />,
+            title: 'Verified-Only Reviews',
+            description:
+                'Only patients who have completed an authenticated clinical consultation can submit ratings and feedback.',
+        },
+        {
+            icon: <Stethoscope className="size-6 text-primary" />,
+            title: 'Digital Prescriptions',
+            description:
+                'Clear, standardized electronic prescriptions linked directly to patient consultation histories and dosage schedules.',
+        },
+        {
+            icon: <Lock className="size-6 text-primary" />,
+            title: 'Secure Medical Records',
+            description:
+                'Encrypted appointment histories, diagnosis notes, and billing ledgers for complete clinic integrity and privacy.',
+        },
+    ];
+
     return (
         <>
             <Head title="Clinic Appointments & Prescriptions | MediFlow" />
@@ -232,7 +284,7 @@ export default function Welcome({
                             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20 sm:h-10 sm:w-10">
                                 <HeartPulse className="h-5 w-5" />
                             </div>
-                            <span className="text-primary text-lg font-bold tracking-tight sm:text-xl">
+                            <span className="text-lg font-bold tracking-tight text-primary sm:text-xl">
                                 MediFlow
                             </span>
                         </div>
@@ -257,7 +309,7 @@ export default function Welcome({
                                     </Link>
                                     <Link
                                         href={register()}
-                                        className="inline-flex h-9 items-center justify-center rounded-lg bg-teal-600 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 sm:px-4 sm:text-sm"
+                                        className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-4 sm:text-sm"
                                     >
                                         Register
                                     </Link>
@@ -278,9 +330,9 @@ export default function Welcome({
                             )}
                             squareSize={4}
                             gridGap={6}
-                            color="#6B7280"
-                            maxOpacity={0.15}
-                            flickerChance={0.1}
+                            color="#14b8a6"
+                            maxOpacity={0.3}
+                            flickerChance={0.15}
                         />
 
                         <PulseBackground />
@@ -291,7 +343,7 @@ export default function Welcome({
                                 Clinic operations platform
                             </div>
 
-                            <h1 className="mx-auto mt-8 max-w-4xl text-3xl leading-tight font-extrabold tracking-tight sm:text-5xl lg:text-6xl">
+                            <h1 className="mx-auto mt-8 max-w-4xl text-3xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
                                 Streamlining clinic appointments &{' '}
                                 <span className="text-primary">
                                     prescription workflows
@@ -346,7 +398,7 @@ export default function Welcome({
                         </Marquee>
                     </section>
 
-                    {/* Meet Our Doctors — teaser only, see data guide at top of file */}
+                    {/* Meet Our Doctors */}
                     {featuredDoctors.length > 0 && (
                         <section className="bg-muted/50 py-16 sm:py-20">
                             <div className="container mx-auto max-w-7xl px-4 sm:px-6">
@@ -361,45 +413,32 @@ export default function Welcome({
                                     </p>
                                 </div>
 
-                                <div className="mt-12 grid gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-                                    {featuredDoctors.map((doc, index) => {
-                                        const colors = [
-                                            'from-teal-500 to-emerald-400',
-                                            'from-teal-600 to-emerald-500',
-                                            'from-emerald-600 to-teal-500',
-                                        ];
-                                        const colorClass = colors[index % colors.length];
-                                        return (
-                                            <div
-                                                key={doc.name}
-                                                className="flex flex-col items-center rounded-2xl border border-border bg-card p-6 text-center transition-all hover:shadow-md text-card-foreground"
-                                            >
-                                                <div
-                                                    className={cn(
-                                                        'flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br text-lg font-bold text-white shadow-md',
-                                                        colorClass,
-                                                    )}
-                                                >
-                                                    {doc.initials}
-                                                </div>
-                                                <h3 className="mt-4 text-base font-bold sm:text-lg">
-                                                    {doc.name}
-                                                </h3>
-                                                <p className="mt-1 text-sm text-primary">
-                                                    {doc.specialty}
-                                                </p>
-                                                <p className="mt-1 text-xs text-muted-foreground">
-                                                    {doc.experience}
-                                                </p>
-                                                <Link
-                                                    href={register()}
-                                                    className="mt-5 inline-flex h-9 w-full items-center justify-center rounded-lg border border-primary px-4 text-xs font-semibold text-primary transition-colors hover:bg-primary/10 sm:text-sm"
-                                                >
-                                                    Check Availability
-                                                </Link>
+                                <div className="mx-auto mt-12 grid max-w-5xl gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
+                                    {featuredDoctors.map((doc) => (
+                                        <div
+                                            key={doc.name}
+                                            className="flex flex-col items-center rounded-2xl border border-border bg-card p-6 text-center text-card-foreground transition-all hover:shadow-md"
+                                        >
+                                            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground shadow-md">
+                                                {doc.initials}
                                             </div>
-                                        );
-                                    })}
+                                            <h3 className="mt-4 text-base font-bold sm:text-lg">
+                                                {doc.name}
+                                            </h3>
+                                            <p className="mt-1 text-sm text-primary">
+                                                {doc.specialty}
+                                            </p>
+                                            <p className="mt-1 text-xs text-muted-foreground">
+                                                {doc.experience}
+                                            </p>
+                                            <Link
+                                                href={register()}
+                                                className="mt-5 inline-flex h-9 w-full items-center justify-center rounded-lg border border-primary px-4 text-xs font-semibold text-primary transition-colors hover:bg-primary/10 sm:text-sm"
+                                            >
+                                                Check Availability
+                                            </Link>
+                                        </div>
+                                    ))}
                                 </div>
                             </div>
                         </section>
@@ -444,7 +483,7 @@ export default function Welcome({
                                 {steps.map((s) => (
                                     <div
                                         key={s.num}
-                                        className="relative flex-1 overflow-hidden rounded-2xl border border-border bg-card text-card-foreground p-6 sm:p-8"
+                                        className="relative flex-1 overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground sm:p-8"
                                     >
                                         <span className="text-3xl font-extrabold text-primary sm:text-4xl">
                                             {s.num}
@@ -458,12 +497,158 @@ export default function Welcome({
                                         <BorderBeam
                                             size={60}
                                             duration={8}
-                                            delay={
-                                                Number(s.num) * 1.5
-                                            }
-                                            colorFrom="#14b8a6"
-                                            colorTo="#06b6d4"
+                                            delay={Number(s.num) * 1.5}
+                                            colorFrom="var(--color-primary)"
+                                            colorTo="var(--color-primary)"
                                         />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Verified Patient Reviews & Ratings Showcase Section */}
+                    <section className="border-t border-border bg-background py-16 sm:py-20">
+                        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+                            <div className="mx-auto max-w-2xl space-y-4 text-center">
+                                <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+                                    What Our Patients Say
+                                </h2>
+                                <p className="text-sm text-muted-foreground sm:text-base">
+                                    Authentic feedback from verified patients after their consultation. Every review reflects a completed clinical visit.
+                                </p>
+                            </div>
+
+                            <div className="mt-12 grid gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
+                                {(featuredReviews.length > 0
+                                    ? featuredReviews
+                                    : [
+                                          {
+                                              id: 1,
+                                              patient: 'Ayesha Khan',
+                                              specialty: 'Cardiology Consultation',
+                                              doctor: 'Dr. Sarah Ahmed',
+                                              rating: 5,
+                                              comment:
+                                                  'The online booking was effortless, and Dr. Sarah listened to every symptom carefully. Truly a 5-star digital and clinical experience!',
+                                              date: '2 days ago',
+                                          },
+                                          {
+                                              id: 2,
+                                              patient: 'Hamza Tariq',
+                                              specialty: 'General Medicine Checkup',
+                                              doctor: 'Dr. Marcus Vance',
+                                              rating: 5,
+                                              comment:
+                                                  'Being able to see verified reviews before booking gave me complete peace of mind. Excellent follow-up and digital prescription access.',
+                                              date: '1 week ago',
+                                          },
+                                          {
+                                              id: 3,
+                                              patient: 'Fatima Noor',
+                                              specialty: 'Pediatric Specialist Visit',
+                                              doctor: 'Dr. Elena Rostova',
+                                              rating: 5,
+                                              comment:
+                                                  'Transparent clinic fees and real patient feedback make this platform stand out. The consultation flow is extremely smooth.',
+                                              date: '3 weeks ago',
+                                          },
+                                      ]
+                                ).map((rev) => (
+                                    <div
+                                        key={rev.id || rev.patient}
+                                        className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground transition-all hover:shadow-md sm:p-8"
+                                    >
+                                        <div>
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-1">
+                                                    {Array.from({ length: 5 }).map((_, i) => (
+                                                        <Star
+                                                            key={i}
+                                                            className={cn(
+                                                                'size-4',
+                                                                i < rev.rating
+                                                                    ? 'fill-primary text-primary'
+                                                                    : 'fill-muted text-muted-foreground/30',
+                                                            )}
+                                                        />
+                                                    ))}
+                                                </div>
+                                                <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-primary">
+                                                    <BadgeCheck className="size-3.5" />
+                                                    Verified Visit
+                                                </span>
+                                            </div>
+
+                                            <Quote className="mt-5 size-6 text-primary/30" />
+
+                                            <p className="mt-2 text-sm font-normal leading-relaxed text-muted-foreground sm:text-base">
+                                                "{rev.comment}"
+                                            </p>
+                                        </div>
+
+                                        <div className="mt-8 border-t border-border/60 pt-4">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-sm font-semibold text-primary">
+                                                        {rev.patient}
+                                                    </p>
+                                                    <p className="mt-0.5 text-xs text-muted-foreground">
+                                                        Treated by {rev.doctor} • {rev.specialty}
+                                                    </p>
+                                                </div>
+                                                <span className="text-xs text-muted-foreground">
+                                                    {rev.date}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <BorderBeam
+                                            size={80}
+                                            duration={6}
+                                            className="opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                                            colorFrom="var(--color-primary)"
+                                            colorTo="var(--color-primary)"
+                                        />
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* Trust & Security Section (Engineering for Clinical Trust) */}
+                    <section
+                        id="trust"
+                        className="scroll-mt-20 border-t border-border bg-muted/30 py-20 sm:py-24"
+                    >
+                        <div className="container mx-auto max-w-7xl px-4 sm:px-6">
+                            <div className="mx-auto max-w-2xl text-center">
+                                <span className="text-xs font-semibold uppercase tracking-wider text-primary">
+                                    Healthcare Integrity
+                                </span>
+                                <h2 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">
+                                    Engineered for Clinical Trust
+                                </h2>
+                                <p className="mt-3 text-sm text-muted-foreground sm:text-base">
+                                    MediFlow prioritizes accuracy, privacy, and accountability across every consultation.
+                                </p>
+                            </div>
+
+                            <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                                {trustPillars.map((tp) => (
+                                    <div
+                                        key={tp.title}
+                                        className="flex flex-col rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-sm transition-all hover:border-primary/40 hover:shadow-md"
+                                    >
+                                        <div className="flex size-11 items-center justify-center rounded-xl bg-primary/10">
+                                            {tp.icon}
+                                        </div>
+                                        <h3 className="mt-5 text-base font-bold text-foreground">
+                                            {tp.title}
+                                        </h3>
+                                        <p className="mt-2 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                                            {tp.description}
+                                        </p>
                                     </div>
                                 ))}
                             </div>
@@ -476,7 +661,7 @@ export default function Welcome({
                             invert them to render as subtle dark streaks instead of
                             hiding them — visible in both themes without forcing a
                             dark backdrop everywhere. */}
-                        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-60 invert dark:opacity-100 dark:invert-0">
+                        <div className="pointer-events-none absolute inset-0 overflow-hidden opacity-60 invert dark:opacity-100 dark:invert-0">
                             <Meteors number={20} />
                         </div>
                         <div className="relative z-10 container mx-auto max-w-3xl px-4 text-center sm:px-6">

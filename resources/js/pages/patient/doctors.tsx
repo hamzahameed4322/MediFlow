@@ -1,9 +1,10 @@
 import { Head, useForm, router } from '@inertiajs/react';
-import { Users, Star, Stethoscope, Clock, Calendar, ChevronRight, DollarSign } from 'lucide-react';
+import { Users, Star, Stethoscope, Clock, Calendar, CalendarDays, ChevronRight, DollarSign, MessageSquare, TriangleAlert } from 'lucide-react';
 import { useDeferredValue, useMemo, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { EmptyState } from '@/components/empty-state';
 import InputError from '@/components/input-error';
+import { StarDisplay } from '@/components/star-rating';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -28,10 +29,26 @@ const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
 export default function Doctors({ doctors, filters }: Props) {
     const doctorData = doctors?.data ?? [];
     const [selectedDoctor, setSelectedDoctor] = useState<DoctorProfile | null>(null);
+    const [selectedDoctorReviews, setSelectedDoctorReviews] = useState<DoctorProfile | null>(null);
+    const [isReviewsModalOpen, setIsReviewsModalOpen] = useState(false);
     const [bookingOpen, setBookingOpen] = useState(false);
     const [slots, setSlots] = useState<string[]>([]);
     const [loadingSlots, setLoadingSlots] = useState(false);
     const [query, setQuery] = useState(filters.search || '');
+
+    const handleOpenReviewsModal = (doc: DoctorProfile) => {
+        setSelectedDoctorReviews(doc);
+        setIsReviewsModalOpen(true);
+    };
+
+    const handleReviewsModalChange = (open: boolean) => {
+        setIsReviewsModalOpen(open);
+        if (!open) {
+            setTimeout(() => {
+                setSelectedDoctorReviews(null);
+            }, 300);
+        }
+    };
 
     // Server-side search with debounce
     useEffect(() => {
@@ -107,6 +124,18 @@ return;
     maxDateObj.setMonth(maxDateObj.getMonth() + 2);
     const maxDate = new Intl.DateTimeFormat('en-CA').format(maxDateObj);
 
+    // Compute which days of week this doctor works (e.g. ['Monday', 'Tuesday'])
+    const availableDays = selectedDoctor?.schedules?.map((s) => s.day) ?? [];
+
+    // Check if a chosen date falls on a day the doctor doesn't work
+    const pickedDayName = data.appointment_date
+        ? new Date(data.appointment_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long' })
+        : null;
+    const isDateUnavailable =
+        pickedDayName !== null &&
+        availableDays.length > 0 &&
+        !availableDays.includes(pickedDayName as any);
+
     return (
         <>
             <Head title="Browse Doctors" />
@@ -160,6 +189,27 @@ return;
                                         <span className="text-sm font-medium">{doctor.specialization}</span>
                                     </div>
 
+                                    {/* Rating */}
+                                    <div className="flex items-center gap-1.5">
+                                        {doctor.reviews_count && doctor.reviews_count > 0 ? (
+                                            <button
+                                                type="button"
+                                                onClick={() => setSelectedDoctorReviews(doctor)}
+                                                className="flex items-center gap-1.5 text-left hover:underline cursor-pointer"
+                                            >
+                                                <Star className="size-3.5 fill-amber-400 text-amber-400 shrink-0" />
+                                                <span className="text-sm font-semibold">
+                                                    {Number(doctor.average_rating ?? 0).toFixed(1)}
+                                                </span>
+                                                <span className="text-xs text-muted-foreground">
+                                                    ({doctor.reviews_count} review{doctor.reviews_count !== 1 ? 's' : ''})
+                                                </span>
+                                            </button>
+                                        ) : (
+                                            <span className="text-xs text-muted-foreground italic">No reviews yet</span>
+                                        )}
+                                    </div>
+
                                     {/* Stats */}
                                     <div className="grid grid-cols-2 gap-3">
                                         <div className="rounded-lg bg-muted/50 p-2 text-center">
@@ -168,7 +218,7 @@ return;
                                         </div>
                                         <div className="rounded-lg bg-muted/50 p-2 text-center">
                                             <p className="text-xs text-muted-foreground">Fee</p>
-                                            <p className="text-sm font-semibold text-green-600">${doctor.consultation_fee}</p>
+                                            <p className="text-sm font-semibold text-primary">${doctor.consultation_fee}</p>
                                         </div>
                                     </div>
 
@@ -190,9 +240,52 @@ return;
                                         </div>
                                     )}
 
-                                    <div className="mt-auto">
-                                        <Button className="w-full" onClick={() => openBooking(doctor)}>
-                                            Book Appointment <ChevronRight className="ml-1 size-4" />
+                                    {/* Recent public feedback (show 1 latest comment to keep card compact and responsive) */}
+                                    {doctor.reviews && doctor.reviews.length > 0 && (
+                                        <div className="rounded-lg bg-muted/40 p-2.5 text-xs space-y-1.5 border border-border/60">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-semibold text-foreground flex items-center gap-1">
+                                                    <MessageSquare className="size-3 text-primary" /> Patient Feedback
+                                                </span>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleOpenReviewsModal(doctor)}
+                                                    className="text-[11px] text-primary hover:underline font-medium"
+                                                >
+                                                    View All ({doctor.reviews_count})
+                                                </button>
+                                            </div>
+                                            <div className="space-y-1">
+                                                {doctor.reviews.slice(0, 1).map((rev) => (
+                                                    <div key={rev.id} className="text-muted-foreground">
+                                                        <div className="flex items-center justify-between gap-1 mb-0.5">
+                                                            <span className="font-medium text-foreground truncate">{rev.patient?.user?.name || 'Patient'}</span>
+                                                            <span className="flex items-center text-[10px] font-semibold text-amber-600 dark:text-amber-400 shrink-0">
+                                                                <Star className="size-2.5 fill-amber-400 text-amber-400 mr-0.5" />
+                                                                {rev.rating}
+                                                            </span>
+                                                        </div>
+                                                        {rev.comment ? (
+                                                            <p className="line-clamp-2 text-foreground/90 italic">"{rev.comment}"</p>
+                                                        ) : (
+                                                            <p className="text-muted-foreground/60 italic">No comment provided</p>
+                                                        )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Action Buttons */}
+                                    <div className="flex items-center gap-2 pt-2 border-t border-border mt-auto">
+                                        <Button
+                                            className="w-full"
+                                            size="sm"
+                                            onClick={() => openBooking(doctor)}
+                                            disabled={doctor.status === 'suspended'}
+                                        >
+                                            <Calendar className="mr-1.5 size-3.5" />
+                                            Book Appointment
                                         </Button>
                                     </div>
                                 </CardContent>
@@ -200,45 +293,47 @@ return;
                         ))}
                     </div>
                 )}
-
-                {/* Pagination Controls */}
-                {doctors?.links && doctors.links.length > 3 && (
-                    <div className="flex items-center justify-center gap-2 pt-6">
-                        {doctors.links.map((link, i) => {
-                            if (!link.url) return null;
-                            const isPrevOrNext = link.label.includes('Previous') || link.label.includes('Next');
-                            return (
-                                <Button
-                                    key={i}
-                                    variant={link.active ? "default" : "outline"}
-                                    size={isPrevOrNext ? "sm" : "icon"}
-                                    className={isPrevOrNext ? "px-4" : ""}
-                                    onClick={() => router.get(link.url!, { search: query }, { preserveState: true })}
-                                >
-                                    <span dangerouslySetInnerHTML={{ __html: link.label }} />
-                                </Button>
-                            );
-                        })}
-                    </div>
-                )}
             </div>
 
-            {/* Booking Dialog */}
+            {/* Booking Dialog Modal */}
             <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-                <DialogContent className="sm:max-w-md">
+                <DialogContent className="max-w-md">
                     <DialogHeader>
                         <DialogTitle>Book Appointment</DialogTitle>
                         <DialogDescription>
-                            With <strong>{selectedDoctor?.user?.name}</strong> — {selectedDoctor?.specialization}
+                            Schedule a consultation with Dr. {selectedDoctor?.user?.name} ({selectedDoctor?.specialization})
                         </DialogDescription>
                     </DialogHeader>
+
                     <form onSubmit={handleBook} className="space-y-4">
-                        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 py-1">
-                        {/* Date */}
-                        <div className="space-y-2">
-                            <Label htmlFor="appointment_date">Appointment Date</Label>
+
+                        {/* Available Days Info Banner */}
+                        {availableDays.length > 0 && (
+                            <div className="flex flex-col gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+                                <div className="flex items-center gap-2 text-xs font-semibold text-primary">
+                                    <CalendarDays className="size-3.5 shrink-0" />
+                                    Doctor is available on
+                                </div>
+                                <div className="flex flex-wrap gap-1.5">
+                                    {availableDays.map((day) => (
+                                        <span
+                                            key={day}
+                                            className="rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-medium text-primary"
+                                        >
+                                            {day}
+                                        </span>
+                                    ))}
+                                </div>
+                                <p className="text-[11px] text-muted-foreground">
+                                    Please select a date that falls on one of the days above.
+                                </p>
+                            </div>
+                        )}
+
+                        <div className="space-y-1.5">
+                            <Label htmlFor="date">Appointment Date</Label>
                             <Input
-                                id="appointment_date"
+                                id="date"
                                 type="date"
                                 min={today}
                                 max={maxDate}
@@ -246,49 +341,60 @@ return;
                                 onChange={(e) => handleDateChange(e.target.value)}
                                 required
                             />
-                            <InputError message={errors.appointment_date} />
-                        </div>
-
-                        {/* Time Slot */}
-                        <div className="space-y-2">
-                            <Label htmlFor="appointment_time">Available Time Slot</Label>
-                            {loadingSlots ? (
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground py-2">
-                                    <Spinner className="size-4" /> Loading slots...
+                            {/* Warn if the picked date is not a day the doctor works */}
+                            {isDateUnavailable && (
+                                <div className="flex items-start gap-1.5 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs text-amber-700 dark:border-amber-700/40 dark:bg-amber-900/20 dark:text-amber-400">
+                                    <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
+                                    <span>
+                                        <strong>{pickedDayName}</strong> is not an available day for this doctor.
+                                        Please pick a <strong>{availableDays.join(', ')}</strong> instead.
+                                    </span>
                                 </div>
-                            ) : slots.length > 0 ? (
-                                <Select value={data.appointment_time} onValueChange={(v) => setData('appointment_time', v)}>
-                                    <SelectTrigger id="appointment_time">
-                                        <SelectValue placeholder="Select a time slot" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {slots.map((slot) => (
-                                            <SelectItem key={slot} value={slot}>{formatTime(slot)}</SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            ) : data.appointment_date ? (
-                                <p className="text-sm text-muted-foreground py-2 italic">No available slots for this date.</p>
-                            ) : (
-                                <p className="text-sm text-muted-foreground py-2 italic">Please select a date first.</p>
                             )}
-                            <InputError message={errors.appointment_time} />
+                            {errors.appointment_date && <p className="text-xs text-destructive">{errors.appointment_date}</p>}
                         </div>
 
-                        {/* Reason */}
-                        <div className="space-y-2">
-                            <Label htmlFor="reason">Reason for Visit <span className="text-muted-foreground text-xs">(optional)</span></Label>
-                            <textarea
+                        <div className="space-y-1.5">
+                            <Label>Available Time Slot</Label>
+                            {loadingSlots ? (
+                                <div className="flex items-center gap-2 text-xs text-muted-foreground py-2">
+                                    <Spinner className="size-4" /> Loading available slots...
+                                </div>
+                            ) : !data.appointment_date ? (
+                                <p className="text-xs text-muted-foreground italic">Please select a date first</p>
+                            ) : slots.length === 0 ? (
+                                <p className="text-xs text-destructive italic">No slots available for this date</p>
+                            ) : (
+                                <div className="grid grid-cols-3 gap-2 max-h-36 overflow-y-auto p-1">
+                                    {slots.map((slot) => (
+                                        <Button
+                                            key={slot}
+                                            type="button"
+                                            variant={data.appointment_time === slot ? 'default' : 'outline'}
+                                            size="sm"
+                                            className="text-xs"
+                                            onClick={() => setData('appointment_time', slot)}
+                                        >
+                                            {slot.slice(0, 5)}
+                                        </Button>
+                                    ))}
+                                </div>
+                            )}
+                            {errors.appointment_time && <p className="text-xs text-destructive">{errors.appointment_time}</p>}
+                        </div>
+
+                        <div className="space-y-1.5">
+                            <Label htmlFor="reason">Reason for Visit</Label>
+                            <Input
                                 id="reason"
+                                placeholder="e.g. Regular checkup, Follow-up consultation"
                                 value={data.reason}
                                 onChange={(e) => setData('reason', e.target.value)}
-                                rows={3}
-                                placeholder="Describe your symptoms or reason..."
-                                className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                                required
                             />
-                            <InputError message={errors.reason} />
+                            {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
                         </div>
-                        </div>
+
                         <DialogFooter>
                             <Button type="button" variant="outline" onClick={() => setBookingOpen(false)}>Cancel</Button>
                             <Button type="submit" disabled={processing || !data.appointment_time}>
@@ -297,6 +403,70 @@ return;
                             </Button>
                         </DialogFooter>
                     </form>
+                </DialogContent>
+            </Dialog>
+
+            {/* Reviews Dialog Modal */}
+            <Dialog open={isReviewsModalOpen} onOpenChange={handleReviewsModalChange}>
+                <DialogContent className="max-w-md">
+                    <DialogHeader>
+                        <DialogTitle>Patient Reviews & Ratings</DialogTitle>
+                        <DialogDescription>
+                            Recent feedback for Dr. {selectedDoctorReviews?.user?.name} ({selectedDoctorReviews?.specialization})
+                        </DialogDescription>
+                    </DialogHeader>
+
+                    {selectedDoctorReviews && (
+                        <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                            <div className="flex items-center justify-between rounded-lg bg-muted p-3">
+                                <div>
+                                    <p className="text-xs text-muted-foreground font-medium uppercase">Overall Rating</p>
+                                    <div className="flex items-center gap-2 mt-0.5">
+                                        <span className="text-2xl font-bold">
+                                            {Number(selectedDoctorReviews.average_rating ?? 0).toFixed(1)}
+                                        </span>
+                                        <StarDisplay rating={Math.round(selectedDoctorReviews.average_rating ?? 0)} size="sm" />
+                                    </div>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-xs text-muted-foreground font-medium uppercase">Total Reviews</p>
+                                    <p className="text-lg font-semibold">{selectedDoctorReviews.reviews_count || 0}</p>
+                                </div>
+                            </div>
+
+                            <div className="space-y-3">
+                                {selectedDoctorReviews.reviews && selectedDoctorReviews.reviews.length > 0 ? (
+                                    selectedDoctorReviews.reviews.map((rev) => (
+                                        <div key={rev.id} className="rounded-lg border border-border p-3 space-y-1.5 text-sm">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-semibold text-foreground">
+                                                    {rev.patient?.user?.name || 'Patient'}
+                                                </span>
+                                                <div className="flex items-center gap-1">
+                                                    <StarDisplay rating={rev.rating} size="sm" />
+                                                </div>
+                                            </div>
+                                            {rev.comment ? (
+                                                <p className="text-muted-foreground italic text-xs">"{rev.comment}"</p>
+                                            ) : (
+                                                <p className="text-muted-foreground/60 italic text-xs">No written comment provided</p>
+                                            )}
+                                            <p className="text-[10px] text-muted-foreground/70">
+                                                {rev.created_at?.slice(0, 10)}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-center text-sm text-muted-foreground py-4">
+                                        No reviews have been submitted for this doctor yet.
+                                    </p>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                    <DialogFooter>
+                        <Button type="button" onClick={() => handleReviewsModalChange(false)}>Close</Button>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </>

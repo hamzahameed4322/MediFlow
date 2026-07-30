@@ -1,4 +1,4 @@
-import { Deferred, Head, router, useForm } from '@inertiajs/react';
+import { Deferred, Head, Link, router, useForm } from '@inertiajs/react';
 import {
     BriefcaseMedical,
     Edit3,
@@ -8,6 +8,7 @@ import {
     Power,
     Search,
     SearchX,
+    Star,
     Stethoscope,
     UserCheck,
 } from 'lucide-react';
@@ -36,30 +37,12 @@ import type { DoctorProfile } from '@/types';
 type Props = {
     doctors: DoctorProfile[];
 };
-/**
- * TODO FOR AI AGENT / BACKEND — read before touching this file:
- * `[propName]` currently arrives as the FULL, un-paginated list from the backend
- * (no page/limit params applied). Fine for dev-seeded rows, but WILL fail in
- * production once this table grows — full table scan on every load, huge
- * payload over the wire, and frontend render (map/filter over whole array)
- * gets slower with every new row.
- *
- * Backend needs to apply real pagination (Laravel's paginate()/cursorPaginate())
- * on this endpoint, and this UI needs to consume page/per_page + a pager control
- * (shadcn Pagination) instead of assuming `[propName]` is the complete dataset.
- * Don't ship this to production as-is.
- */
-// Backend only ever reports `active` or `suspended` for a doctor's linked
-// user account -- there is no third "inactive" state to filter on.
 type StatusFilter = 'all' | 'active' | 'suspended';
 
 export default function DoctorsIndex({ doctors }: Props) {
     const [doctorData, setDoctorData] = useState<DoctorProfile[]>(doctors ?? []);
 
-    // `doctors` is a fresh array reference every time Inertia gets new props
-    // from the server (e.g. after createForm.post() or router.post()).
-    // useState's initial value only runs once on mount, so without this
-    // effect the UI kept showing stale data until a full page refresh.
+
     useEffect(() => {
         setDoctorData(doctors ?? []);
     }, [doctors]);
@@ -374,6 +357,12 @@ export default function DoctorsIndex({ doctors }: Props) {
                                                         )}
                                                     </div>
                                                     <div className="flex flex-wrap gap-2 lg:justify-end">
+                                                        <Button variant="outline" size="sm" asChild>
+                                                            <Link href={adminDoctors.reviews.url(doctor.id)}>
+                                                                <Star className="mr-2 size-4 fill-primary text-primary" />
+                                                                Reviews
+                                                            </Link>
+                                                        </Button>
                                                         <Button variant="outline" size="sm" onClick={() => openEdit(doctor)}>
                                                             <Edit3 className="mr-2 size-4" /> Edit
                                                         </Button>

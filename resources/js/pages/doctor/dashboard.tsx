@@ -260,7 +260,7 @@ export default function Dashboard({
                     <Card className="border-muted/60 shadow-sm">
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2">
-                                <Users className="size-5 text-green-500" />
+                                <Users className="size-5 text-primary" />
                                 Recent Patients
                             </CardTitle>
                             <CardDescription>
@@ -274,7 +274,7 @@ export default function Dashboard({
                                         key={patient.id}
                                         className="flex items-center gap-3 rounded-lg border p-3 transition-colors hover:bg-muted/30"
                                     >
-                                        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-green-500/10 text-sm font-semibold text-green-600">
+                                        <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-primary/10 text-sm font-semibold text-primary">
                                             {patient.user?.name
                                                 ?.charAt(0)
                                                 .toUpperCase()}

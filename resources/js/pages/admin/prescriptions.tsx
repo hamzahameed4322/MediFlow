@@ -1,20 +1,7 @@
-/**
- * TODO FOR AI AGENT / BACKEND — read before touching this file:
- * `[propName]` currently arrives as the FULL, un-paginated list from the backend
- * (no page/limit params applied). Fine for dev-seeded rows, but WILL fail in
- * production once this table grows — full table scan on every load, huge
- * payload over the wire, and frontend render (map/filter over whole array)
- * gets slower with every new row.
- *
- * Backend needs to apply real pagination (Laravel's paginate()/cursorPaginate())
- * on this endpoint, and this UI needs to consume page/per_page + a pager control
- * (shadcn Pagination) instead of assuming `[propName]` is the complete dataset.
- * Don't ship this to production as-is.
- */
 import { Deferred, Head } from '@inertiajs/react';
 import { Pagination } from '@/components/pagination';
 import { ClipboardList, Pill, Search } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -34,20 +21,36 @@ type Props = {
 export default function PrescriptionsIndex({ prescriptions }: Props) {
     const prescriptionData = prescriptions?.data ?? [];
     const [query, setQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
 
+    // Show loading skeleton briefly when search query changes for smooth UX feedback
+    useEffect(() => {
+        if (!query.trim()) {
+            setIsSearching(false);
+            return;
+        }
+
+        setIsSearching(true);
+        const timer = setTimeout(() => {
+            setIsSearching(false);
+        }, 250);
+
+        return () => clearTimeout(timer);
+    }, [query]);
+
+    // Search strictly by Doctor Name and Patient Name only
     const filteredPrescriptions = useMemo(() => {
-        return prescriptionData.filter((prescription) => {
-            const searchableText = [
-                prescription.consultation?.appointment?.doctor?.user?.name,
-                prescription.consultation?.appointment?.patient?.user?.name,
-                prescription.instructions,
-                ...(prescription.items?.map((item) => item.medicine_name) ?? []),
-            ]
-                .filter(Boolean)
-                .join(' ')
-                .toLowerCase();
+        if (!query.trim()) {
+            return prescriptionData;
+        }
 
-            return searchableText.includes(query.toLowerCase());
+        const lowerQuery = query.toLowerCase();
+
+        return prescriptionData.filter((prescription) => {
+            const doctorName = prescription.consultation?.appointment?.doctor?.user?.name?.toLowerCase() ?? '';
+            const patientName = prescription.consultation?.appointment?.patient?.user?.name?.toLowerCase() ?? '';
+
+            return doctorName.includes(lowerQuery) || patientName.includes(lowerQuery);
         });
     }, [prescriptionData, query]);
 
@@ -81,17 +84,19 @@ export default function PrescriptionsIndex({ prescriptions }: Props) {
                             <Input
                                 value={query}
                                 onChange={(event) => setQuery(event.target.value)}
-                                placeholder="Search doctor, patient, medicine..."
+                                placeholder="Search doctor or patient..."
                                 className="pl-9"
                             />
                         </div>
 
                         <Deferred data="prescriptions" fallback={<PrescriptionsSkeleton />}>
-                            {filteredPrescriptions.length === 0 ? (
+                            {isSearching ? (
+                                <PrescriptionsSkeleton />
+                            ) : filteredPrescriptions.length === 0 ? (
                                 <EmptyState
                                     icon={Pill}
-                                    title="No prescriptions yet"
-                                    description="Prescriptions will appear after doctors complete consultations."
+                                    title={query ? "No matching prescriptions" : "No prescriptions yet"}
+                                    description={query ? "No prescriptions match the specified doctor or patient name." : "Prescriptions will appear after doctors complete consultations."}
                                 />
                             ) : (
                                 <div>

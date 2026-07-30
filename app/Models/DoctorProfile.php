@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Concerns\FormatsDatesForUi;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,7 @@ use Illuminate\Support\Carbon;
  * @property string $qualification
  * @property int $experience
  * @property float $consultation_fee
+ * @property float|null $average_rating
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
@@ -24,6 +26,27 @@ use Illuminate\Support\Carbon;
 class DoctorProfile extends Model
 {
     use FormatsDatesForUi, HasFactory;
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var list<string>
+     */
+    protected $appends = ['average_rating'];
+
+    /**
+     * Get the average rating attribute.
+     */
+    protected function averageRating(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, array $attributes) => isset($attributes['reviews_avg_rating'])
+                ? round((float) $attributes['reviews_avg_rating'], 1)
+                : ($this->relationLoaded('reviews') && $this->reviews->count() > 0
+                    ? round((float) $this->reviews->avg('rating'), 1)
+                    : null)
+        );
+    }
 
     /**
      * Get the attributes that should be cast.
@@ -66,5 +89,15 @@ class DoctorProfile extends Model
     public function appointments(): HasMany
     {
         return $this->hasMany(Appointment::class, 'doctor_id');
+    }
+
+    /**
+     * Get the reviews for the doctor.
+     *
+     * @return HasMany<DoctorReview, DoctorProfile>
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(DoctorReview::class, 'doctor_id');
     }
 }

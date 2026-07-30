@@ -4,10 +4,11 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PatientController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ReviewController;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -35,6 +36,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::get('prescriptions', [AdminController::class, 'prescriptions'])->name('prescriptions');
     Route::get('bills', [AdminController::class, 'bills'])->name('bills');
     Route::get('reports', [AdminController::class, 'reports'])->name('reports');
+    Route::get('doctors/{doctor}/reviews', [AdminController::class, 'doctorReviews'])->name('doctors.reviews');
 });
 
 // Doctor routes
@@ -59,6 +61,7 @@ Route::middleware(['auth', 'verified', 'role:doctor'])->prefix('doctor')->name('
     Route::post('bills/{bill}/pay', [DoctorController::class, 'markBillPaid'])->name('bills.pay');
 
     Route::get('patient-history/{patient}', [DoctorController::class, 'patientHistory'])->name('patient-history');
+    Route::get('reviews', [DoctorController::class, 'myReviews'])->name('reviews');
 });
 
 // Patient routes
@@ -75,7 +78,20 @@ Route::middleware(['auth', 'verified', 'role:patient'])->prefix('patient')->name
 
     Route::get('bills', [PatientController::class, 'bills'])->name('bills');
     Route::get('medical-history', [PatientController::class, 'medicalHistory'])->name('medical-history');
+    Route::get('reviews', [PatientController::class, 'reviews'])->name('reviews');
+    Route::post('appointments/{appointment}/review', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
 });
 
 require __DIR__.'/settings.php';
-Route::get('/test-email', function () { try { Illuminate\Support\Facades\Mail::raw('Test from production', function($msg) { $msg->to('hamzahameed4322@gmail.com')->subject('Prod Test'); }); return 'SUCCESS'; } catch (\Exception $e) { return $e->getMessage(); } });
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('Test from production', function ($msg) {
+            $msg->to('hamzahameed4322@gmail.com')->subject('Prod Test');
+        });
+
+        return 'SUCCESS';
+    } catch (Exception $e) {
+        return $e->getMessage();
+    }
+});

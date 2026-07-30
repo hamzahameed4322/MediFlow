@@ -57,21 +57,26 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       const rows = Math.ceil(height / (squareSize + gridGap))
 
       const squares = new Float32Array(cols * rows)
+      const targetSquares = new Float32Array(cols * rows)
       for (let i = 0; i < squares.length; i++) {
-        squares[i] = Math.random() * maxOpacity
+        const initialOpacity = Math.random() * maxOpacity
+        squares[i] = initialOpacity
+        targetSquares[i] = initialOpacity
       }
 
-      return { cols, rows, squares, dpr }
+      return { cols, rows, squares, targetSquares, dpr }
     },
     [squareSize, gridGap, maxOpacity]
   )
 
   const updateSquares = useCallback(
-    (squares: Float32Array, deltaTime: number) => {
+    (squares: Float32Array, targetSquares: Float32Array, deltaTime: number) => {
       for (let i = 0; i < squares.length; i++) {
         if (Math.random() < flickerChance * deltaTime) {
-          squares[i] = Math.random() * maxOpacity
+          targetSquares[i] = Math.random() * maxOpacity
         }
+        // Smooth lerp for buttery smooth transitions instead of harsh instant flickering
+        squares[i] += (targetSquares[i] - squares[i]) * Math.min(deltaTime * 2.5, 1)
       }
     },
     [flickerChance, maxOpacity]
@@ -133,7 +138,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         const deltaTime = (time - lastTime) / 1000
         lastTime = time
 
-        updateSquares(gridParams.squares, deltaTime)
+        updateSquares(gridParams.squares, gridParams.targetSquares, deltaTime)
         drawGrid(
           ctx,
           canvas.width,

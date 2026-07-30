@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:174
- * @route 'http://localhost/patient/doctors/{doctor}/slots'
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 export const slots = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: slots.url(args, options),
@@ -11,13 +11,13 @@ export const slots = (args: { doctor: number | { id: number } } | [doctor: numbe
 
 slots.definition = {
     methods: ["get","head"],
-    url: 'http://localhost/patient/doctors/{doctor}/slots',
+    url: 'http://cms.test/patient/doctors/{doctor}/slots',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:174
- * @route 'http://localhost/patient/doctors/{doctor}/slots'
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 slots.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -49,8 +49,8 @@ slots.url = (args: { doctor: number | { id: number } } | [doctor: number | { id:
 
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:174
- * @route 'http://localhost/patient/doctors/{doctor}/slots'
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 slots.get = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: slots.url(args, options),
@@ -58,13 +58,49 @@ slots.get = (args: { doctor: number | { id: number } } | [doctor: number | { id:
 })
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:174
- * @route 'http://localhost/patient/doctors/{doctor}/slots'
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 slots.head = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: slots.url(args, options),
     method: 'head',
 })
+
+    /**
+* @see \App\Http\Controllers\PatientController::slots
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
+ */
+    const slotsForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: slots.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\PatientController::slots
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
+ */
+        slotsForm.get = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: slots.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\PatientController::slots
+ * @see app/Http/Controllers/PatientController.php:189
+ * @route 'http://cms.test/patient/doctors/{doctor}/slots'
+ */
+        slotsForm.head = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: slots.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    slots.form = slotsForm
 const doctors = {
     slots: Object.assign(slots, slots),
 }

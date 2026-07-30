@@ -41,11 +41,14 @@ export type DoctorProfile = {
     qualification: string;
     experience: number;
     consultation_fee: number;
+    average_rating?: number | null;
+    reviews_count?: number;
     created_at: string;
     updated_at: string;
     user?: CmsUser;
     schedules?: DoctorSchedule[];
     appointments?: Appointment[];
+    reviews?: DoctorReview[];
 };
 
 // ─── Doctor Schedule ────────────────────────────────────────────────────────
@@ -85,6 +88,23 @@ export type Appointment = {
     doctor?: DoctorProfile;
     consultation?: Consultation;
     bill?: Bill;
+    review?: DoctorReview | null;
+};
+
+// ─── Doctor Review ───────────────────────────────────────────────────────────
+
+export type DoctorReview = {
+    id: number;
+    appointment_id: number;
+    patient_id: number;
+    doctor_id: number;
+    rating: number;            // 1–5, always required
+    comment: string | null;    // optional
+    created_at: string;
+    updated_at: string;
+    patient?: PatientProfile;
+    doctor?: DoctorProfile;
+    appointment?: Appointment;
 };
 
 // ─── Consultation ───────────────────────────────────────────────────────────

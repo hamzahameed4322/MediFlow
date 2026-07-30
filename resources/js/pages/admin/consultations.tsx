@@ -1,20 +1,7 @@
-/**
- * TODO FOR AI AGENT / BACKEND — read before touching this file:
- * `[propName]` currently arrives as the FULL, un-paginated list from the backend
- * (no page/limit params applied). Fine for dev-seeded rows, but WILL fail in
- * production once this table grows — full table scan on every load, huge
- * payload over the wire, and frontend render (map/filter over whole array)
- * gets slower with every new row.
- *
- * Backend needs to apply real pagination (Laravel's paginate()/cursorPaginate())
- * on this endpoint, and this UI needs to consume page/per_page + a pager control
- * (shadcn Pagination) instead of assuming `[propName]` is the complete dataset.
- * Don't ship this to production as-is.
- */
 import { Deferred, Head } from '@inertiajs/react';
 import { Pagination } from '@/components/pagination';
-import { Mic, Search, Stethoscope } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { ArrowDown, ArrowUp, Mic, Search, Stethoscope, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -41,26 +28,39 @@ type Props = {
 export default function ConsultationsIndex({ consultations }: Props) {
     const consultationData = consultations?.data ?? [];
     const [query, setQuery] = useState('');
+    const [debouncedQuery, setDebouncedQuery] = useState('');
+    const [isSearching, setIsSearching] = useState(false);
+    const [sortOrder, setSortOrder] = useState<'desc' | 'asc'>('desc');
 
-    const filteredConsultations = useMemo(() => {
-        return consultationData.filter((consultation) => {
-            const searchableText = [
-                consultation.appointment?.doctor?.user?.name,
-                consultation.appointment?.patient?.user?.name,
-                consultation.symptoms,
-                consultation.diagnosis,
-                consultation.notes,
-            ]
-                .filter(Boolean)
-                .join(' ')
-                .toLowerCase();
+    // Debounce search query & toggle loading skeleton
+    useEffect(() => {
+        if (query !== debouncedQuery) {
+            setIsSearching(true);
+            const timeoutId = setTimeout(() => {
+                setDebouncedQuery(query);
+                setIsSearching(false);
+            }, 250);
+            return () => clearTimeout(timeoutId);
+        }
+    }, [query, debouncedQuery]);
 
-            return searchableText.includes(query.toLowerCase());
+    // Search ONLY by Doctor or Patient Name, and sort by Visit ID
+    const sortedAndFiltered = useMemo(() => {
+        const filtered = consultationData.filter((consultation) => {
+            if (!debouncedQuery.trim()) return true;
+            const doctorName = consultation.appointment?.doctor?.user?.name || '';
+            const patientName = consultation.appointment?.patient?.user?.name || '';
+            const searchableText = `${doctorName} ${patientName}`.toLowerCase();
+            return searchableText.includes(debouncedQuery.toLowerCase().trim());
         });
-    }, [consultationData, query]);
+
+        return [...filtered].sort((a, b) => {
+            return sortOrder === 'desc' ? b.id - a.id : a.id - b.id;
+        });
+    }, [consultationData, debouncedQuery, sortOrder]);
 
     const hasRecords = consultationData.length > 0;
-    const hasResults = filteredConsultations.length > 0;
+    const hasResults = sortedAndFiltered.length > 0;
 
     return (
         <>
@@ -87,18 +87,30 @@ export default function ConsultationsIndex({ consultations }: Props) {
                         <CardDescription>Symptoms, diagnosis, and notes from completed visits.</CardDescription>
                     </CardHeader>
                     <CardContent>
+                        {/* Search Bar (Doctor & Patient search ONLY) */}
                         <div className="relative mb-4">
-                            <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
+                            <Search className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
                             <Input
                                 value={query}
                                 onChange={(event) => setQuery(event.target.value)}
-                                placeholder="Search doctor, patient, symptoms, diagnosis..."
-                                className="pl-9"
+                                placeholder="Search doctor or patient name..."
+                                className="pl-10 pr-10 h-10 text-sm"
                             />
+                            {query && (
+                                <button
+                                    type="button"
+                                    onClick={() => setQuery('')}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                                >
+                                    <X className="size-3.5" />
+                                </button>
+                            )}
                         </div>
 
                         <Deferred data="consultations" fallback={<ConsultationsSkeleton />}>
-                            {!hasRecords ? (
+                            {isSearching ? (
+                                <ConsultationsSkeleton />
+                            ) : !hasRecords ? (
                                 <EmptyState
                                     icon={Stethoscope}
                                     title="No consultations yet"
@@ -108,7 +120,7 @@ export default function ConsultationsIndex({ consultations }: Props) {
                                 <EmptyState
                                     icon={Search}
                                     title="No matches found"
-                                    description="Try a different doctor, patient, symptom, or diagnosis keyword."
+                                    description={`No doctor or patient matches found for "${debouncedQuery}".`}
                                 />
                             ) : (
                                 <div>
@@ -116,15 +128,29 @@ export default function ConsultationsIndex({ consultations }: Props) {
                                         <Table className="min-w-[800px] table-fixed">
                                             <TableHeader>
                                                 <TableRow>
-                                                    <TableHead className="w-[9%]">Visit</TableHead>
-                                                    <TableHead className="w-[18%]">Doctor / Patient</TableHead>
-                                                    <TableHead className="w-[24%]">Symptoms</TableHead>
-                                                    <TableHead className="w-[24%]">Diagnosis</TableHead>
-                                                    <TableHead className="w-[25%]">Notes</TableHead>
+                                                    <TableHead className="w-[12%]">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
+                                                            className="flex items-center gap-1.5 font-semibold text-foreground hover:text-primary transition-colors text-xs uppercase tracking-wider"
+                                                            title="Click to sort by Visit ID"
+                                                        >
+                                                            <span>Visit</span>
+                                                            {sortOrder === 'desc' ? (
+                                                                <ArrowDown className="size-3.5 text-primary shrink-0" />
+                                                            ) : (
+                                                                <ArrowUp className="size-3.5 text-primary shrink-0" />
+                                                            )}
+                                                        </button>
+                                                    </TableHead>
+                                                    <TableHead className="w-[20%]">Doctor / Patient</TableHead>
+                                                    <TableHead className="w-[23%]">Symptoms</TableHead>
+                                                    <TableHead className="w-[23%]">Diagnosis</TableHead>
+                                                    <TableHead className="w-[22%]">Notes</TableHead>
                                                 </TableRow>
                                             </TableHeader>
                                             <TableBody>
-                                                {filteredConsultations.map((consultation) => (
+                                                {sortedAndFiltered.map((consultation) => (
                                                     <TableRow key={consultation.id}>
                                                         <TableCell className="align-top text-muted-foreground">
                                                             <p className="font-medium text-foreground">
@@ -135,7 +161,7 @@ export default function ConsultationsIndex({ consultations }: Props) {
                                                             </p>
                                                         </TableCell>
                                                         <TableCell className="align-top">
-                                                            <p className="truncate font-medium">
+                                                            <p className="truncate font-medium text-foreground">
                                                                 {consultation.appointment?.doctor?.user?.name}
                                                             </p>
                                                             <p className="truncate text-xs text-muted-foreground">
@@ -154,7 +180,7 @@ export default function ConsultationsIndex({ consultations }: Props) {
                                                         >
                                                             <p className="line-clamp-2">{consultation.diagnosis}</p>
                                                         </TableCell>
-                                                        <TableCell className="align-top whitespace-normal break-words text-muted-foreground">
+                                                        <TableCell className="align-top whitespace-normal break-words text-muted-foreground text-xs">
                                                             {consultation.notes || 'No notes provided.'}
                                                         </TableCell>
                                                     </TableRow>

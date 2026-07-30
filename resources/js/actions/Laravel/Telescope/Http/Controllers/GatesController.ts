@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:33
- * @route 'http://localhost/telescope/telescope-api/gates'
+ * @route 'http://cms.test/telescope/telescope-api/gates'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 index.definition = {
     methods: ["post"],
-    url: 'http://localhost/telescope/telescope-api/gates',
+    url: 'http://cms.test/telescope/telescope-api/gates',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:33
- * @route 'http://localhost/telescope/telescope-api/gates'
+ * @route 'http://cms.test/telescope/telescope-api/gates'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,17 +26,38 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:33
- * @route 'http://localhost/telescope/telescope-api/gates'
+ * @route 'http://cms.test/telescope/telescope-api/gates'
  */
 index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
     method: 'post',
 })
 
+    /**
+* @see \Laravel\Telescope\Http\Controllers\GatesController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:33
+ * @route 'http://cms.test/telescope/telescope-api/gates'
+ */
+    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: index.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\GatesController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:33
+ * @route 'http://cms.test/telescope/telescope-api/gates'
+ */
+        indexForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: index.url(options),
+            method: 'post',
+        })
+    
+    index.form = indexForm
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
- * @route 'http://localhost/telescope/telescope-api/gates/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
  */
 export const show = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -45,13 +66,13 @@ export const show = (args: { telescopeEntryId: string | number } | [telescopeEnt
 
 show.definition = {
     methods: ["get","head"],
-    url: 'http://localhost/telescope/telescope-api/gates/{telescopeEntryId}',
+    url: 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
- * @route 'http://localhost/telescope/telescope-api/gates/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
  */
 show.url = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -79,7 +100,7 @@ show.url = (args: { telescopeEntryId: string | number } | [telescopeEntryId: str
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
- * @route 'http://localhost/telescope/telescope-api/gates/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
  */
 show.get = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: show.url(args, options),
@@ -88,12 +109,48 @@ show.get = (args: { telescopeEntryId: string | number } | [telescopeEntryId: str
 /**
 * @see \Laravel\Telescope\Http\Controllers\GatesController::show
  * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
- * @route 'http://localhost/telescope/telescope-api/gates/{telescopeEntryId}'
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
  */
 show.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: show.url(args, options),
     method: 'head',
 })
+
+    /**
+* @see \Laravel\Telescope\Http\Controllers\GatesController::show
+ * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
+ */
+    const showForm = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: show.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\GatesController::show
+ * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
+ */
+        showForm.get = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: show.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \Laravel\Telescope\Http\Controllers\GatesController::show
+ * @see vendor/laravel/telescope/src/Http/Controllers/GatesController.php:51
+ * @route 'http://cms.test/telescope/telescope-api/gates/{telescopeEntryId}'
+ */
+        showForm.head = (args: { telescopeEntryId: string | number } | [telescopeEntryId: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: show.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    show.form = showForm
 const GatesController = { index, show }
 
 export default GatesController

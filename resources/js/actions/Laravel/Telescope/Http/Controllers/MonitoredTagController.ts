@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 index.definition = {
     methods: ["get","head"],
-    url: 'http://localhost/telescope/telescope-api/monitored-tags',
+    url: 'http://cms.test/telescope/telescope-api/monitored-tags',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,7 +26,7 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(options),
@@ -35,17 +35,52 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
 
+    /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
+ */
+    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: index.url(options),
+        method: 'get',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
+ */
+        indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url(options),
+            method: 'get',
+        })
+            /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:34
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
+ */
+        indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url({
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    index.form = indexForm
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
@@ -54,13 +89,13 @@ export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 store.definition = {
     methods: ["post"],
-    url: 'http://localhost/telescope/telescope-api/monitored-tags',
+    url: 'http://cms.test/telescope/telescope-api/monitored-tags',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 store.url = (options?: RouteQueryOptions) => {
     return store.definition.url + queryParams(options)
@@ -69,17 +104,38 @@ store.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
- * @route 'http://localhost/telescope/telescope-api/monitored-tags'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
  */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: store.url(options),
     method: 'post',
 })
 
+    /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
+ */
+    const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: store.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::store
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:47
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags'
+ */
+        storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: store.url(options),
+            method: 'post',
+        })
+    
+    store.form = storeForm
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'http://localhost/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
 export const destroy = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: destroy.url(options),
@@ -88,13 +144,13 @@ export const destroy = (options?: RouteQueryOptions): RouteDefinition<'post'> =>
 
 destroy.definition = {
     methods: ["post"],
-    url: 'http://localhost/telescope/telescope-api/monitored-tags/delete',
+    url: 'http://cms.test/telescope/telescope-api/monitored-tags/delete',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'http://localhost/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
 destroy.url = (options?: RouteQueryOptions) => {
     return destroy.definition.url + queryParams(options)
@@ -103,12 +159,34 @@ destroy.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
  * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
- * @route 'http://localhost/telescope/telescope-api/monitored-tags/delete'
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
  */
 destroy.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: destroy.url(options),
     method: 'post',
 })
+
+    /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
+ */
+    const destroyForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: destroy.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\MonitoredTagController::destroy
+ * @see vendor/laravel/telescope/src/Http/Controllers/MonitoredTagController.php:58
+ * @route 'http://cms.test/telescope/telescope-api/monitored-tags/delete'
+ */
+        destroyForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: destroy.url(options),
+            method: 'post',
+        })
+    
+    destroy.form = destroyForm
 const MonitoredTagController = { index, store, destroy }
 
 export default MonitoredTagController

@@ -1,198 +1,3 @@
-// import { Deferred, Head } from '@inertiajs/react';
-// import { BarChart3, Clock3, ClipboardList, HeartPulse, Users2, ShieldAlert, Stethoscope } from 'lucide-react';
-// import { EmptyState } from '@/components/empty-state';
-// import { Badge } from '@/components/ui/badge';
-// import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-// import { Skeleton } from '@/components/ui/skeleton';
-// import { reports as adminReports } from '@/routes/admin';
-// import type { AppointmentStats, DoctorAvailabilityStat, DoctorReportRow, PeakHourStat, SpecialtyStat } from '@/types';
-//
-// type Props = {
-//     doctorStats: DoctorReportRow[];
-//     appointmentStats: AppointmentStats;
-//     specialtyCounts: SpecialtyStat[];
-//     peakHours: PeakHourStat[];
-//     doctorAvailability: DoctorAvailabilityStat[];
-//     overloadedDoctors: DoctorAvailabilityStat[];
-// };
-//
-// export default function ReportsIndex({ doctorStats, appointmentStats, specialtyCounts, peakHours, doctorAvailability, overloadedDoctors }: Props) {
-//     const statusEntries: { key: keyof AppointmentStats; label: string }[] = [
-//         { key: 'pending', label: 'Pending' },
-//         { key: 'confirmed', label: 'Confirmed' },
-//         { key: 'completed', label: 'Completed' },
-//         { key: 'cancelled', label: 'Cancelled' },
-//         { key: 'rejected', label: 'Rejected' },
-//         { key: 'no_show', label: 'No Show' },
-//     ];
-//
-//     return (
-//         <>
-//             <Head title="Reports" />
-//
-//             <div className="flex flex-col gap-6 p-6">
-//                 <section className="rounded-[1.75rem] border bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 p-8 text-white shadow-xl">
-//                     <div className="space-y-3">
-//                         <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-xs font-medium tracking-wide text-white/85">
-//                             <BarChart3 className="size-3.5" />
-//                             Clinic analytics
-//                         </div>
-//                         <h1 className="text-3xl font-semibold tracking-tight">Operational reports</h1>
-//                         <p className="max-w-2xl text-sm text-slate-300">Track doctor performance and appointment state distribution for the single-branch clinic workflow.</p>
-//                     </div>
-//                 </section>
-//
-//                 <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-//                     <StatCard label="Doctors tracked" value={doctorStats.length} icon={Users2} />
-//                     <StatCard label="Appointment states" value={statusEntries.length} icon={ClipboardList} />
-//                     <StatCard label="Specialties" value={specialtyCounts.length} icon={Stethoscope} />
-//                     <StatCard label="Peak hours" value={peakHours.length} icon={Clock3} />
-//                 </section>
-//
-//                 <section className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Doctor performance</CardTitle>
-//                             <CardDescription>Completed appointments and generated revenue by doctor.</CardDescription>
-//                         </CardHeader>
-//                         <CardContent>
-//                             <Deferred data="doctorStats" fallback={<ReportSkeletonRows />}>
-//                                 {doctorStats.length === 0 ? (
-//                                     <EmptyState icon={Users2} title="No doctor analytics" description="Doctor performance will appear once the clinic starts processing visits." />
-//                                 ) : (
-//                                     <div className="space-y-3">
-//                                         {doctorStats.map((doctor) => (
-//                                             <div key={doctor.name} className="rounded-2xl border p-4 transition-colors hover:bg-muted/30">
-//                                                 <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-//                                                     <div>
-//                                                         <p className="font-semibold">{doctor.name}</p>
-//                                                         <p className="text-xs text-muted-foreground">{doctor.specialization}</p>
-//                                                     </div>
-//                                                     <div className="flex flex-wrap gap-2 text-xs">
-//                                                         <Badge variant="outline">Total: {doctor.total_appointments}</Badge>
-//                                                         <Badge variant="outline">Completed: {doctor.completed_appointments}</Badge>
-//                                                         <Badge variant="outline">Revenue: ${Number(doctor.revenue).toFixed(2)}</Badge>
-//                                                     </div>
-//                                                 </div>
-//                                             </div>
-//                                         ))}
-//                                     </div>
-//                                 )}
-//                             </Deferred>
-//                         </CardContent>
-//                     </Card>
-//
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Appointment status summary</CardTitle>
-//                             <CardDescription>Current operating state across the appointment pipeline.</CardDescription>
-//                         </CardHeader>
-//                         <CardContent className="space-y-3">
-//                             {statusEntries.map((entry) => (
-//                                 <div key={entry.key} className="flex items-center justify-between rounded-2xl border px-4 py-3">
-//                                     <span className="text-sm font-medium">{entry.label}</span>
-//                                     <Badge variant="secondary">{appointmentStats[entry.key]}</Badge>
-//                                 </div>
-//                             ))}
-//                         </CardContent>
-//                     </Card>
-//                 </section>
-//
-//                 <section className="grid gap-6 xl:grid-cols-2">
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Most requested specialties</CardTitle>
-//                             <CardDescription>Specialty demand based on active doctor profiles.</CardDescription>
-//                         </CardHeader>
-//                         <CardContent className="space-y-3">
-//                             <Deferred data="specialtyCounts" fallback={<ReportSkeletonRows />}>{specialtyCounts.length === 0 ? <EmptyState icon={HeartPulse} title="No specialty data" description="Specialty patterns will appear once doctors are configured." /> : specialtyCounts.map((specialty) => <ProgressRow key={specialty.specialization} label={specialty.specialization} value={specialty.total} />)}</Deferred>
-//                         </CardContent>
-//                     </Card>
-//
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Peak booking hours</CardTitle>
-//                             <CardDescription>Most used appointment times across the clinic.</CardDescription>
-//                         </CardHeader>
-//                         <CardContent className="space-y-3">
-//                             <Deferred data="peakHours" fallback={<ReportSkeletonRows />}>{peakHours.length === 0 ? <EmptyState icon={Clock3} title="No booking hour data" description="Peak-hour insights will appear after bookings accumulate." /> : peakHours.map((hour) => <ProgressRow key={hour.appointment_time} label={hour.appointment_time.slice(0, 5)} value={hour.total} />)}</Deferred>
-//                         </CardContent>
-//                     </Card>
-//                 </section>
-//
-//                 <section className="grid gap-6 xl:grid-cols-2">
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Doctors with overloaded schedules</CardTitle>
-//                             <CardDescription>Highest appointment volume per doctor profile.</CardDescription>
-//                         </CardHeader>
-//                         <CardContent className="space-y-3">
-//                             <Deferred data="overloadedDoctors" fallback={<ReportSkeletonRows />}>
-//                                 {overloadedDoctors.length === 0 ? <EmptyState icon={ShieldAlert} title="No overload data" description="This section will populate once schedule volume increases." /> : overloadedDoctors.map((doctor) => <div key={doctor.id} className="rounded-2xl border px-4 py-3"><div className="flex items-center justify-between gap-3"><div><p className="font-medium">{doctor.user.name}</p><p className="text-xs text-muted-foreground">{doctor.appointments_count} appointments</p></div><Badge variant="outline">{doctor.schedules_count} schedules</Badge></div></div>)}
-//                             </Deferred>
-//                         </CardContent>
-//                     </Card>
-//
-//                     <Card>
-//                         <CardHeader>
-//                             <CardTitle>Doctors with low availability</CardTitle>
-//                             <CardDescription>Doctors with fewer active schedules.</CardDescription>
-//                         </CardHeader>
-//                         <CardContent className="space-y-3">
-//                             <Deferred data="doctorAvailability" fallback={<ReportSkeletonRows />}>
-//                                 {doctorAvailability.length === 0 ? <EmptyState icon={Users2} title="No availability data" description="Schedule insights will appear once doctors define working hours." /> : doctorAvailability.map((doctor) => <div key={doctor.id} className="rounded-2xl border px-4 py-3"><div className="flex items-center justify-between gap-3"><div><p className="font-medium">{doctor.user.name}</p><p className="text-xs text-muted-foreground">{doctor.schedules_count} schedule blocks</p></div><Badge variant="secondary">{doctor.appointments_count} visits</Badge></div></div>)}
-//                             </Deferred>
-//                         </CardContent>
-//                     </Card>
-//                 </section>
-//             </div>
-//         </>
-//     );
-// }
-//
-// function StatCard({ label, value, icon: Icon }: { label: string; value: number | string; icon: React.ComponentType<{ className?: string }>; }) {
-//     return (
-//         <Card>
-//             <CardContent className="flex items-center gap-4 p-5">
-//                 <div className="flex size-12 items-center justify-center rounded-2xl bg-slate-950/5 text-slate-950 dark:bg-white/10 dark:text-white">
-//                     <Icon className="size-6" />
-//                 </div>
-//                 <div>
-//                     <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">{label}</p>
-//                     <p className="mt-1 text-2xl font-semibold tracking-tight">{value}</p>
-//                 </div>
-//             </CardContent>
-//         </Card>
-//     );
-// }
-//
-// function ProgressRow({ label, value }: { label: string; value: number; }) {
-//     return (
-//         <div className="space-y-2 rounded-2xl border p-4">
-//             <div className="flex items-center justify-between gap-3 text-sm">
-//                 <span className="font-medium">{label}</span>
-//                 <span className="text-muted-foreground">{value}</span>
-//             </div>
-//             <div className="h-2 overflow-hidden rounded-full bg-muted">
-//                 <div className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500" style={{ width: `${Math.min(100, value * 10)}%` }} />
-//             </div>
-//         </div>
-//     );
-// }
-//
-// function ReportSkeletonRows() {
-//     return (
-//         <div className="space-y-3">
-//             {Array.from({ length: 4 }).map((_, index) => (
-//                 <Skeleton key={index} className="h-16 w-full rounded-2xl" />
-//             ))}
-//         </div>
-//     );
-// }
-//
-// ReportsIndex.layout = {
-//     breadcrumbs: [{ title: 'Reports', href: adminReports.url() }],
-// };
 
 import { Deferred, Head, router } from '@inertiajs/react';
 import {
@@ -202,6 +7,7 @@ import {
     ClipboardCheck,
     Clock3,
     type LucideIcon,
+    Star,
     Stethoscope,
     Users2,
     Wallet,
@@ -244,6 +50,13 @@ type Props = {
     peakHours: PeakHourStat[];
     revenueTrend: MonthlyRevenueStat[];
     dayOfWeekDistribution: DayOfWeekStat[];
+    doctorReviewStats?: {
+        total_reviews: number;
+        average_rating: number;
+        five_star_percentage: number;
+        with_comments_count: number;
+        rating_distribution: Array<{ name: string; count: number; fill: string }>;
+    };
     filters: {
         date_from: string;
         date_to: string;
@@ -281,32 +94,33 @@ const doctorChartConfig = {
 } satisfies ChartConfig;
 
 const specialtyChartConfig = {
-    total: { label: 'Bookings', color: 'var(--chart-2)' },
+    total: { label: 'Bookings', color: 'var(--chart-1)' },
 } satisfies ChartConfig;
 
 const peakHoursChartConfig = {
-    total: { label: 'Bookings', color: 'var(--chart-3)' },
+    total: { label: 'Bookings', color: 'var(--chart-1)' },
 } satisfies ChartConfig;
 
 const revenueTrendChartConfig = {
-    revenue: { label: 'Revenue', color: 'var(--chart-4)' },
+    revenue: { label: 'Revenue', color: 'var(--chart-1)' },
 } satisfies ChartConfig;
 
 const dayOfWeekChartConfig = {
-    total: { label: 'Appointments', color: 'var(--chart-5)' },
+    total: { label: 'Appointments', color: 'var(--chart-1)' },
 } satisfies ChartConfig;
 
 type LoadPoint = { id: number; name: string; appointments: number; schedules: number };
 
 export default function ReportsIndex({
-                                         doctorStats = [],
-                                         appointmentStats = { pending: 0, confirmed: 0, completed: 0, cancelled: 0, rejected: 0, no_show: 0 },
-                                         specialtyCounts = [],
-                                         peakHours = [],
-                                         revenueTrend = [],
-                                         dayOfWeekDistribution = [],
-                                         filters,
-                                     }: Props) {
+    doctorStats = [],
+    appointmentStats = { pending: 0, confirmed: 0, completed: 0, cancelled: 0, rejected: 0, no_show: 0 },
+    specialtyCounts = [],
+    peakHours = [],
+    revenueTrend = [],
+    dayOfWeekDistribution = [],
+    doctorReviewStats,
+    filters,
+}: Props) {
     const totalAppointments = STATUS_ORDER.reduce(
         (sum, key) => sum + (appointmentStats[key] ?? 0),
         0,
@@ -366,7 +180,7 @@ export default function ReportsIndex({
                                 single-branch clinic workflow.
                             </p>
                         </div>
-                        
+
                         <div className="rounded-xl border bg-muted/30 p-4">
                             <form
                                 className="flex flex-wrap items-end gap-3"
@@ -454,11 +268,11 @@ export default function ReportsIndex({
                                                 cursor={{ fill: 'var(--muted)' }}
                                                 content={<ChartTooltipContent indicator="line" />}
                                             />
-                                            <Bar dataKey="revenue" radius={[4, 4, 0, 0]} fill="var(--chart-4)">
+                                            <Bar dataKey="revenue" radius={[4, 4, 0, 0]} fill="var(--chart-1)">
                                                 {revenueTrend.map((entry, idx) => (
                                                     <Cell
                                                         key={idx}
-                                                        fill={entry.revenue > 0 ? 'var(--chart-4)' : 'var(--muted)'}
+                                                        fill={entry.revenue > 0 ? 'var(--chart-1)' : 'var(--muted)'}
                                                     />
                                                 ))}
                                             </Bar>
@@ -486,11 +300,11 @@ export default function ReportsIndex({
                                     <ChartContainer config={dayOfWeekChartConfig} className="aspect-auto h-64 w-full min-w-0">
                                         <BarChart data={dayOfWeekDistribution} margin={{ left: 0, right: 12, top: 12 }}>
                                             <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border" />
-                                            <XAxis 
-                                                dataKey="day" 
-                                                tickLine={false} 
-                                                axisLine={false} 
-                                                tickMargin={8} 
+                                            <XAxis
+                                                dataKey="day"
+                                                tickLine={false}
+                                                axisLine={false}
+                                                tickMargin={8}
                                                 className="text-xs"
                                                 tickFormatter={(value) => value.slice(0, 3)}
                                                 interval={0}
@@ -499,7 +313,7 @@ export default function ReportsIndex({
                                                 cursor={{ fill: 'var(--muted)' }}
                                                 content={<ChartTooltipContent indicator="line" />}
                                             />
-                                            <Bar dataKey="total" radius={[4, 4, 0, 0]} fill="var(--chart-5)" />
+                                            <Bar dataKey="total" radius={[4, 4, 0, 0]} fill="var(--chart-1)" />
                                         </BarChart>
                                     </ChartContainer>
                                 )}
@@ -594,7 +408,7 @@ export default function ReportsIndex({
                                                 cursor={{ fill: 'var(--muted)' }}
                                                 content={<ChartTooltipContent />}
                                             />
-                                            <Bar dataKey="total" radius={[0, 6, 6, 0]} fill="var(--chart-2)" />
+                                            <Bar dataKey="total" radius={[0, 6, 6, 0]} fill="var(--chart-1)" />
                                         </BarChart>
                                     </ChartContainer>
                                 )}
@@ -622,8 +436,8 @@ export default function ReportsIndex({
                                         <AreaChart data={sortedPeakHours} margin={{ left: 0, right: 12, top: 12 }}>
                                             <defs>
                                                 <linearGradient id="peakHoursFill" x1="0" y1="0" x2="0" y2="1">
-                                                    <stop offset="5%" stopColor="var(--chart-3)" stopOpacity={0.4} />
-                                                    <stop offset="95%" stopColor="var(--chart-3)" stopOpacity={0.03} />
+                                                    <stop offset="5%" stopColor="var(--chart-1)" stopOpacity={0.4} />
+                                                    <stop offset="95%" stopColor="var(--chart-1)" stopOpacity={0.03} />
                                                 </linearGradient>
                                             </defs>
                                             <CartesianGrid vertical={false} strokeDasharray="3 3" className="stroke-border" />
@@ -638,7 +452,7 @@ export default function ReportsIndex({
                                             <Area
                                                 dataKey="total"
                                                 type="monotone"
-                                                stroke="var(--chart-3)"
+                                                stroke="var(--chart-1)"
                                                 strokeWidth={2}
                                                 fill="url(#peakHoursFill)"
                                             />
@@ -650,16 +464,91 @@ export default function ReportsIndex({
                     </Card>
                 </section>
 
+                {/* Doctor Reviews & Ratings Analytics Card */}
+                {doctorReviewStats && (
+                    <section className="min-w-0">
+                        <Card className="min-w-0 overflow-hidden border-border shadow-sm">
+                            <CardHeader className="pb-3">
+                                <div className="flex items-center justify-between">
+                                    <CardTitle className="text-base font-semibold flex items-center gap-2">
+                                        <Star className="size-4 text-primary fill-primary shrink-0" />
+                                        Doctor Reviews & Ratings Distribution Analytics
+                                    </CardTitle>
+                                    <Badge variant="outline" className="text-xs font-normal">
+                                        Total: {doctorReviewStats.total_reviews} Reviews
+                                    </Badge>
+                                </div>
+                                <CardDescription>
+                                    Patient satisfaction scores and star rating breakdown across the clinic
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="space-y-6 pt-2">
+                                {/* 4 Summary Pills */}
+                                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                                    <div className="rounded-xl border border-border bg-muted/20 p-3">
+                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Total Reviews</p>
+                                        <p className="text-xl font-bold text-foreground mt-0.5">{doctorReviewStats.total_reviews}</p>
+                                    </div>
+                                    <div className="rounded-xl border border-border bg-muted/20 p-3">
+                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">Average Rating</p>
+                                        <p className="text-xl font-bold text-foreground mt-0.5 flex items-center">
+                                            {doctorReviewStats.average_rating > 0 ? doctorReviewStats.average_rating : '0.0'}
+                                            <Star className="size-4 text-primary fill-primary ml-1.5" />
+                                        </p>
+                                    </div>
+                                    <div className="rounded-xl border border-border bg-muted/20 p-3">
+                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">5-Star Ratio</p>
+                                        <p className="text-xl font-bold text-foreground mt-0.5">{doctorReviewStats.five_star_percentage}%</p>
+                                    </div>
+                                    <div className="rounded-xl border border-border bg-muted/20 p-3">
+                                        <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">With Comments</p>
+                                        <p className="text-xl font-bold text-foreground mt-0.5">{doctorReviewStats.with_comments_count}</p>
+                                    </div>
+                                </div>
+
+                                {/* Progress Bars for Rating Distribution */}
+                                <div className="space-y-3">
+                                    <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                                        Star Rating Distribution Breakdown
+                                    </p>
+                                    {doctorReviewStats.rating_distribution.map((dist) => {
+                                        const total = doctorReviewStats.total_reviews || 1;
+                                        const percentage = Math.round((dist.count / total) * 100);
+                                        return (
+                                            <div key={dist.name} className="flex items-center gap-3 text-xs sm:text-sm">
+                                                <div className="w-16 sm:w-20 font-medium text-foreground shrink-0">
+                                                    {dist.name}
+                                                </div>
+                                                <div className="flex-1 h-3 rounded-full bg-muted overflow-hidden relative">
+                                                    <div
+                                                        className="h-full rounded-full bg-primary transition-all duration-500"
+                                                        style={{
+                                                            width: `${percentage}%`,
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div className="w-16 sm:w-20 text-right font-semibold text-foreground shrink-0">
+                                                    {dist.count} <span className="text-muted-foreground font-normal text-xs">({percentage}%)</span>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </section>
+                )}
+
             </div>
         </>
     );
 }
 
 function StatCard({
-                      icon: Icon,
-                      label,
-                      value,
-                  }: {
+    icon: Icon,
+    label,
+    value,
+}: {
     icon: LucideIcon;
     label: string;
     value: number | string;

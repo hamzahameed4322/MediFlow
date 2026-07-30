@@ -1,7 +1,7 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
- * @see [serialized-closure]:2
- * @route 'http://localhost/storage/{path}'
+ * @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+ * @route 'http://cms.test/storage/{path}'
  */
 export const upload = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: upload.url(args, options),
@@ -10,12 +10,12 @@ export const upload = (args: { path: string | number } | [path: string | number 
 
 upload.definition = {
     methods: ["put"],
-    url: 'http://localhost/storage/{path}',
+    url: 'http://cms.test/storage/{path}',
 } satisfies RouteDefinition<["put"]>
 
 /**
- * @see [serialized-closure]:2
- * @route 'http://localhost/storage/{path}'
+ * @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+ * @route 'http://cms.test/storage/{path}'
  */
 upload.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -41,13 +41,43 @@ upload.url = (args: { path: string | number } | [path: string | number ] | strin
 }
 
 /**
- * @see [serialized-closure]:2
- * @route 'http://localhost/storage/{path}'
+ * @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+ * @route 'http://cms.test/storage/{path}'
  */
 upload.put = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     url: upload.url(args, options),
     method: 'put',
 })
+
+    /**
+ * @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+ * @route 'http://cms.test/storage/{path}'
+ */
+    const uploadForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: upload.url(args, {
+                    [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                        _method: 'PUT',
+                        ...(options?.query ?? options?.mergeQuery ?? {}),
+                    }
+                }),
+        method: 'post',
+    })
+
+            /**
+ * @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:119
+ * @route 'http://cms.test/storage/{path}'
+ */
+        uploadForm.put = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: upload.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'PUT',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'post',
+        })
+    
+    upload.form = uploadForm
 const local = {
     upload: Object.assign(upload, upload),
 }

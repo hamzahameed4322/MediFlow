@@ -46,12 +46,12 @@ export default function Bills({ bills }: Props) {
                         </div>
                     </div>
                     <div className="flex items-center gap-4 rounded-xl border bg-card p-4">
-                        <div className="flex size-12 items-center justify-center rounded-full bg-green-500/10">
-                            <CheckCircle className="size-6 text-green-500" />
+                        <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
+                            <CheckCircle className="size-6 text-primary" />
                         </div>
                         <div>
                             <p className="text-xs text-muted-foreground uppercase tracking-wide font-medium">Total Paid</p>
-                            <p className="text-2xl font-bold text-green-600">${totalPaid.toFixed(2)}</p>
+                            <p className="text-2xl font-bold text-primary">${totalPaid.toFixed(2)}</p>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@ export default function Bills({ bills }: Props) {
                                                 <td className="py-3 px-4 text-muted-foreground">{bill.appointment?.doctor?.specialization}</td>
                                                 <td className="py-3 px-4 text-muted-foreground">{bill.appointment?.appointment_date}</td>
                                                 <td className="py-3 px-4">
-                                                    <span className={`font-bold ${bill.status === 'unpaid' ? 'text-red-600' : 'text-green-600'}`}>
+                                                    <span className={`font-bold ${bill.status === 'unpaid' ? 'text-destructive' : 'text-primary'}`}>
                                                         ${Number(bill.amount).toFixed(2)}
                                                     </span>
                                                 </td>

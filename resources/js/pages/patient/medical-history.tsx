@@ -55,7 +55,7 @@ export default function MedicalHistory({ history }: Props) {
                                                             <span>{appt.doctor?.specialization}</span>
                                                         </div>
                                                     </div>
-                                                    <Badge className="bg-green-500/10 text-green-600 border border-green-500/20 text-xs">
+                                                    <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs">
                                                         Completed
                                                     </Badge>
                                                 </div>

@@ -9,9 +9,11 @@ use App\Http\Requests\Doctor\StoreScheduleRequest;
 use App\Http\Requests\Doctor\UpdateDoctorProfileRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\BillResource;
+use App\Http\Resources\DoctorReviewResource;
 use App\Http\Resources\PatientProfileResource;
 use App\Models\Appointment;
 use App\Models\Bill;
+use App\Models\DoctorReview;
 use App\Models\DoctorSchedule;
 use App\Models\PatientProfile;
 use App\Services\ClinicWorkflowService;
@@ -240,7 +242,15 @@ class DoctorController extends Controller
         }
 
         if ($request->filled('status') && $request->input('status') !== 'all') {
-            $query->where('status', $request->input('status'));
+            $status = $request->input('status');
+
+            if ($status === 'cancelled_by_doctor') {
+                $query->where('status', 'cancelled')->where('cancelled_by', 'doctor');
+            } elseif ($status === 'cancelled_by_patient') {
+                $query->where('status', 'cancelled')->where('cancelled_by', 'patient');
+            } else {
+                $query->where('status', $status);
+            }
         }
 
         $appointments = $query->orderByDesc('appointment_date')
@@ -382,6 +392,38 @@ class DoctorController extends Controller
         return Inertia::render('doctor/patient-history', [
             'patient' => new PatientProfileResource($patient->load('user:id,name,email')),
             'history' => AppointmentResource::collection($history),
+        ]);
+    }
+
+    /**
+     * View all reviews received by this doctor.
+     */
+    public function myReviews(): Response
+    {
+        $doctorProfile = Auth::user()->doctorProfile;
+
+        $baseQuery = DoctorReview::query()
+            ->where('doctor_id', $doctorProfile->id);
+
+        $stats = [
+            'average_rating' => $baseQuery->count() > 0
+                ? round($baseQuery->avg('rating'), 1)
+                : null,
+            'total_reviews' => $baseQuery->count(),
+        ];
+
+        $reviews = $baseQuery
+            ->with([
+                'patient.user:id,name,email',
+                'appointment:id,appointment_date',
+            ])
+            ->latest()
+            ->paginate(5)
+            ->withQueryString();
+
+        return Inertia::render('doctor/reviews', [
+            'reviews' => DoctorReviewResource::collection($reviews),
+            'stats' => $stats,
         ]);
     }
 }

@@ -260,5 +260,8 @@ class DatabaseSeeder extends Seeder
             'reason' => 'Heart palpitation follow up',
             'status' => 'no_show',
         ]);
+
+        // 6. Seed Doctor Reviews for completed appointments
+        $this->call(DoctorReviewSeeder::class);
     }
 }

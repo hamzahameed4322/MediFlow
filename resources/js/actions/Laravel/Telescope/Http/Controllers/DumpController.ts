@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../../wayfinder'
 /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://localhost/telescope/telescope-api/dumps'
+ * @route 'http://cms.test/telescope/telescope-api/dumps'
  */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
@@ -11,13 +11,13 @@ export const index = (options?: RouteQueryOptions): RouteDefinition<'post'> => (
 
 index.definition = {
     methods: ["post"],
-    url: 'http://localhost/telescope/telescope-api/dumps',
+    url: 'http://cms.test/telescope/telescope-api/dumps',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://localhost/telescope/telescope-api/dumps'
+ * @route 'http://cms.test/telescope/telescope-api/dumps'
  */
 index.url = (options?: RouteQueryOptions) => {
     return index.definition.url + queryParams(options)
@@ -26,12 +26,34 @@ index.url = (options?: RouteQueryOptions) => {
 /**
 * @see \Laravel\Telescope\Http\Controllers\DumpController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
- * @route 'http://localhost/telescope/telescope-api/dumps'
+ * @route 'http://cms.test/telescope/telescope-api/dumps'
  */
 index.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: index.url(options),
     method: 'post',
 })
+
+    /**
+* @see \Laravel\Telescope\Http\Controllers\DumpController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
+ * @route 'http://cms.test/telescope/telescope-api/dumps'
+ */
+    const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: index.url(options),
+        method: 'post',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\DumpController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/DumpController.php:42
+ * @route 'http://cms.test/telescope/telescope-api/dumps'
+ */
+        indexForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: index.url(options),
+            method: 'post',
+        })
+    
+    index.form = indexForm
 const DumpController = { index }
 
 export default DumpController

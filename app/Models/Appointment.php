@@ -80,4 +80,14 @@ class Appointment extends Model
     {
         return $this->hasOne(Bill::class, 'appointment_id');
     }
+
+    /**
+     * Get the review associated with this appointment.
+     *
+     * @return HasOne<DoctorReview, Appointment>
+     */
+    public function review(): HasOne
+    {
+        return $this->hasOne(DoctorReview::class, 'appointment_id');
+    }
 }

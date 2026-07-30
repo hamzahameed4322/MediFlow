@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults, validateParameters } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults, validateParameters } from './../../../../../wayfinder'
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'http://localhost/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 export const index = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
@@ -11,13 +11,13 @@ export const index = (args?: { view?: string | number } | [view: string | number
 
 index.definition = {
     methods: ["get","head"],
-    url: 'http://localhost/telescope/{view?}',
+    url: 'http://cms.test/telescope/{view?}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'http://localhost/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 index.url = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -49,7 +49,7 @@ index.url = (args?: { view?: string | number } | [view: string | number ] | stri
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'http://localhost/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 index.get = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: index.url(args, options),
@@ -58,12 +58,48 @@ index.get = (args?: { view?: string | number } | [view: string | number ] | stri
 /**
 * @see \Laravel\Telescope\Http\Controllers\HomeController::index
  * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
- * @route 'http://localhost/telescope/{view?}'
+ * @route 'http://cms.test/telescope/{view?}'
  */
 index.head = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(args, options),
     method: 'head',
 })
+
+    /**
+* @see \Laravel\Telescope\Http\Controllers\HomeController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
+ * @route 'http://cms.test/telescope/{view?}'
+ */
+    const indexForm = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: index.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \Laravel\Telescope\Http\Controllers\HomeController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
+ * @route 'http://cms.test/telescope/{view?}'
+ */
+        indexForm.get = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \Laravel\Telescope\Http\Controllers\HomeController::index
+ * @see vendor/laravel/telescope/src/Http/Controllers/HomeController.php:15
+ * @route 'http://cms.test/telescope/{view?}'
+ */
+        indexForm.head = (args?: { view?: string | number } | [view: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: index.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    index.form = indexForm
 const HomeController = { index }
 
 export default HomeController

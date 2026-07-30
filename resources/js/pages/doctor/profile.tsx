@@ -90,7 +90,7 @@ export default function Profile({ doctor }: Props) {
                 {/* Profile Header Banner */}
                 <div className="relative overflow-hidden rounded-2xl border bg-background shadow-sm">
                     {/* Decorative Background */}
-                    <div className="h-32 w-full bg-gradient-to-r from-teal-600 to-emerald-800 dark:from-teal-900 dark:to-emerald-950 opacity-90" />
+                    <div className="h-32 w-full bg-gradient-to-r from-primary to-primary/70 dark:from-primary/80 dark:to-primary/40 opacity-90" />
                     
                     <div className="relative z-10 px-6 pb-6 pt-0 sm:px-10">
                         <div className="flex flex-col items-center gap-4 sm:flex-row sm:items-end sm:justify-between -mt-12">
@@ -103,7 +103,7 @@ export default function Profile({ doctor }: Props) {
                                 <div className="text-center sm:text-left mb-2">
                                     <h1 className="text-3xl font-bold tracking-tight text-foreground flex items-center justify-center sm:justify-start gap-2">
                                         {doctor.name}
-                                        <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                                        <CheckCircle2 className="h-5 w-5 text-primary" />
                                     </h1>
                                     <p className="text-muted-foreground font-medium flex items-center justify-center sm:justify-start gap-2 mt-1">
                                         {doctor.specialization}
@@ -118,7 +118,7 @@ export default function Profile({ doctor }: Props) {
                                     <Sparkles className="h-3.5 w-3.5 text-amber-500" />
                                     {doctor.experience} Years Exp.
                                 </Badge>
-                                <Badge className="bg-emerald-500/15 text-emerald-700 hover:bg-emerald-500/25 dark:bg-emerald-500/20 dark:text-emerald-400 border-none px-3 py-1">
+                                <Badge className="bg-primary/15 text-primary hover:bg-primary/25 dark:bg-primary/20 dark:text-primary border-none px-3 py-1">
                                     On Duty
                                 </Badge>
                             </div>

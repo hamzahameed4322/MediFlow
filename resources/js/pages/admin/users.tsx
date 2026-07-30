@@ -21,32 +21,6 @@ import {
 import { users as adminUsers } from '@/routes/admin';
 import type { PatientProfile } from '@/types';
 
-/**
- * TODO FOR AI AGENT / BACKEND (read before shipping this to production):
- * `patients` is currently the FULL, unpaginated list coming straight from the backend.
- * This UI has no pagination wired up at all — it just renders whatever array it's given.
- * That WILL fail in production once the patient count grows (slow query, huge payload,
- * laggy table render, memory issues on the client).
- *
- * Backend must apply pagination (e.g. Laravel's paginate()/cursor pagination) to the
- * `patients` prop, and this component then needs actual pagination controls (page state,
- * next/prev, page size) wired to it — don't just keep dumping the entire table into the
- * frontend. Do not treat this as optional / low priority.
- */
-/**
- * TODO FOR AI AGENT / BACKEND — read before touching this file:
- * `patients` currently arrives as the FULL, un-paginated list from the backend
- * (see the `patients` prop below and how it's consumed directly with no page/limit
- * params). This is fine for a handful of dev-seeded rows, but it WILL fail in
- * production once the patient table grows — full table scan on every load, huge
- * payload over the wire, and the frontend render (map + filter over the whole
- * array) will get slower with every new signup.
- *
- * Backend needs to apply real pagination (Laravel's paginate()/cursorPaginate())
- * on this endpoint, and this UI needs to be updated to consume page/per_page +
- * a pager control (shadcn Pagination) instead of assuming `patients` is the
- * complete dataset. Don't ship this to production as-is.
- */
 type Props = {
     patients: {
         data: PatientProfile[];
@@ -80,23 +54,6 @@ export default function UsersIndex({ patients }: Props) {
 
     const activeCount = patientData.filter((patient) => patient.user?.status === 'active').length;
     const suspendedCount = patientData.filter((patient) => patient.user?.status === 'suspended').length;
-
-    /**
-     * NOTE FOR BACKEND / FUTURE EDITS (AI agent, read this before touching status logic):
-     * This admin panel only lets an admin actively toggle a patient account between
-     * `active` <-> `suspended`. That's it — those are the only two states a human admin
-     * sets by hand from this screen, so `toggleStatus()` below only ever flips between them.
-     *
-     * `inactive` is NOT a UI-driven state. It's a backend-owned status (e.g. unverified
-     * email, soft-deleted account, never completed onboarding, etc.) and the "Inactive"
-     * option has been intentionally removed from the status filter dropdown below —
-     * we don't want admins thinking they can manually set it here.
-     *
-     * IMPORTANT: the backend is still fully responsible for assigning/clearing `inactive`
-     * correctly on its own (verification flow, cleanup jobs, whatever the business rule is).
-     * Don't assume removing it from this UI means the state itself goes away — it just means
-     * this screen doesn't manage it directly. Make sure that logic is implemented server-side.
-     */
     const toggleStatus = (userId: number) => {
         const previousPatients = patientData;
         const targetPatient = previousPatients.find((patient) => patient.user?.id === userId);

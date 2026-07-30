@@ -1,9 +1,10 @@
-import { Head, useForm } from '@inertiajs/react';
+import { Head, router, useForm } from '@inertiajs/react';
 import { Calendar, Clock, User, X, CheckCircle, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { EmptyState } from '@/components/empty-state';
 import InputError from '@/components/input-error';
+import { Pagination } from '@/components/pagination';
 import { AppointmentStatusBadge, CancelledByBadge } from '@/components/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -11,33 +12,40 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
+import { appointments as patientAppointments } from '@/routes/patient';
 import type { Appointment, AppointmentStatus } from '@/types';
 
 type Props = {
-    appointments: Appointment[];
+    appointments: {
+        data: Appointment[];
+        links: any;
+        meta: any;
+    };
+    filters?: {
+        status?: string;
+    };
+    counts: {
+        pending: number;
+        confirmed: number;
+    };
 };
 
-const TABS: { key: AppointmentStatus | 'all'; label: string }[] = [
+const TABS: { key: AppointmentStatus | 'all' | 'cancelled_by_patient' | 'cancelled_by_doctor'; label: string }[] = [
     { key: 'all', label: 'All' },
     { key: 'pending', label: 'Pending' },
     { key: 'confirmed', label: 'Confirmed' },
     { key: 'completed', label: 'Completed' },
-    { key: 'cancelled', label: 'Cancelled' },
+    { key: 'cancelled', label: 'Cancelled (All)' },
+    { key: 'cancelled_by_patient', label: 'Cancelled by Me' },
+    { key: 'cancelled_by_doctor', label: 'Cancelled by Doctor' },
     { key: 'rejected', label: 'Rejected' },
 ];
 
-export default function Appointments({ appointments }: Props) {
-    const [activeTab, setActiveTab] = useState<AppointmentStatus | 'all'>('all');
+export default function Appointments({ appointments, filters, counts }: Props) {
+    const activeTab = (filters?.status as AppointmentStatus | 'all' | 'cancelled_by_patient' | 'cancelled_by_doctor') || 'all';
     const [cancelTarget, setCancelTarget] = useState<Appointment | null>(null);
 
     const { data, setData, post, processing, errors, reset } = useForm({ cancel_reason: '' });
-
-    const filtered = activeTab === 'all' ? appointments : appointments.filter(a => a.status === activeTab);
-
-    const counts = {
-        pending: appointments.filter(a => a.status === 'pending').length,
-        confirmed: appointments.filter(a => a.status === 'confirmed').length,
-    };
 
     const openCancel = (appt: Appointment) => {
         setCancelTarget(appt);
@@ -104,12 +112,20 @@ return;
                 {/* Tabs */}
                 <div className="flex gap-1 overflow-x-auto rounded-xl border bg-muted/40 p-1">
                     {TABS.map((tab) => {
-                        const count = tab.key === 'all' ? appointments.length : appointments.filter(a => a.status === tab.key).length;
-
                         return (
                             <button
                                 key={tab.key}
-                                onClick={() => setActiveTab(tab.key)}
+                                onClick={() => {
+                                    router.get(
+                                        patientAppointments.url(),
+                                        { status: tab.key === 'all' ? undefined : tab.key },
+                                        {
+                                            preserveState: true,
+                                            preserveScroll: true,
+                                            replace: true,
+                                        }
+                                    );
+                                }}
                                 className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium whitespace-nowrap transition-all ${
                                     activeTab === tab.key
                                         ? 'bg-background text-foreground shadow-sm'
@@ -117,22 +133,17 @@ return;
                                 }`}
                             >
                                 {tab.label}
-                                {count > 0 && (
-                                    <span className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
-                                        activeTab === tab.key ? 'bg-primary text-primary-foreground' : 'bg-muted-foreground/20'
-                                    }`}>{count}</span>
-                                )}
                             </button>
                         );
                     })}
                 </div>
 
                 {/* Appointments List */}
-                {filtered.length === 0 ? (
+                {appointments.data.length === 0 ? (
                     <EmptyState icon={Calendar} title="No appointments found" description="No appointments match this filter." />
                 ) : (
                     <div className="flex flex-col gap-3">
-                        {filtered.map((appt) => (
+                        {appointments.data.map((appt) => (
                             <Card key={appt.id} className="transition-shadow hover:shadow-sm">
                                 <CardContent className="p-4">
                                     <div className="flex flex-wrap items-start justify-between gap-3">
@@ -150,10 +161,12 @@ return;
                                                 {appt.reason && (
                                                     <p className="mt-1.5 text-xs text-muted-foreground italic">"{appt.reason}"</p>
                                                 )}
-                                                {appt.cancel_reason && (
+                                                {(appt.status === 'cancelled' || appt.cancelled_by) && (
                                                     <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
                                                         <CancelledByBadge cancelledBy={appt.cancelled_by} />
-                                                        <p className="text-xs text-red-500">Reason: {appt.cancel_reason}</p>
+                                                        {appt.cancel_reason && (
+                                                            <p className="text-xs text-red-500">Reason: {appt.cancel_reason}</p>
+                                                        )}
                                                     </div>
                                                 )}
                                                 {appt.reject_reason && (
@@ -178,6 +191,7 @@ return;
                                 </CardContent>
                             </Card>
                         ))}
+                        <Pagination links={appointments?.meta?.links ?? []} meta={appointments?.meta} />
                     </div>
                 )}
             </div>

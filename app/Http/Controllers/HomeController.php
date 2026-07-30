@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\DoctorProfile;
-use Illuminate\Http\Request;
+use App\Models\DoctorReview;
+use App\Models\PatientProfile;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -36,13 +38,7 @@ class HomeController extends Controller
                     $initials = 'DR';
                 }
 
-                // Assign color based on index
-                $colors = [
-                    'from-teal-500 to-emerald-400',
-                    'from-cyan-500 to-teal-400',
-                    'from-emerald-600 to-teal-500',
-                ];
-                $color = $colors[$index % count($colors)];
+                $color = 'bg-primary text-primary-foreground';
 
                 return [
                     'name' => $doctor->user->name,
@@ -53,8 +49,42 @@ class HomeController extends Controller
                 ];
             });
 
+        $reviews = DoctorReview::with(['patient.user', 'doctor.user'])
+            ->whereNotNull('comment')
+            ->where('rating', '>=', 4)
+            ->latest()
+            ->get()
+            ->filter(function ($review) {
+                return strlen(trim((string) $review->comment)) >= 15;
+            })
+            ->unique('comment')
+            ->take(3)
+            ->map(function ($review) {
+                return [
+                    'id' => $review->id,
+                    'patient' => $review->patient?->user?->name ?: 'Verified Patient',
+                    'doctor' => $review->doctor?->user?->name ?: 'Doctor Profile',
+                    'specialty' => $review->doctor?->specialization ?: 'Specialty Consultation',
+                    'rating' => (int) $review->rating,
+                    'comment' => preg_replace('/Dr\.\s+Dr\./i', 'Dr.', (string) $review->comment),
+                    'date' => $review->created_at ? $review->created_at->diffForHumans() : 'Recently',
+                ];
+            })
+            ->values();
+
+        $stats = [
+            'appointments' => Appointment::count(),
+            'doctors' => DoctorProfile::whereHas('user', function ($query) {
+                $query->where('status', 'active');
+            })->count(),
+            'reviews' => DoctorReview::count(),
+            'patients' => PatientProfile::count(),
+        ];
+
         return Inertia::render('welcome', [
             'featuredDoctors' => $doctors,
+            'featuredReviews' => $reviews,
+            'stats' => $stats,
         ]);
     }
 }

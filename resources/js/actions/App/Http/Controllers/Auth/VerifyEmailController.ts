@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://localhost/email/verify/{id}/{hash}'
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
  */
 const VerifyEmailController = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: VerifyEmailController.url(args, options),
@@ -11,13 +11,13 @@ const VerifyEmailController = (args: { id: string | number, hash: string | numbe
 
 VerifyEmailController.definition = {
     methods: ["get","head"],
-    url: 'http://localhost/email/verify/{id}/{hash}',
+    url: 'http://cms.test/email/verify/{id}/{hash}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://localhost/email/verify/{id}/{hash}'
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
  */
 VerifyEmailController.url = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions) => {
     if (Array.isArray(args)) {
@@ -43,7 +43,7 @@ VerifyEmailController.url = (args: { id: string | number, hash: string | number 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://localhost/email/verify/{id}/{hash}'
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
  */
 VerifyEmailController.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'get'> => ({
     url: VerifyEmailController.url(args, options),
@@ -52,10 +52,46 @@ VerifyEmailController.get = (args: { id: string | number, hash: string | number 
 /**
 * @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
  * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
- * @route 'http://localhost/email/verify/{id}/{hash}'
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
  */
 VerifyEmailController.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: VerifyEmailController.url(args, options),
     method: 'head',
 })
+
+    /**
+* @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
+ * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
+ */
+    const VerifyEmailControllerForm = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+        action: VerifyEmailController.url(args, options),
+        method: 'get',
+    })
+
+            /**
+* @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
+ * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
+ */
+        VerifyEmailControllerForm.get = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: VerifyEmailController.url(args, options),
+            method: 'get',
+        })
+            /**
+* @see \App\Http\Controllers\Auth\VerifyEmailController::__invoke
+ * @see app/Http/Controllers/Auth/VerifyEmailController.php:16
+ * @route 'http://cms.test/email/verify/{id}/{hash}'
+ */
+        VerifyEmailControllerForm.head = (args: { id: string | number, hash: string | number } | [id: string | number, hash: string | number ], options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+            action: VerifyEmailController.url(args, {
+                        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+                            _method: 'HEAD',
+                            ...(options?.query ?? options?.mergeQuery ?? {}),
+                        }
+                    }),
+            method: 'get',
+        })
+    
+    VerifyEmailController.form = VerifyEmailControllerForm
 export default VerifyEmailController

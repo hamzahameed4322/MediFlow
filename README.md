@@ -2,7 +2,7 @@
 
 **🟢 Live Production Demo:** [https://mediflow-app.me/](https://mediflow-app.me/)
 
-> A web-based Clinic Appointment & Prescription Management System that allows patients to discover active doctors, view doctor schedules, book appointments online for physical clinic visits, receive consultations during clinic visits, access digital prescriptions, and maintain centralized medical history records while enabling doctors and administrators to manage the complete clinic workflow efficiently.
+> A web-based Clinic Appointment & Prescription Management System that allows patients to discover active doctors, view doctor schedules, book appointments online for physical clinic visits, receive consultations during clinic visits, access digital prescriptions, submit doctor reviews and ratings, and maintain centralized medical history records while enabling doctors and administrators to manage the complete clinic workflow efficiently.
 
 ---
 
@@ -17,6 +17,9 @@ MediFlow is focused on streamlining the workflow of a **single clinic**. The app
 - Patient consultations & private notes
 - Structured digital prescriptions
 - Centralized medical history tracking
+- ⭐ **Patient-Doctor Review & Star Rating System** (1-5 Stars, Anonymous Reviews, Score Breakdowns, Admin Moderation)
+- 🛡️ **Transparent Appointment Cancellation Tracking** (`cancelled_by: patient | doctor`, cancellation & rejection reasons, and visual badges)
+- ⚡ **Server-Side Paginated Queues & URL State Sync** (`paginate(10)` with query params preserving state across tabs)
 - Manual consultation billing (paid/unpaid tracking)
 - Strict role-based access control (Admin, Doctor, Patient)
 
@@ -58,6 +61,7 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 | **🛡️ Authorization** | Strict Role-Based Access Control (RBAC) preventing cross-role access (Admin, Doctor, Patient). |
 | **⚡ Async Processing**| Database-driven job queues for non-blocking operations like dispatching transactional emails. |
 | **🐛 Developer Tooling**| Built-in `Laravel Telescope` integration for deep query, request, and background job debugging. |
+| **✨ Aesthetic UI** | Curated primary teal/emerald design system (`#14b8a6`), interactive `FlickeringGrid`, responsive layouts, and dark mode support. |
 
 ### 👑 Administrator Capabilities
 | Feature | Operational Scope |
@@ -65,26 +69,30 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 | **📊 Clinic Dashboard** | High-level metrics tracking active users, total doctors, and daily appointments. |
 | **👥 User Management** | View comprehensive user tables and instantly toggle account access (`active`/`suspended`). |
 | **🩺 Doctor Onboarding**| Register new doctors, assign exact medical specialties, set consultation fees, and toggle employment status. |
-| **👁️ Clinical Oversight**| Unrestricted read-access to clinic-wide data (Appointments, Consultations, Prescriptions, and Bills). |
+| **👁️ Clinical Oversight**| Unrestricted read-access to clinic-wide data (Appointments, Consultations, Prescriptions, Bills, and Reviews). |
+| **⭐ Review Moderation** | Inspect and moderate patient reviews and ratings submitted for clinic doctors (`/admin/doctor-reviews`). |
 | **📈 Reporting** | Generate and review systematic clinic performance and financial reports. |
 
 ### 🩺 Doctor Workspace
 | Feature | Operational Scope |
 |---------|-------------------|
 | **📅 Schedule Control** | Dynamically define weekly availability (Day of week, Start/End time, and precise slot duration in minutes). |
-| **📥 Appointment Queue**| Real-time processing of pending patient requests. Doctors can `Approve`, `Reject`, `Cancel`, or flag as `No-Show`. |
+| **📥 Appointment Queue**| Real-time paginated queue of patient requests. Doctors can `Approve`, `Reject` (with reason), `Cancel` (with attribution), or flag as `No-Show`. |
+| **🛡️ Cancellation Tracking**| Clear distinction between appointments cancelled by the doctor (`Cancelled by Me`) versus the patient (`Cancelled by Patient`). |
 | **⚕️ Clinical Consultations**| Dedicated workflow to record patient symptoms, formal diagnosis, and private doctor-only notes. |
 | **💊 Digital Prescriptions**| Issue structured medical prescriptions supporting multiple line items (Medicine Name, Dosage, Frequency, Duration). |
 | **📂 Patient History** | Instant access to the historical timeline of an assigned patient's past appointments and prescriptions. |
+| **⭐ Rating Analytics** | View average star rating, rating distribution (1 to 5 stars), and patient reviews (`/doctor/reviews`). |
 | **💳 Billing Oversight** | View auto-generated consultation bills and manually mark them as `Paid` upon collection. |
 
 ### 🧑‍⚕️ Patient Portal
 | Feature | Operational Scope |
 |---------|-------------------|
-| **🔍 Doctor Discovery** | Browse the active clinic directory filtered by doctor specialization and upfront consultation fees. |
+| **🔍 Doctor Discovery** | Browse the active clinic directory filtered by doctor specialization, average star ratings, and upfront consultation fees. |
 | **⏱️ Live Booking** | View real-time, conflict-free time slots derived from the doctor's predefined schedule and current bookings. |
-| **📆 Appointment Lifecycle**| Submit new booking requests and cancel existing pending appointments directly from the dashboard. |
-| **🏥 Medical Records** | Access a permanent personal archive of past consultations, doctor diagnoses, and digital prescriptions. |
+| **📆 Appointment Lifecycle**| Submit new booking requests, view paginated appointments (`paginate(10)`), and cancel appointments with automated origin tracking. |
+| **🏥 Medical Records** | Access a permanent personal timeline archive of past consultations, doctor diagnoses, and collapsible digital prescriptions. |
+| **⭐ Review Submission** | Rate doctors after completed visits with a 1-5 star score, optional review text, and anonymous toggle (`/patient/reviews`). |
 | **🧾 Financial Ledger** | Transparent view of all pending and cleared consultation bills. |
 
 ---
@@ -102,18 +110,18 @@ The appointment system operates on a strictly enforced state machine, managed ex
                          /       \
                         ▼         ▼
                  CANCELLED    DOCTOR REVIEW
-                                    │
+                (by patient)        │
                         ┌───────────┼────────────┐
                         │           │            │
                         ▼           ▼            ▼
                    REJECTED    CONFIRMED    CANCELLED
-                                              (Doctor)
+                  (with reason)            (by doctor)
                                        │
                           ┌────────────┼────────────┐
                           │            │            │
                           ▼            ▼            ▼
                     CANCELLED      NO_SHOW    CONSULTATION
-                     (Patient)                   │
+                   (by patient)                  │
                                                  ▼
                                             PRESCRIPTION
                                                  │
@@ -122,6 +130,10 @@ The appointment system operates on a strictly enforced state machine, managed ex
                                                  │
                                                  ▼
                                              COMPLETED
+                                                 │
+                                                 ▼
+                                           DOCTOR REVIEW
+                                          (Star Rating & Text)
 ```
 
 ### Core Business Rules
@@ -136,6 +148,8 @@ The application strictly enforces the following domain logic at the service laye
 | **BR-5** | **Strict Approvals** | Only `pending` appointments can be approved or rejected by the assigned doctor. |
 | **BR-6** | **No-Show & Consultations**| Only `confirmed` appointments can transition into `no_show` or proceed to `completed` via a consultation. |
 | **BR-7** | **Consultation Artifacts** | Successfully completing a consultation automatically transitions the appointment to `completed` and synchronously generates a Consultation record, a Digital Prescription, and an `unpaid` Bill. |
+| **BR-8** | **Doctor Reviews & Ratings** | Patients can rate and review doctors after completed appointments. Reviews support optional anonymity (`is_anonymous`), with scores bounded between 1 and 5 stars. |
+| **BR-9** | **Cancellation Attribution** | Whenever an appointment is cancelled by either party, the system permanently records the origin (`cancelled_by: patient | doctor`) and optional cancellation reason. |
 
 ---
 
@@ -154,6 +168,9 @@ erDiagram
     Appointment ||--o| Bill : "generates (1:1)"
     Consultation ||--o| Prescription : "receives (1:1)"
     Prescription ||--o{ PrescriptionItem : "contains (1:N)"
+    PatientProfile ||--o{ DoctorReview : "submits (1:N)"
+    DoctorProfile ||--o{ DoctorReview : "receives (1:N)"
+    Appointment ||--o| DoctorReview : "reviewed in (0:1)"
 ```
 
 ### 🗄 Data Dictionary
@@ -250,6 +267,17 @@ Below is the strict structural definition of the core entities, including data t
 | `amount` | decimal(8,2)| | Auto-populated from doctor profile |
 | `status` | enum | Default: `unpaid` | `unpaid`, `paid` |
 
+#### `doctor_reviews`
+| Attribute | Type | Key/Constraint | Domain / Notes |
+|---|---|---|---|
+| `id` | bigint | PK | Auto-incrementing |
+| `patient_id` | bigint | FK (`patient_profiles.id`) | Cascade Delete |
+| `doctor_id` | bigint | FK (`doctor_profiles.id`) | Cascade Delete |
+| `appointment_id` | bigint | FK (`appointments.id`) | Nullable, Cascade Delete |
+| `rating` | integer | | Score between 1 and 5 stars |
+| `review_text` | text | Nullable | Patient written feedback |
+| `is_anonymous` | boolean | Default: `false` | Whether author identity is hidden |
+
 ---
 
 ## 🛠 Technology Stack
@@ -272,7 +300,7 @@ Below is the strict structural definition of the core entities, including data t
 - **Bundler**: Vite `^8.0`
 
 ### Recommended Local Tools
-- **Laravel Herd**: If you want to avoid manually setting up PHP, Node.js, and Composer, Herd provides an effortless, zero-configuration environment with everything bundled out-of-the-box.
+- **Laravel Herd**: Provides an effortless, zero-configuration environment with PHP, Node.js, and Composer bundled out-of-the-box.
 - **DBngin** & **DBeaver**: For database service management and inspection.
 
 ---
@@ -285,22 +313,24 @@ The repository follows a standard Laravel + React monolithic structure, emphasiz
 MediFlow/
 ├── app/                        # Backend Engine (Laravel)
 │   ├── Http/
-│   │   └── Controllers/        # API Request Handlers (Admin, Doctor, Patient)
-│   ├── Models/                 # Eloquent Database Models (User, Appointment, etc.)
-│   └── Providers/              # Service Providers
+│   │   ├── Controllers/        # API Request Handlers (Admin, Doctor, Patient, Review)
+│   │   ├── Requests/           # Form Request Validation (Patient, Doctor, Admin)
+│   │   └── Resources/          # Eloquent API Resources (AppointmentResource, DoctorReviewResource)
+│   ├── Models/                 # Eloquent Database Models (User, Appointment, DoctorReview, etc.)
+│   └── Policies/               # RBAC Policies (DoctorReviewPolicy, etc.)
 ├── config/                     # Centralized configuration (Database, Mail, Fortify)
 ├── database/                   # Data Layer
 │   ├── migrations/             # Database Schema Definitions
-│   └── seeders/                # Test Data Generation
+│   └── seeders/                # Test Data Generation (DatabaseSeeder, DoctorReviewSeeder)
 ├── public/                     # Publicly accessible assets & entry point
 ├── resources/                  
 │   └── js/                     # Frontend Workspace (React + TypeScript)
-│       ├── components/         # Reusable UI (Radix, Tailwind, shadcn/ui)
-│       ├── layouts/            # Shared Page Layouts
+│       ├── components/         # Reusable UI (Pagination, StatusBadge, StarRating, FlickeringGrid)
+│       ├── layouts/            # Shared Page Layouts (AppLayout, AuthSplitLayout)
 │       └── pages/              # Inertia Page Components
-│           ├── admin/          # Admin Views
-│           ├── doctor/         # Doctor Views
-│           └── patient/        # Patient Views
+│           ├── admin/          # Admin Views (Dashboard, Users, Doctors, Doctor Reviews, Reports)
+│           ├── doctor/         # Doctor Views (Dashboard, Appointments, Reviews, Patient History, Schedules)
+│           └── patient/        # Patient Views (Dashboard, My Appointments, Doctors, Reviews, Medical History)
 ├── routes/                     # HTTP Routing
 │   └── web.php                 # Web & Inertia Routes
 ├── .env.example                # Environment Configuration Template
@@ -343,7 +373,7 @@ php artisan key:generate
 ### 3. Database Initialization
 By default, the application uses **SQLite**, meaning no database server configuration is required out of the box.
 ```bash
-# Run migrations and seed initial test data (Admin, Doctors, Patients)
+# Run migrations and seed initial test data (Admin, Doctors, Patients, Reviews)
 php artisan migrate --seed
 ```
 *(If prompted to create the `database.sqlite` file, type `yes`).*
@@ -384,7 +414,7 @@ A quick reference for commonly used commands in this repository.
 | **Servers** | `composer run dev` | Runs PHP server, Vite, and Queue concurrently. |
 | **Servers** | `npm run build` | Compiles and minifies frontend assets for production. |
 | **Database**| `php artisan migrate:fresh --seed` | Wipes the database, re-runs all migrations, and seeds test data. |
-| **Testing** | `php artisan test` | Executes the PestPHP / PHPUnit test suite. |
+| **Testing** | `php artisan test --compact` | Executes the PestPHP / PHPUnit test suite. |
 | **Linting** | `composer run lint` | Formats backend PHP code using Laravel Pint. |
 | **Linting** | `npm run lint` | Formats and lints frontend React/TS code via ESLint. |
 | **Routing** | `php artisan route:list` | Displays all registered application routes. |

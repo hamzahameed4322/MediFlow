@@ -25,8 +25,8 @@ export default function AuthSplitLayout({
                     squareSize={4}
                     gridGap={6}
                     color="#14b8a6"
-                    maxOpacity={0.2}
-                    flickerChance={0.1}
+                    maxOpacity={0.3}
+                    flickerChance={0.15}
                 />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,var(--color-primary),transparent_55%)] opacity-15 dark:opacity-25" />
 

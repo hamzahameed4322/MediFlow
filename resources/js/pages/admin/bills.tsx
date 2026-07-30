@@ -1,20 +1,7 @@
-/**
- * TODO FOR AI AGENT / BACKEND — read before touching this file:
- * `[propName]` currently arrives as the FULL, un-paginated list from the backend
- * (no page/limit params applied). Fine for dev-seeded rows, but WILL fail in
- * production once this table grows — full table scan on every load, huge
- * payload over the wire, and frontend render (map/filter over whole array)
- * gets slower with every new row.
- *
- * Backend needs to apply real pagination (Laravel's paginate()/cursorPaginate())
- * on this endpoint, and this UI needs to consume page/per_page + a pager control
- * (shadcn Pagination) instead of assuming `[propName]` is the complete dataset.
- * Don't ship this to production as-is.
- */
 import { Deferred, Head } from '@inertiajs/react';
 import { Pagination } from '@/components/pagination';
-import { CircleDollarSign, type LucideIcon, Receipt, Search, Wallet } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { CircleDollarSign, type LucideIcon, Receipt, Search, Wallet, X } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
 import { BillStatusBadge } from '@/components/status-badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -52,6 +39,21 @@ export default function BillsIndex({ bills }: Props) {
     const billData = bills?.data ?? [];
     const [query, setQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState<'all' | 'paid' | 'unpaid'>('all');
+    const [isSearching, setIsSearching] = useState(false);
+
+    useEffect(() => {
+        if (!query.trim() && statusFilter === 'all') {
+            setIsSearching(false);
+            return;
+        }
+
+        setIsSearching(true);
+        const timer = setTimeout(() => {
+            setIsSearching(false);
+        }, 250);
+
+        return () => clearTimeout(timer);
+    }, [query, statusFilter]);
 
     const filteredBills = useMemo(() => {
         return billData.filter((bill) => {
@@ -68,6 +70,8 @@ export default function BillsIndex({ bills }: Props) {
             return matchesStatus && searchableText.includes(query.toLowerCase());
         });
     }, [billData, query, statusFilter]);
+
+    const hasActiveFilter = statusFilter !== 'all' || query.trim() !== '';
 
     const paid = billData
         .filter((bill) => bill.status === 'paid')
@@ -100,26 +104,69 @@ export default function BillsIndex({ bills }: Props) {
                     <BillMetric label="Outstanding" value={formatCurrency(unpaid)} icon={Receipt} tone="rose" />
                 </section>
 
-                <div className="grid gap-3 md:grid-cols-[1fr_220px]">
-                    <div className="relative rounded-2xl border border-border bg-background">
-                        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-                        <Input
-                            value={query}
-                            onChange={(event) => setQuery(event.target.value)}
-                            placeholder="Search patient, doctor, date..."
-                            className="border-0 pl-9 shadow-none focus-visible:ring-0"
-                        />
+                <div className="flex flex-col gap-3">
+                    <div className="grid gap-3 md:grid-cols-[1fr_220px]">
+                        <div className="relative rounded-2xl border border-border bg-background">
+                            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+                            <Input
+                                value={query}
+                                onChange={(event) => setQuery(event.target.value)}
+                                placeholder="Search patient, doctor, date..."
+                                className="border-0 pl-9 shadow-none focus-visible:ring-0"
+                            />
+                        </div>
+                        <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as typeof statusFilter)}>
+                            <SelectTrigger>
+                                <SelectValue placeholder="Filter status" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">All statuses</SelectItem>
+                                <SelectItem value="paid">Paid</SelectItem>
+                                <SelectItem value="unpaid">Unpaid</SelectItem>
+                            </SelectContent>
+                        </Select>
                     </div>
-                    <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as typeof statusFilter)}>
-                        <SelectTrigger>
-                            <SelectValue placeholder="Filter status" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="all">All statuses</SelectItem>
-                            <SelectItem value="paid">Paid</SelectItem>
-                            <SelectItem value="unpaid">Unpaid</SelectItem>
-                        </SelectContent>
-                    </Select>
+
+                    {hasActiveFilter && (
+                        <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                            {statusFilter !== 'all' && (
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-medium text-primary shadow-2xs">
+                                    Status: {statusFilter === 'paid' ? 'Paid' : 'Unpaid'}
+                                    <button
+                                        type="button"
+                                        onClick={() => setStatusFilter('all')}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-primary/20 transition-colors cursor-pointer"
+                                        aria-label="Remove status filter"
+                                    >
+                                        <X className="size-3" />
+                                    </button>
+                                </span>
+                            )}
+                            {query.trim() !== '' && (
+                                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-medium text-primary shadow-2xs">
+                                    Search: "{query}"
+                                    <button
+                                        type="button"
+                                        onClick={() => setQuery('')}
+                                        className="ml-0.5 rounded-full p-0.5 hover:bg-primary/20 transition-colors cursor-pointer"
+                                        aria-label="Remove search query"
+                                    >
+                                        <X className="size-3" />
+                                    </button>
+                                </span>
+                            )}
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    setStatusFilter('all');
+                                    setQuery('');
+                                }}
+                                className="ml-1 text-xs font-semibold text-muted-foreground hover:text-destructive transition-colors underline-offset-4 hover:underline cursor-pointer"
+                            >
+                                Reset all
+                            </button>
+                        </div>
+                    )}
                 </div>
 
                 <Card>
@@ -129,25 +176,33 @@ export default function BillsIndex({ bills }: Props) {
                     </CardHeader>
                     <CardContent>
                         <Deferred data="bills" fallback={<BillsSkeleton />}>
-                            {filteredBills.length === 0 ? (
-                                <EmptyState
-                                    icon={Receipt}
-                                    title="No bills yet"
-                                    description="Bills will be generated automatically after consultations."
-                                />
-                            ) : (
-                                <div>
-                                    <div className="overflow-x-auto rounded-xl border border-border">
-                                        <Table className="min-w-[800px] table-fixed">
-                                            <TableHeader>
+                            <div>
+                                <div className="overflow-x-auto rounded-xl border border-border">
+                                    <Table className="min-w-[800px] table-fixed">
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead className="w-[24%]">Patient</TableHead>
+                                                <TableHead className="w-[24%]">Doctor</TableHead>
+                                                <TableHead className="w-[18%]">Visit date</TableHead>
+                                                <TableHead className="w-[18%]">Amount</TableHead>
+                                                <TableHead className="w-[17%]">Status</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        {isSearching ? (
+                                            <BillsTableSkeleton />
+                                        ) : filteredBills.length === 0 ? (
+                                            <TableBody>
                                                 <TableRow>
-                                                    <TableHead className="w-[24%]">Patient</TableHead>
-                                                    <TableHead className="w-[24%]">Doctor</TableHead>
-                                                    <TableHead className="w-[18%]">Visit date</TableHead>
-                                                    <TableHead className="w-[18%]">Amount</TableHead>
-                                                    <TableHead className="w-[17%]">Status</TableHead>
+                                                    <TableCell colSpan={5} className="py-8 text-center">
+                                                        <EmptyState
+                                                            icon={Receipt}
+                                                            title={query || statusFilter !== 'all' ? "No matching bills" : "No bills yet"}
+                                                            description="There are no billing records matching your current filter or search criteria."
+                                                        />
+                                                    </TableCell>
                                                 </TableRow>
-                                            </TableHeader>
+                                            </TableBody>
+                                        ) : (
                                             <TableBody>
                                                 {filteredBills.map((bill) => (
                                                     <TableRow key={bill.id}>
@@ -169,11 +224,11 @@ export default function BillsIndex({ bills }: Props) {
                                                     </TableRow>
                                                 ))}
                                             </TableBody>
-                                        </Table>
-                                    </div>
-                                    <Pagination links={bills?.meta?.links || []} meta={bills?.meta} />
+                                        )}
+                                    </Table>
                                 </div>
-                            )}
+                                <Pagination links={bills?.meta?.links || []} meta={bills?.meta} />
+                            </div>
                         </Deferred>
                     </CardContent>
                 </Card>
@@ -188,11 +243,11 @@ const BILL_TONE_CLASSES: Record<'emerald' | 'rose', string> = {
 };
 
 function BillMetric({
-                        label,
-                        value,
-                        icon: Icon,
-                        tone,
-                    }: {
+    label,
+    value,
+    icon: Icon,
+    tone,
+}: {
     label: string;
     value: string;
     icon: LucideIcon;
@@ -220,6 +275,22 @@ function BillsSkeleton() {
                 <Skeleton key={index} className="h-16 w-full rounded-2xl" />
             ))}
         </div>
+    );
+}
+
+function BillsTableSkeleton() {
+    return (
+        <TableBody>
+            {Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                    <TableCell><Skeleton className="mb-1 h-4 w-32" /><Skeleton className="h-3 w-20" /></TableCell>
+                    <TableCell><Skeleton className="mb-1 h-4 w-32" /><Skeleton className="h-3 w-24" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-24" /></TableCell>
+                    <TableCell><Skeleton className="h-4 w-16" /></TableCell>
+                    <TableCell><Skeleton className="h-6 w-16 rounded-full" /></TableCell>
+                </TableRow>
+            ))}
+        </TableBody>
     );
 }
 

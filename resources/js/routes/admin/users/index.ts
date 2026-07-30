@@ -1,8 +1,8 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://localhost/admin/users/{user}/toggle-status'
+ * @see app/Http/Controllers/AdminController.php:109
+ * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
 export const toggleStatus = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleStatus.url(args, options),
@@ -11,13 +11,13 @@ export const toggleStatus = (args: { user: number | { id: number } } | [user: nu
 
 toggleStatus.definition = {
     methods: ["post"],
-    url: 'http://localhost/admin/users/{user}/toggle-status',
+    url: 'http://cms.test/admin/users/{user}/toggle-status',
 } satisfies RouteDefinition<["post"]>
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://localhost/admin/users/{user}/toggle-status'
+ * @see app/Http/Controllers/AdminController.php:109
+ * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
 toggleStatus.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
@@ -49,13 +49,35 @@ toggleStatus.url = (args: { user: number | { id: number } } | [user: number | { 
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:108
- * @route 'http://localhost/admin/users/{user}/toggle-status'
+ * @see app/Http/Controllers/AdminController.php:109
+ * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
 toggleStatus.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     url: toggleStatus.url(args, options),
     method: 'post',
 })
+
+    /**
+* @see \App\Http\Controllers\AdminController::toggleStatus
+ * @see app/Http/Controllers/AdminController.php:109
+ * @route 'http://cms.test/admin/users/{user}/toggle-status'
+ */
+    const toggleStatusForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+        action: toggleStatus.url(args, options),
+        method: 'post',
+    })
+
+            /**
+* @see \App\Http\Controllers\AdminController::toggleStatus
+ * @see app/Http/Controllers/AdminController.php:109
+ * @route 'http://cms.test/admin/users/{user}/toggle-status'
+ */
+        toggleStatusForm.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+            action: toggleStatus.url(args, options),
+            method: 'post',
+        })
+    
+    toggleStatus.form = toggleStatusForm
 const users = {
     toggleStatus: Object.assign(toggleStatus, toggleStatus),
 }
