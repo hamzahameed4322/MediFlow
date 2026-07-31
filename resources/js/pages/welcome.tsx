@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
 import {
     Calendar,
@@ -25,6 +26,15 @@ import { Marquee } from '@/components/ui/marquee';
 import { Meteors } from '@/components/ui/meteors';
 import { TextAnimate } from '@/components/ui/text-animate';
 import { FlickeringGrid } from '@/components/ui/flickering-grid';
+import {
+    Navbar,
+    NavBody,
+    NavItems,
+    MobileNav,
+    MobileNavHeader,
+    MobileNavMenu,
+    MobileNavToggle,
+} from '@/components/ui/resizable-navbar';
 
 import { cn } from '@/lib/utils';
 
@@ -175,6 +185,17 @@ export default function Welcome({
     stats,
 }: WelcomeProps) {
     const { auth } = usePage().props;
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+    const navItems = [
+        ...(featuredDoctors.length > 0
+            ? [{ name: 'Doctors', link: '#doctors' }]
+            : []),
+        { name: 'Features', link: '#features' },
+        { name: 'How It Works', link: '#how-it-works' },
+        { name: 'Reviews', link: '#reviews' },
+        { name: 'Trust & Security', link: '#trust' },
+    ];
 
     const features = [
         {
@@ -276,26 +297,30 @@ export default function Welcome({
         <>
             <Head title="Clinic Appointments & Prescriptions | MediFlow" />
             <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-                {/* Header Navbar */}
-                <header className="sticky top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-md">
-                    <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
+                {/* Header Resizable Navbar */}
+                <Navbar className="sticky top-0 z-50 w-full">
+                    {/* Desktop Floating Resizable Nav */}
+                    <NavBody>
                         {/* Logo */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex shrink-0 items-center gap-2">
                             <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20 sm:h-10 sm:w-10">
                                 <HeartPulse className="h-5 w-5" />
                             </div>
-                            <span className="text-lg font-bold tracking-tight text-primary sm:text-xl">
+                            <span className="text-lg font-bold tracking-tight text-primary whitespace-nowrap sm:text-xl">
                                 MediFlow
                             </span>
                         </div>
 
+                        {/* Nav Items */}
+                        <NavItems items={navItems} />
+
                         {/* Nav Actions */}
-                        <nav className="flex items-center gap-1.5 sm:gap-4">
+                        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
                             <ThemeToggle className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" />
                             {auth?.user ? (
                                 <Link
                                     href={dashboard()}
-                                    className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-4 sm:text-sm"
+                                    className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 whitespace-nowrap sm:px-4 sm:text-sm"
                                 >
                                     Dashboard
                                 </Link>
@@ -303,21 +328,100 @@ export default function Welcome({
                                 <>
                                     <Link
                                         href={login()}
-                                        className="inline-flex h-9 items-center justify-center rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground sm:px-4 sm:text-sm"
+                                        className="inline-flex h-9 items-center justify-center rounded-lg border border-border bg-background px-3 py-2 text-xs font-medium text-foreground transition-colors hover:bg-accent hover:text-accent-foreground whitespace-nowrap sm:px-4 sm:text-sm"
                                     >
                                         Log in
                                     </Link>
                                     <Link
                                         href={register()}
-                                        className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 sm:px-4 sm:text-sm"
+                                        className="inline-flex h-9 items-center justify-center rounded-lg bg-primary px-3 py-2 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 whitespace-nowrap sm:px-4 sm:text-sm"
                                     >
                                         Register
                                     </Link>
                                 </>
                             )}
-                        </nav>
-                    </div>
-                </header>
+                        </div>
+                    </NavBody>
+
+                    {/* Mobile Responsive Navigation Drawer */}
+                    <MobileNav>
+                        <MobileNavHeader>
+                            {/* Mobile Logo */}
+                            <div className="flex items-center gap-2">
+                                <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-md shadow-primary/20">
+                                    <HeartPulse className="h-4 w-4" />
+                                </div>
+                                <span className="text-base font-bold tracking-tight text-primary">
+                                    MediFlow
+                                </span>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                                <ThemeToggle className="flex h-8 w-8 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground" />
+                                <MobileNavToggle
+                                    isOpen={mobileMenuOpen}
+                                    onClick={() =>
+                                        setMobileMenuOpen(!mobileMenuOpen)
+                                    }
+                                />
+                            </div>
+                        </MobileNavHeader>
+
+                        <MobileNavMenu
+                            isOpen={mobileMenuOpen}
+                            onClose={() => setMobileMenuOpen(false)}
+                            className="mt-2 border border-border/80 bg-background/95 backdrop-blur-md"
+                        >
+                            <div className="flex w-full flex-col gap-3 py-2">
+                                {navItems.map((item) => (
+                                    <a
+                                        key={item.name}
+                                        href={item.link}
+                                        onClick={() =>
+                                            setMobileMenuOpen(false)
+                                        }
+                                        className="rounded-lg px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent hover:text-primary"
+                                    >
+                                        {item.name}
+                                    </a>
+                                ))}
+                                <div className="my-1 border-t border-border" />
+                                {auth?.user ? (
+                                    <Link
+                                        href={dashboard()}
+                                        onClick={() =>
+                                            setMobileMenuOpen(false)
+                                        }
+                                        className="inline-flex h-9 w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                                    >
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <div className="flex flex-col gap-2">
+                                        <Link
+                                            href={login()}
+                                            onClick={() =>
+                                                setMobileMenuOpen(false)
+                                            }
+                                            className="inline-flex h-9 w-full items-center justify-center rounded-lg border border-border bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+                                        >
+                                            Log in
+                                        </Link>
+                                        <Link
+                                            href={register()}
+                                            onClick={() =>
+                                                setMobileMenuOpen(false)
+                                            }
+                                            className="inline-flex h-9 w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                                        >
+                                            Register
+                                        </Link>
+                                    </div>
+                                )}
+                            </div>
+                        </MobileNavMenu>
+                    </MobileNav>
+                </Navbar>
 
                 {/* Hero Section */}
                 <main>
@@ -400,7 +504,10 @@ export default function Welcome({
 
                     {/* Meet Our Doctors */}
                     {featuredDoctors.length > 0 && (
-                        <section className="bg-muted/50 py-16 sm:py-20">
+                        <section
+                            id="doctors"
+                            className="scroll-mt-20 bg-muted/50 py-16 sm:py-20"
+                        >
                             <div className="container mx-auto max-w-7xl px-4 sm:px-6">
                                 <div className="mx-auto max-w-2xl space-y-4 text-center">
                                     <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
@@ -445,7 +552,10 @@ export default function Welcome({
                     )}
 
                     {/* Features Grid */}
-                    <section className="border-t border-border bg-background py-16 sm:py-20">
+                    <section
+                        id="features"
+                        className="scroll-mt-20 border-t border-border bg-background py-16 sm:py-20"
+                    >
                         <div className="container mx-auto max-w-7xl px-4 sm:px-6">
                             <div className="mx-auto max-w-3xl space-y-4 text-center">
                                 <h2 className="text-2xl font-bold tracking-tight sm:text-3xl lg:text-4xl">
@@ -467,7 +577,10 @@ export default function Welcome({
                     </section>
 
                     {/* How It Works */}
-                    <section className="bg-muted/50 py-16 sm:py-20">
+                    <section
+                        id="how-it-works"
+                        className="scroll-mt-20 bg-muted/50 py-16 sm:py-20"
+                    >
                         <div className="container mx-auto max-w-7xl px-4 sm:px-6">
                             <div className="mx-auto max-w-2xl space-y-4 text-center">
                                 <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
@@ -508,7 +621,10 @@ export default function Welcome({
                     </section>
 
                     {/* Verified Patient Reviews & Ratings Showcase Section */}
-                    <section className="border-t border-border bg-background py-16 sm:py-20">
+                    <section
+                        id="reviews"
+                        className="scroll-mt-20 border-t border-border bg-background py-16 sm:py-20"
+                    >
                         <div className="container mx-auto max-w-7xl px-4 sm:px-6">
                             <div className="mx-auto max-w-2xl space-y-4 text-center">
                                 <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl lg:text-4xl">

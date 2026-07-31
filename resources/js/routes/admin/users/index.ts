@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:109
+ * @see app/Http/Controllers/AdminController.php:135
  * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
 export const toggleStatus = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ toggleStatus.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:109
+ * @see app/Http/Controllers/AdminController.php:135
  * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
 toggleStatus.url = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ toggleStatus.url = (args: { user: number | { id: number } } | [user: number | { 
 
 /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:109
+ * @see app/Http/Controllers/AdminController.php:135
  * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
 toggleStatus.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ toggleStatus.post = (args: { user: number | { id: number } } | [user: number | {
 
     /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:109
+ * @see app/Http/Controllers/AdminController.php:135
  * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
     const toggleStatusForm = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ toggleStatus.post = (args: { user: number | { id: number } } | [user: number | {
 
             /**
 * @see \App\Http\Controllers\AdminController::toggleStatus
- * @see app/Http/Controllers/AdminController.php:109
+ * @see app/Http/Controllers/AdminController.php:135
  * @route 'http://cms.test/admin/users/{user}/toggle-status'
  */
         toggleStatusForm.post = (args: { user: number | { id: number } } | [user: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

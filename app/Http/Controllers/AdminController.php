@@ -92,13 +92,39 @@ class AdminController extends Controller
     }
 
     /**
-     * List all patient accounts.
+     * List all patient accounts with search, status filtering, and 10 records per page.
      */
-    public function users(): Response
+    public function users(Request $request): Response
     {
+        $query = PatientProfile::query()
+            ->with(['user', 'appointments.doctor.user']);
+
+        if ($search = trim((string) $request->input('search'))) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($uq) use ($search) {
+                    $uq->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                })
+                    ->orWhere('phone', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%");
+            });
+        }
+
+        if ($status = $request->input('status')) {
+            if (in_array($status, ['active', 'suspended'])) {
+                $query->whereHas('user', function ($uq) use ($status) {
+                    $uq->where('status', $status);
+                });
+            }
+        }
+
         return Inertia::render('admin/users', [
+            'filters' => [
+                'search' => $request->input('search', ''),
+                'status' => $request->input('status', 'all'),
+            ],
             'patients' => PatientProfileResource::collection(
-                PatientProfile::query()->with('user')->orderByDesc('created_at')->paginate(10),
+                $query->orderByDesc('created_at')->paginate(10)->withQueryString(),
             ),
         ]);
     }

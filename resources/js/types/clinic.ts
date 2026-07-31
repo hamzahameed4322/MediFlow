@@ -16,6 +16,18 @@ export type CmsUser = {
 
 // ─── Patient Profile ────────────────────────────────────────────────────────
 
+export type PatientAppointmentStats = {
+    total: number;
+    completed: number;
+    cancelled: number;
+    cancelled_by_patient: number;
+    cancelled_by_doctor: number;
+    no_show: number;
+    pending: number;
+    confirmed: number;
+    rejected: number;
+};
+
 export type PatientProfile = {
     id: number;
     user_id: number;
@@ -30,6 +42,7 @@ export type PatientProfile = {
     updated_at: string;
     user?: CmsUser;
     appointments?: Appointment[];
+    appointment_stats?: PatientAppointmentStats;
 };
 
 // ─── Doctor Profile ─────────────────────────────────────────────────────────
