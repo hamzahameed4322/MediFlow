@@ -37,15 +37,50 @@ MediFlow is focused on streamlining the workflow of a **single clinic**. The app
 
 ## 🏗 Architecture Overview
 
-MediFlow employs a modern monolithic architecture utilizing the **Inertia.js** protocol to bridge the gap between a server-rendered Laravel backend and a client-side React frontend.
+MediFlow employs a modern monolithic architecture powered by the **Inertia.js** protocol. Inertia bridges the gap between a server-side Laravel 13 backend and a client-side React 19 SPA frontend without the overhead of building a separate REST or GraphQL API.
+
+### 💡 The Power of Inertia.js (Abstraction Layer)
+
+* **No API Glue Code:** Eliminates the need for complex client-side state management (Redux, React Query) or API controllers. Server controllers return props directly to React page components via `Inertia::render('PageName', $props)`.
+* **Single Server-Side Routing:** All application routes are defined centrally in `routes/web.php` and automatically exported to end-to-end typed TypeScript functions via **Laravel Wayfinder**.
+* **Seamless SPA Performance:** The initial page load serves a full HTML document with a hydration payload. Subsequent navigations are intercepted by Inertia to perform instant XHR component swaps without browser reloads.
+* **Unified Security & RBAC:** Sessions, cookies, CSRF tokens, and Role-Based Access Control remain 100% server-side and secure via Laravel Fortify and Middleware.
 
 ```mermaid
-flowchart LR
-    Client([Web Browser]) <--> |Inertia.js Protocol| React[React 19 + Tailwind CSS 4]
-    React <--> |JSON| Laravel[Laravel 13 Core]
-    Laravel <--> |Eloquent ORM| DB[(SQLite / MySQL)]
-    Laravel -.-> |Queued Jobs| Queue[Database Queue]
-    Queue -.-> |Transactional Mails| Brevo[Brevo Mail Provider]
+flowchart TB
+    subgraph ClientLayer [" 💻 Client-Side SPA Layer (Browser) "]
+        direction LR
+        UI["React 19 User Interface<br/>(Components, Tailwind CSS 4, shadcn/ui)"]
+        ClientAdapter["⚡ @inertiajs/react Adapter<br/>(Client Router, Page State, Link Interceptor)"]
+        UI <--> ClientAdapter
+    end
+
+    subgraph ProtocolLayer [" 🌉 Inertia.js Protocol Abstraction (No REST/GraphQL API Needed) "]
+        direction TB
+        Protocol["• Initial Request: Full HTML + Hydration Payload<br/>• Subsequent Navigations: XHR Requests with X-Inertia Headers<br/>• Response: JSON Page Objects (Component Name + Server Props + Flash Data)<br/>• Route Sync: Wayfinder Typed Route Actions"]
+    end
+
+    subgraph ServerLayer [" 🕹️ Server-Side Monolith Layer (Laravel 13 Core) "]
+        direction LR
+        Controllers["Laravel Controllers & Services<br/>(ClinicWorkflowService, RBAC Middleware)"]
+        InertiaResponse["📦 Inertia::render('page', $props)<br/>(Direct Prop Injection)"]
+        ORM["🗄️ Eloquent ORM Models<br/>(User, Appointment, DoctorProfile, etc.)"]
+        Controllers --> InertiaResponse
+        Controllers --> ORM
+    end
+
+    subgraph InfraLayer [" ⚙️ Infrastructure & Background Workers "]
+        direction LR
+        DB[("💾 Database Engine<br/>(SQLite / MySQL)")]
+        Queue["⚙️ Database Job Queue<br/>(Async Notification Dispatcher)"]
+        Brevo["📧 Brevo Email Service<br/>(Transactional Mail API)"]
+        ORM <--> DB
+        Controllers -.-> Queue
+        Queue -.-> Brevo
+    end
+
+    ClientLayer <===> ProtocolLayer
+    ProtocolLayer <===> ServerLayer
 ```
 
 ---
