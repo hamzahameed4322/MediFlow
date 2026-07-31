@@ -164,6 +164,25 @@ The system integrates asynchronous transactional email notifications (via Larave
 | **Appointment Rejected** | Patient | `AppointmentRejectedNotification` | Notifies the patient that their pending request was declined, including the doctor's explanation. |
 | **Appointment Marked No-Show** | Patient | `AppointmentNoShowNotification` | Alerts the patient that they missed a confirmed clinical visit. |
 
+#### Technical Email Execution Flow
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as User / Admin / Doctor
+    participant System as MediFlow Core API
+    participant Queue as Asynchronous Queue
+    participant Brevo as Brevo Mail Engine
+    participant Inbox as Target Recipient Inbox
+
+    User->>System: Action Triggered (e.g. Cancel / Reject)
+    System->>System: Update DB Record Status
+    System->>Queue: Push Notification Job
+    System-->>User: Immediate UI Response (Fast)
+    Queue->>Brevo: Send Payload via Brevo Transport
+    Brevo->>Inbox: Email Delivered to Recipient
+```
+
 ---
 
 ## 💾 Domain Model (Database Schema)
