@@ -30,3 +30,13 @@ test('unverified admin users are redirected to email verification', function () 
         ->get(route('admin.dashboard'))
         ->assertRedirect(route('verification.notice'));
 });
+
+test('non-admin users cannot access admin dashboard and receive 403 status', function () {
+    $patient = User::factory()->create([
+        'role' => 'patient',
+    ]);
+
+    $this->actingAs($patient)
+        ->get(route('admin.dashboard'))
+        ->assertStatus(403);
+});
