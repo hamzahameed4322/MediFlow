@@ -152,15 +152,17 @@ The application strictly enforces the following domain logic at the service laye
 | **BR-10** | **Asynchronous Notifications** | The system automatically dispatches queued email notifications on critical lifecycle events: cancellations (cross-notified to the opposing party), rejections, no-shows, and doctor onboarding. |
 
 ### Automated Transactional Notifications
-The system integrates asynchronous transactional email notifications (via Laravel Notifications and Brevo/SMTP) triggered on specific state machine transitions:
+The system integrates asynchronous transactional email notifications (via Laravel Notifications and Brevo/SMTP) triggered on specific lifecycle events:
 
 | Lifecycle Event | Recipient | Notification Class | Action & Behavior |
 |---|---|---|---|
+| **User Registration Verification** | New Patient | `QueuedVerifyEmail` | Sends a signed email verification link upon new patient account signup. |
+| **Password Reset Request** | Account Owner | `ResetPasswordNotification` | Delivers a secure, single-use password recovery link valid for 60 minutes. |
+| **Doctor Account Onboarded** | Doctor | `DoctorCredentialsNotification` | Delivers initial system credentials (email & temp password) to newly onboarded clinical staff. |
 | **Appointment Cancelled (by Patient)** | Doctor | `AppointmentCancelledNotification` | Cross-notifies the doctor immediately with the patient's name, appointment timestamp, and cancellation reason. |
 | **Appointment Cancelled (by Doctor)** | Patient | `AppointmentCancelledNotification` | Cross-notifies the patient immediately with the doctor's name, appointment timestamp, and cancellation reason. |
 | **Appointment Rejected** | Patient | `AppointmentRejectedNotification` | Notifies the patient that their pending request was declined, including the doctor's explanation. |
 | **Appointment Marked No-Show** | Patient | `AppointmentNoShowNotification` | Alerts the patient that they missed a confirmed clinical visit. |
-| **Doctor Account Onboarded** | Doctor | `DoctorCredentialsNotification` | Delivers initial system credentials to newly onboarded clinical staff. |
 
 ---
 
