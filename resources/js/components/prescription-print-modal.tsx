@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import { Download, Printer, Stethoscope, Pill, FileText, Calendar, User } from 'lucide-react';
-import { useReactToPrint } from 'react-to-print';
+import { Download, Stethoscope, Pill, FileText, Calendar, User } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { Button } from '@/components/ui/button';
 import {
@@ -36,11 +35,6 @@ export function PrescriptionPrintModal({
 }: Props) {
     const printableRef = useRef<HTMLDivElement>(null);
 
-    const reactToPrintFn = useReactToPrint({
-        contentRef: printableRef,
-        documentTitle: appointment ? `Prescription_${patient?.name || 'Patient'}_${appointment.appointment_date}` : 'Prescription',
-    });
-
     if (!appointment) return null;
 
     const consultation = appointment.consultation;
@@ -75,7 +69,7 @@ export function PrescriptionPrintModal({
                         Prescription & Consultation Pass
                     </DialogTitle>
                     <DialogDescription>
-                        Save as PDF directly to your device or send to printer.
+                        Save as PDF directly to your device downloads folder.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -209,14 +203,6 @@ export function PrescriptionPrintModal({
                 <DialogFooter className="no-print gap-2 sm:gap-0">
                     <Button variant="outline" onClick={() => onOpenChange(false)}>
                         Close
-                    </Button>
-                    <Button
-                        variant="outline"
-                        onClick={() => reactToPrintFn()}
-                        className="gap-2"
-                    >
-                        <Printer className="size-4" />
-                        Print
                     </Button>
                     <Button
                         onClick={handleDownloadPdf}

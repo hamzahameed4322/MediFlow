@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import { Download, Ticket, Stethoscope, User, Calendar, Clock, Printer, CheckCircle, MapPin } from 'lucide-react';
-import { useReactToPrint } from 'react-to-print';
+import { Download, Ticket, Stethoscope, User, Calendar, Clock, CheckCircle, MapPin } from 'lucide-react';
 import html2pdf from 'html2pdf.js';
 import { Button } from '@/components/ui/button';
 import {
@@ -35,11 +34,6 @@ export function AppointmentTokenModal({
     patient,
 }: Props) {
     const printableRef = useRef<HTMLDivElement>(null);
-
-    const reactToPrintFn = useReactToPrint({
-        contentRef: printableRef,
-        documentTitle: appointment ? `Token_Pass_${appointment.id}` : 'Token_Pass',
-    });
 
     if (!appointment) return null;
 
@@ -83,7 +77,7 @@ export function AppointmentTokenModal({
                         Appointment Token Pass
                     </DialogTitle>
                     <DialogDescription>
-                        Save as PDF directly to your device or present at reception.
+                        Save as PDF directly to your device downloads folder.
                     </DialogDescription>
                 </DialogHeader>
 
@@ -167,10 +161,6 @@ export function AppointmentTokenModal({
                 <DialogFooter className="no-print gap-2 sm:gap-0">
                     <Button variant="outline" onClick={() => onOpenChange(false)}>
                         Close
-                    </Button>
-                    <Button variant="outline" onClick={() => reactToPrintFn()} className="gap-2">
-                        <Printer className="size-4" />
-                        Print
                     </Button>
                     <Button onClick={handleDownloadPdf} className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold">
                         <Download className="size-4" />
