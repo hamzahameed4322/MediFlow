@@ -4,10 +4,13 @@ import {
     CalendarDays,
     ClipboardList,
     CreditCard,
+    Printer,
     ReceiptText,
     Stethoscope,
 } from 'lucide-react';
+import { useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
+import { PrescriptionPrintModal } from '@/components/prescription-print-modal';
 import {
     AppointmentStatusBadge,
     BillStatusBadge,
@@ -40,12 +43,36 @@ export default function Dashboard({
     latestPrescription,
     recentBills,
 }: Props) {
+    const [printModalOpen, setPrintModalOpen] = useState(false);
+
     const outstandingBalance = recentBills
         .filter((bill) => bill.status === 'unpaid')
         .reduce((total, bill) => total + Number(bill.amount), 0);
     const unpaidBills = recentBills.filter((bill) => bill.status === 'unpaid');
     const latestDoctor =
         latestPrescription?.consultation?.appointment?.doctor?.user?.name;
+
+    const latestApptForPrint: Appointment | null = latestPrescription?.consultation?.appointment ? {
+        id: latestPrescription.consultation.appointment.id,
+        patient_id: latestPrescription.consultation.appointment.patient_id,
+        doctor_id: latestPrescription.consultation.appointment.doctor_id,
+        appointment_date: latestPrescription.consultation.appointment.appointment_date,
+        appointment_time: latestPrescription.consultation.appointment.appointment_time,
+        status: latestPrescription.consultation.appointment.status,
+        doctor: latestPrescription.consultation.appointment.doctor,
+        consultation: {
+            id: latestPrescription.consultation.id,
+            appointment_id: latestPrescription.consultation.appointment.id,
+            symptoms: latestPrescription.consultation.symptoms,
+            diagnosis: latestPrescription.consultation.diagnosis,
+            notes: latestPrescription.consultation.notes,
+            created_at: latestPrescription.consultation.created_at,
+            updated_at: latestPrescription.consultation.updated_at,
+            prescription: latestPrescription,
+        },
+        created_at: latestPrescription.consultation.appointment.created_at,
+        updated_at: latestPrescription.consultation.appointment.updated_at,
+    } : null;
 
     return (
         <>
@@ -151,11 +178,24 @@ export default function Dashboard({
 
                     <Card className="flex flex-col border-muted/60 shadow-sm">
                         <CardHeader>
-                            <div className="flex items-center gap-2 text-primary">
-                                <ClipboardList className="size-5" />
-                                <span className="text-xs font-semibold tracking-[0.2em] uppercase">
-                                    Medical guidance
-                                </span>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-primary">
+                                    <ClipboardList className="size-5" />
+                                    <span className="text-xs font-semibold tracking-[0.2em] uppercase">
+                                        Medical guidance
+                                    </span>
+                                </div>
+                                {latestPrescription && (
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        className="h-7 gap-1.5 text-xs"
+                                        onClick={() => setPrintModalOpen(true)}
+                                    >
+                                        <Printer className="size-3.5" />
+                                        Print
+                                    </Button>
+                                )}
                             </div>
                             <CardTitle className="mt-2">
                                 Latest prescription
@@ -310,6 +350,12 @@ export default function Dashboard({
                     </CardContent>
                 </Card>
             </div>
+
+            <PrescriptionPrintModal
+                open={printModalOpen}
+                onOpenChange={setPrintModalOpen}
+                appointment={latestApptForPrint}
+            />
         </>
     );
 }

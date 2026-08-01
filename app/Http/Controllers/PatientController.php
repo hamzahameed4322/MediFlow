@@ -334,6 +334,13 @@ class PatientController extends Controller
 
         return Inertia::render('patient/medical-history', [
             'history' => $history,
+            'patient' => [
+                'name' => Auth::user()->name,
+                'email' => Auth::user()->email,
+                'phone' => $patientProfile->phone,
+                'gender' => $patientProfile->gender,
+                'dob' => $patientProfile->dob ? $patientProfile->dob->format('Y-m-d') : null,
+            ],
         ]);
     }
 }

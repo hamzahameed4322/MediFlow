@@ -1,17 +1,28 @@
 import { Head } from '@inertiajs/react';
-import { History, Stethoscope, Pill, ChevronDown, ChevronUp, Calendar, User } from 'lucide-react';
+import { History, Stethoscope, Pill, ChevronDown, ChevronUp, Calendar, User, Printer } from 'lucide-react';
 import { useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
+import { PrescriptionPrintModal } from '@/components/prescription-print-modal';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Appointment } from '@/types';
 
 type Props = {
     history: Appointment[];
+    patient?: {
+        name?: string;
+        email?: string;
+        phone?: string;
+        gender?: string;
+        dob?: string;
+    };
 };
 
-export default function MedicalHistory({ history }: Props) {
+export default function MedicalHistory({ history, patient }: Props) {
     const [expanded, setExpanded] = useState<number | null>(null);
+    const [selectedApptForPrint, setSelectedApptForPrint] = useState<Appointment | null>(null);
+
     const toggle = (id: number) => setExpanded(prev => (prev === id ? null : id));
 
     return (
@@ -55,9 +66,20 @@ export default function MedicalHistory({ history }: Props) {
                                                             <span>{appt.doctor?.specialization}</span>
                                                         </div>
                                                     </div>
-                                                    <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs">
-                                                        Completed
-                                                    </Badge>
+                                                    <div className="flex items-center gap-2">
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="h-8 gap-1.5 text-xs"
+                                                            onClick={() => setSelectedApptForPrint(appt)}
+                                                        >
+                                                            <Printer className="size-3.5" />
+                                                            Print Prescription
+                                                        </Button>
+                                                        <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs">
+                                                            Completed
+                                                        </Badge>
+                                                    </div>
                                                 </div>
                                             </CardHeader>
 
@@ -136,6 +158,13 @@ export default function MedicalHistory({ history }: Props) {
                     </div>
                 )}
             </div>
+
+            <PrescriptionPrintModal
+                open={!!selectedApptForPrint}
+                onOpenChange={(open) => !open && setSelectedApptForPrint(null)}
+                appointment={selectedApptForPrint}
+                patient={patient}
+            />
         </>
     );
 }
