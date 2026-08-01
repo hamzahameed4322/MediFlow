@@ -28,10 +28,10 @@ export default function MedicalHistory({ history, patient }: Props) {
     return (
         <>
             <Head title="Medical History" />
-            <div className="flex flex-col gap-6 p-6">
+            <div className="flex flex-col gap-6 p-4 sm:p-6">
                 <div className="flex flex-col gap-1">
-                    <h1 className="text-3xl font-bold tracking-tight">Medical History</h1>
-                    <p className="text-muted-foreground">A complete record of your past clinic visits, diagnoses, and prescriptions.</p>
+                    <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">Medical History</h1>
+                    <p className="text-sm text-muted-foreground">A complete record of your past clinic visits, diagnoses, and prescriptions.</p>
                 </div>
 
                 {history.length === 0 ? (
@@ -39,18 +39,24 @@ export default function MedicalHistory({ history, patient }: Props) {
                 ) : (
                     <div className="relative">
                         {/* Timeline line */}
-                        <div className="absolute left-5 top-0 h-full w-px bg-border" />
+                        <div className="absolute left-3 sm:left-5 top-0 h-full w-px bg-border" />
 
-                        <div className="flex flex-col gap-6 pl-14">
+                        <div className="flex flex-col gap-6 pl-7 sm:pl-14">
                             {history.map((appt, idx) => {
                                 const isOpen = expanded === appt.id;
                                 const consultation = appt.consultation;
                                 const prescription = consultation?.prescription;
+                                const rawDoctorName = appt.doctor?.user?.name || '';
+                                const doctorName = rawDoctorName
+                                    ? rawDoctorName.trim().startsWith('Dr.')
+                                        ? rawDoctorName.trim()
+                                        : `Dr. ${rawDoctorName.trim()}`
+                                    : 'Doctor';
 
                                 return (
                                     <div key={appt.id} className="relative">
                                         {/* Timeline dot */}
-                                        <div className="absolute -left-9 flex size-8 items-center justify-center rounded-full border-2 border-primary bg-background text-primary text-xs font-bold">
+                                        <div className="absolute -left-6 sm:-left-9 flex size-6 sm:size-8 items-center justify-center rounded-full border-2 border-primary bg-background text-primary text-[10px] sm:text-xs font-bold">
                                             {idx + 1}
                                         </div>
 
@@ -61,9 +67,13 @@ export default function MedicalHistory({ history, patient }: Props) {
                                                         <CardTitle className="text-base">Visit — {appt.appointment_date}</CardTitle>
                                                         <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
                                                             <User className="size-3" />
-                                                            <span>Dr. {appt.doctor?.user?.name}</span>
-                                                            <span className="text-muted-foreground/40">•</span>
-                                                            <span>{appt.doctor?.specialization}</span>
+                                                            <span>{doctorName}</span>
+                                                            {appt.doctor?.specialization && (
+                                                                <>
+                                                                    <span className="text-muted-foreground/40">•</span>
+                                                                    <span>{appt.doctor.specialization}</span>
+                                                                </>
+                                                            )}
                                                         </div>
                                                     </div>
                                                     <div className="flex items-center gap-2">
@@ -118,8 +128,8 @@ export default function MedicalHistory({ history, patient }: Props) {
                                                             </button>
 
                                                             {isOpen && (
-                                                                <div className="rounded-lg border overflow-hidden">
-                                                                    <table className="w-full text-xs">
+                                                                <div className="rounded-lg border overflow-x-auto">
+                                                                    <table className="w-full text-xs min-w-[500px]">
                                                                         <thead className="bg-muted/60">
                                                                             <tr>
                                                                                 <th className="py-2 px-3 text-left font-semibold text-muted-foreground">Medicine</th>
