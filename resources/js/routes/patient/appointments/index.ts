@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\PatientController::cancel
- * @see app/Http/Controllers/PatientController.php:252
+ * @see app/Http/Controllers/PatientController.php:259
  * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
  */
 export const cancel = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -71,7 +71,7 @@ cancel.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientController::cancel
- * @see app/Http/Controllers/PatientController.php:252
+ * @see app/Http/Controllers/PatientController.php:259
  * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
  */
 cancel.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ cancel.url = (args: { appointment: number | { id: number } } | [appointment: num
 
 /**
 * @see \App\Http\Controllers\PatientController::cancel
- * @see app/Http/Controllers/PatientController.php:252
+ * @see app/Http/Controllers/PatientController.php:259
  * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
  */
 cancel.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -114,7 +114,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
 
     /**
 * @see \App\Http\Controllers\PatientController::cancel
- * @see app/Http/Controllers/PatientController.php:252
+ * @see app/Http/Controllers/PatientController.php:259
  * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
  */
     const cancelForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -124,7 +124,7 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
 
             /**
 * @see \App\Http\Controllers\PatientController::cancel
- * @see app/Http/Controllers/PatientController.php:252
+ * @see app/Http/Controllers/PatientController.php:259
  * @route 'http://cms.test/patient/appointments/{appointment}/cancel'
  */
         cancelForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

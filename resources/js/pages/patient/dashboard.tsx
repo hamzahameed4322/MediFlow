@@ -7,8 +7,10 @@ import {
     Printer,
     ReceiptText,
     Stethoscope,
+    Ticket,
 } from 'lucide-react';
 import { useState } from 'react';
+import { AppointmentTokenModal } from '@/components/appointment-token-modal';
 import { EmptyState } from '@/components/empty-state';
 import { PrescriptionPrintModal } from '@/components/prescription-print-modal';
 import {
@@ -44,6 +46,7 @@ export default function Dashboard({
     recentBills,
 }: Props) {
     const [printModalOpen, setPrintModalOpen] = useState(false);
+    const [tokenModalOpen, setTokenModalOpen] = useState(false);
 
     const outstandingBalance = recentBills
         .filter((bill) => bill.status === 'unpaid')
@@ -111,11 +114,24 @@ export default function Dashboard({
                 <div className="grid gap-4 lg:grid-cols-3">
                     <Card className="flex flex-col border-muted/60 shadow-sm">
                         <CardHeader>
-                            <div className="flex items-center gap-2 text-sky-600">
-                                <CalendarDays className="size-5" />
-                                <span className="text-xs font-semibold tracking-[0.2em] uppercase">
-                                    Next visit
-                                </span>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-sky-600">
+                                    <CalendarDays className="size-5" />
+                                    <span className="text-xs font-semibold tracking-[0.2em] uppercase">
+                                        Next visit
+                                    </span>
+                                </div>
+                                {upcomingAppointment?.status === 'confirmed' && (
+                                    <Button
+                                        size="sm"
+                                        variant="outline"
+                                        className="h-7 gap-1.5 text-xs text-emerald-700 border-emerald-300 hover:bg-emerald-50 dark:text-emerald-400 dark:border-emerald-800 dark:hover:bg-emerald-950/50"
+                                        onClick={() => setTokenModalOpen(true)}
+                                    >
+                                        <Ticket className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                        Print Token
+                                    </Button>
+                                )}
                             </div>
                             <CardTitle className="mt-2">
                                 Upcoming appointment
@@ -355,6 +371,12 @@ export default function Dashboard({
                 open={printModalOpen}
                 onOpenChange={setPrintModalOpen}
                 appointment={latestApptForPrint}
+            />
+
+            <AppointmentTokenModal
+                open={tokenModalOpen}
+                onOpenChange={setTokenModalOpen}
+                appointment={upcomingAppointment}
             />
         </>
     );

@@ -1,7 +1,8 @@
 import { Head, router, useForm } from '@inertiajs/react';
-import { Calendar, Clock, User, X, CheckCircle, AlertCircle } from 'lucide-react';
+import { Calendar, Clock, User, X, CheckCircle, AlertCircle, Ticket } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { AppointmentTokenModal } from '@/components/appointment-token-modal';
 import { EmptyState } from '@/components/empty-state';
 import InputError from '@/components/input-error';
 import { Pagination } from '@/components/pagination';
@@ -28,6 +29,13 @@ type Props = {
         pending: number;
         confirmed: number;
     };
+    patient?: {
+        name?: string;
+        email?: string;
+        phone?: string;
+        gender?: string;
+        dob?: string;
+    };
 };
 
 const TABS: { key: AppointmentStatus | 'all' | 'cancelled_by_patient' | 'cancelled_by_doctor'; label: string }[] = [
@@ -41,9 +49,10 @@ const TABS: { key: AppointmentStatus | 'all' | 'cancelled_by_patient' | 'cancell
     { key: 'rejected', label: 'Rejected' },
 ];
 
-export default function Appointments({ appointments, filters, counts }: Props) {
+export default function Appointments({ appointments, filters, counts, patient }: Props) {
     const activeTab = (filters?.status as AppointmentStatus | 'all' | 'cancelled_by_patient' | 'cancelled_by_doctor') || 'all';
     const [cancelTarget, setCancelTarget] = useState<Appointment | null>(null);
+    const [selectedApptForToken, setSelectedApptForToken] = useState<Appointment | null>(null);
 
     const { data, setData, post, processing, errors, reset } = useForm({ cancel_reason: '' });
 
@@ -176,16 +185,29 @@ return;
                                         </div>
                                         <div className="flex flex-col items-end gap-2">
                                             <AppointmentStatusBadge status={appt.status} />
-                                            {(appt.status === 'pending' || appt.status === 'confirmed') && (
-                                                <Button
-                                                    size="sm"
-                                                    variant="outline"
-                                                    className="text-red-600 border-red-200 hover:bg-red-50 text-xs"
-                                                    onClick={() => openCancel(appt)}
-                                                >
-                                                    <X className="mr-1 size-3" /> Cancel
-                                                </Button>
-                                            )}
+                                            <div className="flex items-center gap-2">
+                                                {appt.status === 'confirmed' && (
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="text-emerald-700 border-emerald-300 hover:bg-emerald-50 dark:text-emerald-400 dark:border-emerald-800 dark:hover:bg-emerald-950/50 text-xs gap-1.5"
+                                                        onClick={() => setSelectedApptForToken(appt)}
+                                                    >
+                                                        <Ticket className="size-3.5 text-emerald-600 dark:text-emerald-400" />
+                                                        Print Token
+                                                    </Button>
+                                                )}
+                                                {(appt.status === 'pending' || appt.status === 'confirmed') && (
+                                                    <Button
+                                                        size="sm"
+                                                        variant="outline"
+                                                        className="text-red-600 border-red-200 hover:bg-red-50 text-xs"
+                                                        onClick={() => openCancel(appt)}
+                                                    >
+                                                        <X className="mr-1 size-3" /> Cancel
+                                                    </Button>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
                                 </CardContent>
@@ -235,6 +257,13 @@ setCancelTarget(null);
                     </form>
                 </DialogContent>
             </Dialog>
+
+            <AppointmentTokenModal
+                open={!!selectedApptForToken}
+                onOpenChange={(open) => !open && setSelectedApptForToken(null)}
+                appointment={selectedApptForToken}
+                patient={patient}
+            />
         </>
     );
 }

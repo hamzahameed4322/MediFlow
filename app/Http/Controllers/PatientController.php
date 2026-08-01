@@ -243,6 +243,13 @@ class PatientController extends Controller
             'appointments' => AppointmentResource::collection($appointments),
             'filters' => $request->only(['status']),
             'counts' => $counts,
+            'patient' => [
+                'name' => Auth::user()->name,
+                'email' => Auth::user()->email,
+                'phone' => $patientProfile->phone,
+                'gender' => $patientProfile->gender,
+                'dob' => $patientProfile->dob ? $patientProfile->dob->format('Y-m-d') : null,
+            ],
         ]);
     }
 
