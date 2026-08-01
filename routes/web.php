@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Patient\PdfController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Mail;
@@ -81,6 +82,10 @@ Route::middleware(['auth', 'verified', 'role:patient'])->prefix('patient')->name
     Route::get('reviews', [PatientController::class, 'reviews'])->name('reviews');
     Route::post('appointments/{appointment}/review', [ReviewController::class, 'store'])->name('reviews.store');
     Route::put('reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+
+    // PDF Download routes
+    Route::get('appointments/{appointment}/prescription/pdf', [PdfController::class, 'downloadPrescription'])->name('appointments.prescription.pdf');
+    Route::get('appointments/{appointment}/token/pdf', [PdfController::class, 'downloadToken'])->name('appointments.token.pdf');
 });
 
 require __DIR__.'/settings.php';

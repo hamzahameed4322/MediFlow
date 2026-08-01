@@ -62,11 +62,11 @@ export default function MedicalHistory({ history, patient }: Props) {
 
                                         <Card className="transition-shadow hover:shadow-md">
                                             <CardHeader className="pb-3">
-                                                <div className="flex items-start justify-between gap-3 flex-wrap">
+                                                <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
                                                     <div>
-                                                        <CardTitle className="text-base">Visit — {appt.appointment_date}</CardTitle>
-                                                        <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                                                            <User className="size-3" />
+                                                        <CardTitle className="text-base font-bold">Visit — {appt.appointment_date}</CardTitle>
+                                                        <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
+                                                            <User className="size-3 shrink-0" />
                                                             <span>{doctorName}</span>
                                                             {appt.doctor?.specialization && (
                                                                 <>
@@ -76,15 +76,15 @@ export default function MedicalHistory({ history, patient }: Props) {
                                                             )}
                                                         </div>
                                                     </div>
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-2 self-start sm:self-auto">
                                                         <Button
                                                             variant="outline"
                                                             size="sm"
-                                                            className="h-8 gap-1.5 text-xs"
+                                                            className="h-8 gap-1.5 text-xs font-medium border-primary/30 hover:bg-primary/5 text-primary"
                                                             onClick={() => setSelectedApptForPrint(appt)}
                                                         >
                                                             <Printer className="size-3.5" />
-                                                            Print Prescription
+                                                            <span>Prescription PDF</span>
                                                         </Button>
                                                         <Badge className="bg-primary/10 text-primary border border-primary/20 text-xs">
                                                             Completed

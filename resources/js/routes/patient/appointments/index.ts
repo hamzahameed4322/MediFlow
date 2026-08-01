@@ -1,4 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
+import prescription from './prescription'
+import token from './token'
 /**
 * @see \App\Http\Controllers\PatientController::store
  * @see app/Http/Controllers/PatientController.php:201
@@ -135,6 +137,8 @@ cancel.post = (args: { appointment: number | { id: number } } | [appointment: nu
     cancel.form = cancelForm
 const appointments = {
     cancel: Object.assign(cancel, cancel),
+prescription: Object.assign(prescription, prescription),
+token: Object.assign(token, token),
 }
 
 export default appointments
