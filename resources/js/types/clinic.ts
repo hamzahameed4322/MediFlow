@@ -90,11 +90,11 @@ export type Appointment = {
     doctor_id: number;
     appointment_date: string;
     appointment_time: string;
-    reason: string | null;
+    reason?: string | null;
     status: AppointmentStatus;
-    cancelled_by: CancelledBy | null;
-    cancel_reason: string | null;
-    reject_reason: string | null;
+    cancelled_by?: CancelledBy | null;
+    cancel_reason?: string | null;
+    reject_reason?: string | null;
     created_at: string;
     updated_at: string;
     patient?: PatientProfile;

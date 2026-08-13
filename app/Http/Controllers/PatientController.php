@@ -28,7 +28,6 @@ class PatientController extends Controller
     {
         $user = Auth::user();
         $patientProfile = $user->patientProfile;
-        $today = now()->toDateString();
 
         // Upcoming Appointment
         $upcomingAppointment = Appointment::query()
@@ -36,7 +35,6 @@ class PatientController extends Controller
             ->with(['doctor.user:id,name,email', 'doctor:id,user_id,specialization,qualification,experience,consultation_fee'])
             ->where('patient_id', $patientProfile->id)
             ->whereIn('status', ['pending', 'confirmed'])
-            ->whereDate('appointment_date', '>=', $today)
             ->orderBy('appointment_date')
             ->orderBy('appointment_time')
             ->first();
@@ -153,7 +151,8 @@ class PatientController extends Controller
             ->withCount('reviews')
             ->whereHas('user', function ($q) {
                 $q->where('status', 'active');
-            });
+            })
+            ->whereHas('schedules');
 
         if ($request->filled('search')) {
             $search = $request->input('search');

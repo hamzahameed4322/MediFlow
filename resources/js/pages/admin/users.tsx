@@ -17,8 +17,10 @@ import {
     UserRound,
     Users,
     XCircle,
+    type LucideIcon,
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { EmptyState } from '@/components/empty-state';
 import { Pagination } from '@/components/pagination';
 import { AppointmentStatusBadge, CancelledByBadge, UserStatusBadge } from '@/components/status-badge';
@@ -44,10 +46,14 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { users as adminUsers } from '@/routes/admin';
+import { dashboard as adminDashboard, users as adminUsers } from '@/routes/admin';
 import type { PatientProfile } from '@/types';
 
 type Props = {
+    filters: {
+        search?: string;
+        status?: string;
+    };
     patients: {
         data: PatientProfile[];
         links: any;
@@ -55,7 +61,7 @@ type Props = {
     };
 };
 
-export default function UsersIndex({ patients }: Props) {
+export default function UsersIndex({ patients, filters }: Props) {
     const [patientData, setPatientData] = useState<PatientProfile[]>(patients?.data ?? []);
     const [selectedPatientForHistory, setSelectedPatientForHistory] = useState<PatientProfile | null>(null);
 
@@ -63,28 +69,57 @@ export default function UsersIndex({ patients }: Props) {
         setPatientData(patients?.data ?? []);
     }, [patients]);
 
-    const [query, setQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'inactive' | 'suspended'>('all');
+    const [query, setQuery] = useState(filters?.search ?? '');
+    const [statusFilter, setStatusFilter] = useState<string>(filters?.status ?? 'all');
     const [modalStatusFilter, setModalStatusFilter] = useState<string>('all');
     const [updatingUserId, setUpdatingUserId] = useState<number | null>(null);
+    const [isSearching, setIsSearching] = useState(false);
 
-    const filteredPatients = useMemo(() => {
-        return patientData.filter((patient) => {
-            const status = patient.user?.status ?? 'inactive';
-            const matchesStatus = statusFilter === 'all' || status === statusFilter;
-            const searchableText = [patient.user?.name, patient.user?.email, patient.phone, patient.gender, patient.dob]
-                .filter(Boolean)
-                .join(' ')
-                .toLowerCase();
+    // Trigger router search on query / status filter change
+    const triggerSearch = (searchVal: string, statusVal: string) => {
+        setIsSearching(true);
+        router.get(
+            adminUsers.url(),
+            {
+                search: searchVal || undefined,
+                status: statusVal !== 'all' ? statusVal : undefined,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+                onFinish: () => setIsSearching(false),
+            }
+        );
+    };
 
-            return matchesStatus && searchableText.includes(query.toLowerCase());
-        });
-    }, [patientData, query, statusFilter]);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (query !== (filters?.search ?? '')) {
+                triggerSearch(query, statusFilter);
+            }
+        }, 400);
+        return () => clearTimeout(timer);
+    }, [query]);
+
+    const handleStatusFilterChange = (value: string) => {
+        setStatusFilter(value);
+        triggerSearch(query, value);
+    };
+
+    const [retainedPatient, setRetainedPatient] = useState<PatientProfile | null>(null);
+
+    useEffect(() => {
+        if (selectedPatientForHistory) {
+            setRetainedPatient(selectedPatientForHistory);
+        }
+    }, [selectedPatientForHistory]);
 
     const activeHistoryPatient = useMemo(() => {
-        if (!selectedPatientForHistory) return null;
-        return patientData.find((p) => p.id === selectedPatientForHistory.id) ?? selectedPatientForHistory;
-    }, [selectedPatientForHistory, patientData]);
+        const target = selectedPatientForHistory ?? retainedPatient;
+        if (!target) return null;
+        return patientData.find((p) => p.id === target.id) ?? target;
+    }, [selectedPatientForHistory, retainedPatient, patientData]);
 
     const filteredModalAppointments = useMemo(() => {
         if (!activeHistoryPatient?.appointments) return [];
@@ -156,13 +191,13 @@ export default function UsersIndex({ patients }: Props) {
                                 Patient accounts
                             </h1>
                             <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                                Review registered patients, inspect appointment behavior, and manage access privileges.
+                                Review registered patients, inspect appointment behavior, medical histories, and manage access privileges.
                             </p>
                         </div>
                     </div>
 
                     <div className="mt-6 grid gap-3 sm:grid-cols-3">
-                        <MiniStat label="Patients" value={patientData.length} icon={Users} />
+                        <MiniStat label="Patients on Page" value={patientData.length} icon={Users} />
                         <MiniStat label="Active" value={activeCount} icon={UserCheck} />
                         <MiniStat label="Suspended" value={suspendedCount} icon={UserRound} />
                     </div>
@@ -175,18 +210,21 @@ export default function UsersIndex({ patients }: Props) {
                             Single-clinic user access management and medical profile entry points.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent className="min-w-0">
-                        <div className="mb-4 grid gap-3 md:grid-cols-[1fr_220px]">
+                    <CardContent className="min-w-0 space-y-4">
+                        <div className="grid gap-3 md:grid-cols-[1fr_220px]">
                             <div className="relative">
                                 <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
                                 <Input
                                     value={query}
                                     onChange={(event) => setQuery(event.target.value)}
-                                    placeholder="Search patient, email, phone..."
-                                    className="pl-9"
+                                    placeholder="Search patient name, email, phone, ID..."
+                                    className="pl-9 pr-9"
                                 />
+                                {isSearching && (
+                                    <RotateCw className="absolute right-3 top-1/2 -translate-y-1/2 size-3.5 animate-spin text-muted-foreground" />
+                                )}
                             </div>
-                            <Select value={statusFilter} onValueChange={(value) => setStatusFilter(value as typeof statusFilter)}>
+                            <Select value={statusFilter} onValueChange={handleStatusFilterChange}>
                                 <SelectTrigger>
                                     <SelectValue placeholder="Filter status" />
                                 </SelectTrigger>
@@ -198,28 +236,52 @@ export default function UsersIndex({ patients }: Props) {
                             </Select>
                         </div>
 
-                        <Deferred data="patients" fallback={<UsersSkeleton />}>
-                            {filteredPatients.length === 0 ? (
-                                <EmptyState
-                                    icon={Users}
-                                    title="No patients registered"
-                                    description="Patient accounts will appear here once users sign up."
-                                />
-                            ) : (
-                                <div>
-                                    <div className="overflow-x-auto rounded-xl border border-border">
-                                        <Table className="min-w-[760px] table-fixed">
-                                            <TableHeader>
-                                                <TableRow>
-                                                    <TableHead className="w-[24%]">Patient</TableHead>
-                                                    <TableHead className="w-[22%]">Contact</TableHead>
-                                                    <TableHead className="w-[18%]">Medical Profile</TableHead>
-                                                    <TableHead className="w-[12%]">Status</TableHead>
-                                                    <TableHead className="w-[24%] text-right">Actions</TableHead>
-                                                </TableRow>
-                                            </TableHeader>
-                                            <TableBody>
-                                                {filteredPatients.map((patient) => (
+                        <Deferred data="patients" fallback={
+                            <div className="overflow-x-auto rounded-xl border border-border">
+                                <Table className="min-w-[880px] table-fixed">
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-[22%]">Patient</TableHead>
+                                            <TableHead className="w-[22%]">Contact</TableHead>
+                                            <TableHead className="w-[20%]">Medical Profile</TableHead>
+                                            <TableHead className="w-[14%]">Status</TableHead>
+                                            <TableHead className="w-[22%] text-right">Actions</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+                                    <UsersTableSkeleton />
+                                </Table>
+                            </div>
+                        }>
+                            <div className="space-y-4">
+                                <div className="overflow-x-auto rounded-xl border border-border">
+                                    <Table className="min-w-[880px] table-fixed">
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead className="w-[22%]">Patient</TableHead>
+                                                <TableHead className="w-[22%]">Contact</TableHead>
+                                                <TableHead className="w-[20%]">Medical Profile</TableHead>
+                                                <TableHead className="w-[14%]">Status</TableHead>
+                                                <TableHead className="w-[22%] text-right">Actions</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <AnimatePresence mode="wait">
+                                            {isSearching ? (
+                                                <UsersTableSkeleton />
+                                            ) : patientData.length === 0 ? (
+                                                <TableBody>
+                                                    <TableRow>
+                                                        <TableCell colSpan={5} className="py-8 border-b-0 text-center">
+                                                            <EmptyState
+                                                                icon={Users}
+                                                                title="No patients found"
+                                                                description="No patient accounts match your current search criteria."
+                                                            />
+                                                        </TableCell>
+                                                    </TableRow>
+                                                </TableBody>
+                                            ) : (
+                                                <TableBody>
+                                                {patientData.map((patient) => (
                                                     <TableRow
                                                         key={patient.id}
                                                         className={
@@ -241,26 +303,30 @@ export default function UsersIndex({ patients }: Props) {
                                                                 </div>
                                                             </div>
                                                         </TableCell>
-                                                        <TableCell className="text-muted-foreground">
+                                                        <TableCell className="text-muted-foreground text-xs">
                                                             <p className="truncate">{patient.user?.email}</p>
                                                             <p className="truncate">{patient.phone}</p>
                                                         </TableCell>
-                                                        <TableCell className="text-muted-foreground">
-                                                            <div className="flex flex-wrap gap-2">
-                                                                <Badge variant="outline">{patient.gender}</Badge>
-                                                                <Badge variant="outline">{patient.dob || 'No DOB'}</Badge>
+                                                        <TableCell className="text-muted-foreground text-xs">
+                                                            <div className="flex flex-wrap gap-1.5">
+                                                                <Badge variant="outline" className="capitalize text-[11px]">
+                                                                    {patient.gender}
+                                                                </Badge>
+                                                                <Badge variant="outline" className="text-[11px]">
+                                                                    {patient.age ? `${patient.age} yrs` : patient.dob || 'No DOB'}
+                                                                </Badge>
                                                             </div>
                                                         </TableCell>
                                                         <TableCell>
                                                             <UserStatusBadge status={patient.user?.status || 'inactive'} />
                                                         </TableCell>
                                                         <TableCell className="text-right">
-                                                            <div className="flex items-center justify-end gap-2">
+                                                            <div className="flex items-center justify-end gap-1.5 shrink-0">
                                                                 <Button
                                                                     size="sm"
                                                                     variant="ghost"
                                                                     onClick={() => setSelectedPatientForHistory(patient)}
-                                                                    className="h-8 gap-1.5 px-2.5 text-xs text-muted-foreground hover:text-foreground"
+                                                                    className="h-8 gap-1 px-2.5 text-xs text-muted-foreground hover:text-foreground"
                                                                 >
                                                                     <Eye className="size-3.5" />
                                                                     <span>History</span>
@@ -270,10 +336,10 @@ export default function UsersIndex({ patients }: Props) {
                                                                     variant={patient.user?.status === 'suspended' ? 'default' : 'outline'}
                                                                     disabled={updatingUserId === patient.user?.id}
                                                                     onClick={() => patient.user && toggleStatus(patient.user.id)}
-                                                                    className="h-8 transition-all duration-300"
+                                                                    className="h-8 text-xs shrink-0 transition-all duration-300"
                                                                 >
                                                                     <RotateCw
-                                                                        className={`mr-1.5 size-3.5 shrink-0 ${updatingUserId === patient.user?.id ? 'animate-spin' : ''}`}
+                                                                        className={`mr-1 size-3 shrink-0 ${updatingUserId === patient.user?.id ? 'animate-spin' : ''}`}
                                                                     />
                                                                     {patient.user?.status === 'suspended' ? 'Reactivate' : 'Suspend'}
                                                                 </Button>
@@ -281,18 +347,21 @@ export default function UsersIndex({ patients }: Props) {
                                                         </TableCell>
                                                     </TableRow>
                                                 ))}
-                                            </TableBody>
+                                                </TableBody>
+                                            )}
+                                        </AnimatePresence>
                                         </Table>
                                     </div>
-                                    <Pagination links={patients?.meta?.links || []} meta={patients?.meta} />
+                                    {!isSearching && patientData.length > 0 && (
+                                        <Pagination links={patients?.meta?.links || []} meta={patients?.meta} />
+                                    )}
                                 </div>
-                            )}
                         </Deferred>
                     </CardContent>
                 </Card>
 
                 {/* Patient Appointment History Modal */}
-                <Dialog open={activeHistoryPatient !== null} onOpenChange={(open) => !open && setSelectedPatientForHistory(null)}>
+                <Dialog open={selectedPatientForHistory !== null} onOpenChange={(open) => !open && setSelectedPatientForHistory(null)}>
                     <DialogContent className="max-w-4xl sm:max-w-4xl max-h-[88vh] overflow-y-auto overflow-x-hidden p-4 sm:p-8">
                         <DialogHeader className="pb-4 border-b border-border/60">
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -517,13 +586,35 @@ function MiniStat({ label, value, icon: Icon }: { label: string; value: number; 
     );
 }
 
-function UsersSkeleton() {
+function UsersTableSkeleton() {
     return (
-        <div className="space-y-3">
-            {Array.from({ length: 5 }).map((_, index) => (
-                <Skeleton key={index} className="h-20 w-full rounded-2xl" />
+        <motion.tbody key="skeleton" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            {Array.from({ length: 5 }).map((_, i) => (
+                <TableRow key={i}>
+                    <TableCell>
+                        <Skeleton className="mb-1 h-4 w-32" />
+                        <Skeleton className="h-3 w-20" />
+                    </TableCell>
+                    <TableCell>
+                        <Skeleton className="mb-1 h-4 w-28" />
+                        <Skeleton className="h-3 w-16" />
+                    </TableCell>
+                    <TableCell>
+                        <Skeleton className="mb-1 h-4 w-24" />
+                        <Skeleton className="h-3 w-16" />
+                    </TableCell>
+                    <TableCell>
+                        <Skeleton className="h-6 w-20 rounded-full" />
+                    </TableCell>
+                    <TableCell>
+                        <div className="flex justify-end gap-2">
+                            <Skeleton className="h-8 w-24 rounded-md" />
+                            <Skeleton className="h-8 w-20 rounded-md" />
+                        </div>
+                    </TableCell>
+                </TableRow>
             ))}
-        </div>
+        </motion.tbody>
     );
 }
 

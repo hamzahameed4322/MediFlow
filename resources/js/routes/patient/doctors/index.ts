@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 export const slots = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ slots.definition = {
 
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 slots.url = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ slots.url = (args: { doctor: number | { id: number } } | [doctor: number | { id:
 
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 slots.get = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -58,7 +58,7 @@ slots.get = (args: { doctor: number | { id: number } } | [doctor: number | { id:
 })
 /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
 slots.head = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -68,7 +68,7 @@ slots.head = (args: { doctor: number | { id: number } } | [doctor: number | { id
 
     /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
     const slotsForm = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -78,7 +78,7 @@ slots.head = (args: { doctor: number | { id: number } } | [doctor: number | { id
 
             /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
         slotsForm.get = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -87,7 +87,7 @@ slots.head = (args: { doctor: number | { id: number } } | [doctor: number | { id
         })
             /**
 * @see \App\Http\Controllers\PatientController::slots
- * @see app/Http/Controllers/PatientController.php:189
+ * @see app/Http/Controllers/PatientController.php:188
  * @route 'http://cms.test/patient/doctors/{doctor}/slots'
  */
         slotsForm.head = (args: { doctor: number | { id: number } } | [doctor: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

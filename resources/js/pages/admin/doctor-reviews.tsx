@@ -7,7 +7,7 @@ import { StarDisplay } from '@/components/star-rating';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { doctors as adminDoctors } from '@/routes/admin';
+import { dashboard as adminDashboard, doctors as adminDoctors } from '@/routes/admin';
 import type { DoctorProfile, DoctorReview } from '@/types';
 
 type Props = {
@@ -130,6 +130,7 @@ export default function AdminDoctorReviews({ doctor, reviews, stats }: Props) {
 
 AdminDoctorReviews.layout = {
     breadcrumbs: [
+        { title: 'Admin Dashboard', href: adminDashboard.url() },
         { title: 'Doctors', href: adminDoctors.url() },
         { title: 'Doctor Reviews', href: '#' },
     ],

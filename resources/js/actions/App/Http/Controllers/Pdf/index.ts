@@ -1,6 +1,6 @@
 import PdfController from './PdfController'
-const Patient = {
+const Pdf = {
     PdfController: Object.assign(PdfController, PdfController),
 }
 
-export default Patient
+export default Pdf

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../wayfinder'
 /**
 * @see \App\Http\Controllers\DoctorController::pay
- * @see app/Http/Controllers/DoctorController.php:364
+ * @see app/Http/Controllers/DoctorController.php:373
  * @route 'http://cms.test/doctor/bills/{bill}/pay'
  */
 export const pay = (args: { bill: number | { id: number } } | [bill: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ pay.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::pay
- * @see app/Http/Controllers/DoctorController.php:364
+ * @see app/Http/Controllers/DoctorController.php:373
  * @route 'http://cms.test/doctor/bills/{bill}/pay'
  */
 pay.url = (args: { bill: number | { id: number } } | [bill: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ pay.url = (args: { bill: number | { id: number } } | [bill: number | { id: numbe
 
 /**
 * @see \App\Http\Controllers\DoctorController::pay
- * @see app/Http/Controllers/DoctorController.php:364
+ * @see app/Http/Controllers/DoctorController.php:373
  * @route 'http://cms.test/doctor/bills/{bill}/pay'
  */
 pay.post = (args: { bill: number | { id: number } } | [bill: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ pay.post = (args: { bill: number | { id: number } } | [bill: number | { id: numb
 
     /**
 * @see \App\Http\Controllers\DoctorController::pay
- * @see app/Http/Controllers/DoctorController.php:364
+ * @see app/Http/Controllers/DoctorController.php:373
  * @route 'http://cms.test/doctor/bills/{bill}/pay'
  */
     const payForm = (args: { bill: number | { id: number } } | [bill: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ pay.post = (args: { bill: number | { id: number } } | [bill: number | { id: numb
 
             /**
 * @see \App\Http\Controllers\DoctorController::pay
- * @see app/Http/Controllers/DoctorController.php:364
+ * @see app/Http/Controllers/DoctorController.php:373
  * @route 'http://cms.test/doctor/bills/{bill}/pay'
  */
         payForm.post = (args: { bill: number | { id: number } } | [bill: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

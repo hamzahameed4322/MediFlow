@@ -8,7 +8,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from '@/components/ui/dialog';
-import PdfController from '@/actions/App/Http/Controllers/Patient/PdfController';
+import PdfController from '@/actions/App/Http/Controllers/Pdf/PdfController';
 import type { Appointment } from '@/types';
 
 type PatientInfo = {

@@ -161,7 +161,7 @@ schedules.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     schedules.form = schedulesForm
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
 export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -176,7 +176,7 @@ appointments.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
 appointments.url = (options?: RouteQueryOptions) => {
@@ -185,7 +185,7 @@ appointments.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
 appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -194,7 +194,7 @@ appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
 appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -204,7 +204,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
     const appointmentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -214,7 +214,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
         appointmentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -223,7 +223,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DoctorController::appointments
- * @see app/Http/Controllers/DoctorController.php:227
+ * @see app/Http/Controllers/DoctorController.php:236
  * @route 'http://cms.test/doctor/appointments'
  */
         appointmentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -239,7 +239,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     appointments.form = appointmentsForm
 /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
 export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -254,7 +254,7 @@ bills.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
 bills.url = (options?: RouteQueryOptions) => {
@@ -263,7 +263,7 @@ bills.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
 bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -272,7 +272,7 @@ bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
 bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -282,7 +282,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
     const billsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -292,7 +292,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
         billsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -301,7 +301,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DoctorController::bills
- * @see app/Http/Controllers/DoctorController.php:330
+ * @see app/Http/Controllers/DoctorController.php:339
  * @route 'http://cms.test/doctor/bills'
  */
         billsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -317,7 +317,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     bills.form = billsForm
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
 export const patientHistory = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -332,7 +332,7 @@ patientHistory.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
 patientHistory.url = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -365,7 +365,7 @@ patientHistory.url = (args: { patient: number | { id: number } } | [patient: num
 
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
 patientHistory.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -374,7 +374,7 @@ patientHistory.get = (args: { patient: number | { id: number } } | [patient: num
 })
 /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
 patientHistory.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -384,7 +384,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
 
     /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
     const patientHistoryForm = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -394,7 +394,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
 
             /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
         patientHistoryForm.get = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -403,7 +403,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
         })
             /**
 * @see \App\Http\Controllers\DoctorController::patientHistory
- * @see app/Http/Controllers/DoctorController.php:376
+ * @see app/Http/Controllers/DoctorController.php:385
  * @route 'http://cms.test/doctor/patient-history/{patient}'
  */
         patientHistoryForm.head = (args: { patient: number | { id: number } } | [patient: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -419,7 +419,7 @@ patientHistory.head = (args: { patient: number | { id: number } } | [patient: nu
     patientHistory.form = patientHistoryForm
 /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
 export const reviews = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -434,7 +434,7 @@ reviews.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
 reviews.url = (options?: RouteQueryOptions) => {
@@ -443,7 +443,7 @@ reviews.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
 reviews.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -452,7 +452,7 @@ reviews.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
 reviews.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -462,7 +462,7 @@ reviews.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
     const reviewsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -472,7 +472,7 @@ reviews.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
         reviewsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -481,7 +481,7 @@ reviews.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\DoctorController::reviews
- * @see app/Http/Controllers/DoctorController.php:401
+ * @see app/Http/Controllers/DoctorController.php:410
  * @route 'http://cms.test/doctor/reviews'
  */
         reviewsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

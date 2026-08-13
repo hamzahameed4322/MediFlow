@@ -1,8 +1,38 @@
 # MediFlow Clinic Management System
 
+<p align="left">
+  <a href="https://laravel.com" target="_blank">
+    <img src="https://img.shields.io/badge/Laravel-v13.17-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel" />
+  </a>
+  <a href="https://react.dev" target="_blank">
+    <img src="https://img.shields.io/badge/React-v19.2-2563EB?style=for-the-badge&logo=react&logoColor=white" alt="React" />
+  </a>
+  <a href="https://www.php.net" target="_blank">
+    <img src="https://img.shields.io/badge/PHP-^8.4-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP" />
+  </a>
+  <a href="https://inertiajs.com" target="_blank">
+    <img src="https://img.shields.io/badge/Inertia.js-v3.0-7C3AED?style=for-the-badge&logo=inertia&logoColor=white" alt="Inertia.js" />
+  </a>
+  <a href="https://tailwindcss.com" target="_blank">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-v4.0-0EA5E9?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  </a>
+  <a href="https://github.com/laravel/wayfinder" target="_blank">
+    <img src="https://img.shields.io/badge/Wayfinder-Typed_Routes-E11D48?style=for-the-badge" alt="Laravel Wayfinder" />
+  </a>
+  <a href="https://opensource.org/licenses/MIT" target="_blank">
+    <img src="https://img.shields.io/badge/License-MIT-059669?style=for-the-badge" alt="MIT License" />
+  </a>
+</p>
+
 **🟢 Live Production Demo:** [https://mediflow-app.me/](https://mediflow-app.me/)
 
-> A web-based Clinic Appointment & Prescription Management System that allows patients to discover active doctors, view doctor schedules, book appointments online for physical clinic visits, receive consultations during clinic visits, access digital prescriptions, submit doctor reviews and ratings, and maintain centralized medical history records while enabling doctors and administrators to manage the complete clinic workflow efficiently.
+> A web-based Clinic Appointment & Prescription Management System that allows patients to discover active doctors, view doctor schedules, book appointments online for physical clinic visits, receive consultations during clinic visits, access digital & printable PDF prescriptions, submit doctor reviews and ratings, and maintain centralized medical history records while enabling doctors and administrators to manage the complete clinic workflow efficiently.
+
+---
+
+## 📍 Quick Navigation
+
+[🌐 Live Demo](https://mediflow-app.me/) • [🎯 Scope](#-project-scope) • [📸 Screenshots Gallery](#-application-preview--screenshot-gallery) • [🏗 Architecture](#-architecture-overview) • [✨ Features](#-implemented-features) • [🚦 State Machine](#-state-machine--business-rules) • [💾 Database Schema](#-domain-model-database-schema) • [🛠 Tech Stack](#-technology-stack) • [🚀 Setup Guide](#-local-development-setup) • [🔄 Upgrading Guide](#-upgrading--maintenance-guide)
 
 ---
 
@@ -10,28 +40,103 @@
 
 MediFlow is focused on streamlining the workflow of a **single clinic**. The application intentionally delivers a clean, maintainable Minimum Viable Product (MVP) for core clinic operations rather than attempting to cover every module of a massive hospital management system.
 
-### Included
-- Single clinic administration
-- Physical clinic appointment scheduling
-- Doctor schedule management
-- Patient consultations & private notes
-- Structured digital prescriptions
-- Centralized medical history tracking
-- ⭐ **Patient-Doctor Review & Star Rating System** (1-5 Stars, Anonymous Reviews, Score Breakdowns, Admin Moderation)
-- 🛡️ **Transparent Appointment Cancellation Tracking** (`cancelled_by: patient | doctor`, cancellation & rejection reasons, and visual badges)
-- ⚡ **Server-Side Paginated Queues & URL State Sync** (`paginate(10)` with query params preserving state across tabs)
-- Manual consultation billing (paid/unpaid tracking)
-- Strict role-based access control (Admin, Doctor, Patient)
+### 🟢 Included Features
+- 🏢 **Single Clinic Administration:** Core workflow management tailored specifically for a single clinic ecosystem.
+- 📅 **Physical Clinic Appointment Scheduling:** Real-time conflict-free slot booking for physical patient visits.
+- 🩺 **Doctor Schedule Management:** Custom weekly day, start/end time, and slot duration configuration.
+- ⚕️ **Patient Consultations & Notes:** Dedicated clinical consultation workspace with private doctor notes.
+- 📑 **Structured Digital & PDF Prescriptions:** Multi-item prescriptions with one-click printable PDF downloads (`barryvdh/laravel-dompdf`).
+- 🎟️ **Printable Appointment Entry Pass Tokens:** Official clinic entry pass PDF downloads (`TK-XXXX` Token format).
+- 📜 **Centralized Medical History Tracking:** Permanent patient consultation and prescription timeline archive.
+- ⭐ **Patient-Doctor Review & Rating System:** 1-5 star ratings, optional written feedback, anonymous toggle, and admin moderation.
+- 🛡️ **Transparent Cancellation Tracking:** Attribution tracking (`cancelled_by: patient | doctor`), cancellation reasons, and status badges.
+- ⚡ **Paginated Queues & URL State Sync:** Server-side `paginate(10)` with query param sync across browser tabs.
+- 📊 **Interactive Analytics & Financial Charts:** Visual performance and revenue metrics powered by `Recharts`.
+- 🗺️ **End-to-End Typed Route Actions:** Typed PHP-to-TypeScript route bindings powered by `Laravel Wayfinder`.
+- 💳 **Manual Consultation Billing:** Integrated consultation fee ledger with paid/unpaid tracking.
+- 🔒 **Strict Role-Based Access Control:** Role-compartmentalized security for Admins, Doctors, and Patients.
 
-### Out of Scope
-- Multi-clinic or multi-branch support
-- Telemedicine, video calls, or live chat
-- Online payment gateways (Stripe, PayPal)
-- Pharmacy inventory & stock management
-- Laboratory management & diagnostic reports
-- AI-assisted medical diagnosis
-- Insurance claim processing
-- Multi-tenant SaaS architecture
+### 🔴 Out of Scope
+- ❌ **Multi-Clinic Support:** Multi-branch or multi-tenant SaaS architecture.
+- ❌ **Telemedicine Services:** Video consultations, live chat, or online audio calls.
+- ❌ **Online Payment Gateways:** Automated Stripe/PayPal checkout processing.
+- ❌ **Pharmacy Stock Management:** Drug inventory tracking or pharmacy point-of-sale.
+- ❌ **Lab Diagnostics:** Laboratory test orders and diagnostic image processing.
+- ❌ **AI Diagnosis:** Automated AI symptom analysis or machine-learning triage.
+- ❌ **Insurance Claims:** Health insurance claim filing or third-party billing integrations.
+
+---
+
+## 📸 Application Preview & Screenshot Gallery
+
+A complete visual walkthrough of the MediFlow platform across all user roles and workflows.
+
+### 🌐 Public & Auth Experience
+
+| Welcome Landing Page | Login Page |
+|:---:|:---:|
+| ![Welcome Landing Page](docs/welcome.png) | ![Login Page](docs/loginpage.png) |
+
+| Registration Page | Forgot Password Page |
+|:---:|:---:|
+| ![Registration Page](docs/register.png) | ![Forgot Password Page](docs/forget-password.png) |
+
+#### Custom 404 Error Page
+![404 Error Page](docs/404page.png)
+
+---
+
+### 👑 Administrator Portal Workflow
+
+| 1. Admin Dashboard Overview | 1. Dashboard Analytics Charts |
+|:---:|:---:|
+| ![Admin Dashboard 1](docs/admin-dashboard-pages/dashboard-part1-1.png) | ![Admin Dashboard 2](docs/admin-dashboard-pages/dashboard-part2-1.png) |
+
+| 2. User & Patient Moderation | 3. Doctor Directory & Onboarding |
+|:---:|:---:|
+| ![Patient Moderation](docs/admin-dashboard-pages/patient-2.png) | ![Doctor Management](docs/admin-dashboard-pages/doctor-3.png) |
+
+| 4. Appointment Clinical Oversight | 5. Financial & Performance Reports |
+|:---:|:---:|
+| ![Admin Appointments](docs/admin-dashboard-pages/appointment-4.png) | ![Admin Reports](docs/admin-dashboard-pages/report-part1-5.png) |
+
+---
+
+### 🩺 Doctor Workspace Workflow
+
+| 1. Doctor Dashboard Overview | 2. Clinical Profile Settings |
+|:---:|:---:|
+| ![Doctor Dashboard](docs/doctor-dashboard-pages/dashboard-1.png) | ![Doctor Profile](docs/doctor-dashboard-pages/profile-2.png) |
+
+| 3. Weekly Schedule Controller | 4. Appointment Queue & Approvals |
+|:---:|:---:|
+| ![Doctor Schedule](docs/doctor-dashboard-pages/schedule-3.png) | ![Doctor Queue Part 1](docs/doctor-dashboard-pages/appoitment-part1-4.png) |
+
+| 4. Cancellation & Rejection Logs | 5. Billing & Consultation Ledger |
+|:---:|:---:|
+| ![Doctor Queue Part 2](docs/doctor-dashboard-pages/appointment-part2-4.png) | ![Doctor Bills](docs/doctor-dashboard-pages/bill-log-5.png) |
+
+#### 6. Doctor Rating & Review Analytics
+![Doctor Reviews](docs/doctor-dashboard-pages/review-6.png)
+
+---
+
+### 🧑‍⚕️ Patient Portal Workflow
+
+| 1. Patient Dashboard | 2. Personal & Health Profile |
+|:---:|:---:|
+| ![Patient Dashboard](docs/patient-dashboard-pages/dashborad-1.png) | ![Patient Profile](docs/patient-dashboard-pages/profile-2.png) |
+
+| 3. Doctor Discovery Directory | 4. My Appointments Lifecycle |
+|:---:|:---:|
+| ![Browse Doctors](docs/patient-dashboard-pages/browse-doctor-3.png) | ![Patient Appointments](docs/patient-dashboard-pages/my-appointment-4.png) |
+
+| 5. Financial Bills Ledger | 6. Medical Records & PDF Prescriptions |
+|:---:|:---:|
+| ![Patient Bills](docs/patient-dashboard-pages/my-bill-5.png) | ![Medical History](docs/patient-dashboard-pages/medical-history-6.png) |
+
+#### 7. Doctor Review & Rating Form
+![Patient Review Form](docs/patient-dashboard-pages/my-review-7.png)
 
 ---
 
@@ -39,12 +144,11 @@ MediFlow is focused on streamlining the workflow of a **single clinic**. The app
 
 MediFlow employs a modern monolithic architecture powered by the **Inertia.js** protocol. Inertia bridges the gap between a server-side Laravel 13 backend and a client-side React 19 SPA frontend without the overhead of building a separate REST or GraphQL API.
 
-### 💡 The Power of Inertia.js (Abstraction Layer)
-
-* **No API Glue Code:** Eliminates the need for complex client-side state management (Redux, React Query) or API controllers. Server controllers return props directly to React page components via `Inertia::render('PageName', $props)`.
-* **Single Server-Side Routing:** All application routes are defined centrally in `routes/web.php` and automatically exported to end-to-end typed TypeScript functions via **Laravel Wayfinder**.
-* **Seamless SPA Performance:** The initial page load serves a full HTML document with a hydration payload. Subsequent navigations are intercepted by Inertia to perform instant XHR component swaps without browser reloads.
-* **Unified Security & RBAC:** Sessions, cookies, CSRF tokens, and Role-Based Access Control remain 100% server-side and secure via Laravel Fortify and Middleware.
+### 💡 The Power of Inertia.js & Laravel Wayfinder
+* ⚡ **No API Glue Code:** Eliminates the need for complex client-side state management (Redux, React Query) or API controllers. Server controllers return props directly to React page components via `Inertia::render('PageName', $props)`.
+* 🗺️ **End-to-End Typed Routing:** Application routes are defined centrally in `routes/web.php` and automatically compiled into TypeScript functions via **Laravel Wayfinder**.
+* 🚀 **Seamless SPA Performance:** The initial page load serves a full HTML document with a hydration payload. Subsequent navigations are intercepted by Inertia to perform instant XHR component swaps without browser reloads.
+* 🔒 **Unified Security & RBAC:** Sessions, cookies, CSRF tokens, and Role-Based Access Control remain 100% server-side and secure via Laravel Fortify and Middleware.
 
 ```mermaid
 flowchart TB
@@ -74,8 +178,10 @@ flowchart TB
         DB[("💾 Database Engine<br/>(SQLite / MySQL)")]
         Queue["⚙️ Database Job Queue<br/>(Async Notification Dispatcher)"]
         Brevo["📧 Brevo Email Service<br/>(Transactional Mail API)"]
+        PDF["📄 DomPDF Engine<br/>(Prescription & Entry Token PDF Generator)"]
         ORM <--> DB
         Controllers -.-> Queue
+        Controllers -.-> PDF
         Queue -.-> Brevo
     end
 
@@ -92,40 +198,42 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 ### 🔒 Core Infrastructure
 | Category | Technical Implementation |
 |----------|--------------------------|
-| **🔐 Authentication** | Secure session-based auth, user registration, and email verification (powered by `Laravel Fortify`). |
+| **🔐 Authentication** | Secure session-based auth, user registration, and email verification (`Laravel Fortify`). |
 | **🛡️ Authorization** | Strict Role-Based Access Control (RBAC) preventing cross-role access (Admin, Doctor, Patient). |
+| **📄 PDF Generation** | Server-side PDF generation engine (`barryvdh/laravel-dompdf`) for medical prescriptions & entry passes. |
 | **⚡ Async Processing**| Database-driven job queues for non-blocking operations like dispatching transactional emails. |
 | **🐛 Developer Tooling**| Built-in `Laravel Telescope` integration for deep query, request, and background job debugging. |
 
 ### 👑 Administrator Capabilities
 | Feature | Operational Scope |
 |---------|-------------------|
-| **📊 Clinic Dashboard** | High-level metrics tracking active users, total doctors, and daily appointments. |
+| **📊 Clinic Dashboard** | High-level metrics tracking active users, total doctors, daily appointments, and Recharts analytics. |
 | **👥 User Management** | View comprehensive user tables and instantly toggle account access (`active`/`suspended`). |
 | **🩺 Doctor Onboarding**| Register new doctors, assign exact medical specialties, set consultation fees, and toggle employment status. |
 | **👁️ Clinical Oversight**| Unrestricted read-access to clinic-wide data (Appointments, Consultations, Prescriptions, Bills, and Reviews). |
 | **⭐ Review Moderation** | Inspect and moderate patient reviews and ratings submitted for clinic doctors (`/admin/doctor-reviews`). |
-| **📈 Reporting** | Generate and review systematic clinic performance and financial reports. |
+| **📈 Reporting** | Interactive financial & performance report charts generated via Recharts. |
 
 ### 🩺 Doctor Workspace
 | Feature | Operational Scope |
 |---------|-------------------|
 | **📅 Schedule Control** | Dynamically define weekly availability (Day of week, Start/End time, and precise slot duration in minutes). |
-| **📥 Appointment Queue**| Real-time paginated queue of patient requests. Doctors can `Approve`, `Reject` (with reason), `Cancel` (with attribution), or flag as `No-Show`. |
-| **🛡️ Cancellation Tracking**| Clear distinction between appointments cancelled by the doctor (`Cancelled by Me`) versus the patient (`Cancelled by Patient`). |
+| **📥 Appointment Queue**| Real-time paginated queue of patient requests. Approve, Reject (with reason), Cancel, or mark as No-Show. |
+| **🛡️ Cancellation Tracking**| Clear distinction between appointments cancelled by doctor (`Cancelled by Me`) vs patient (`Cancelled by Patient`). |
 | **⚕️ Clinical Consultations**| Dedicated workflow to record patient symptoms, formal diagnosis, and private doctor-only notes. |
 | **💊 Digital Prescriptions**| Issue structured medical prescriptions supporting multiple line items (Medicine Name, Dosage, Frequency, Duration). |
 | **📂 Patient History** | Instant access to the historical timeline of an assigned patient's past appointments and prescriptions. |
-| **⭐ Rating Analytics** | View average star rating, rating distribution (1 to 5 stars), and patient reviews (`/doctor/reviews`). |
+| **⭐ Rating Analytics** | View average star rating, rating distribution (1 to 5 stars), and patient feedback (`/doctor/reviews`). |
 | **💳 Billing Oversight** | View auto-generated consultation bills and manually mark them as `Paid` upon collection. |
 
 ### 🧑‍⚕️ Patient Portal
 | Feature | Operational Scope |
 |---------|-------------------|
-| **🔍 Doctor Discovery** | Browse the active clinic directory filtered by doctor specialization, average star ratings, and upfront consultation fees. |
+| **🔍 Doctor Discovery** | Browse the active clinic directory filtered by doctor specialization, star ratings, and consultation fees. |
 | **⏱️ Live Booking** | View real-time, conflict-free time slots derived from the doctor's predefined schedule and current bookings. |
-| **📆 Appointment Lifecycle**| Submit new booking requests, view paginated appointments (`paginate(10)`), and cancel appointments with automated origin tracking. |
-| **🏥 Medical Records** | Access a permanent personal timeline archive of past consultations, doctor diagnoses, and collapsible digital prescriptions. |
+| **📆 Appointment Lifecycle**| Submit booking requests, view paginated appointments (`paginate(10)`), and cancel with origin tracking. |
+| **🏥 Medical Records** | Access a permanent personal timeline archive of past consultations, diagnoses, and prescriptions. |
+| **📄 PDF Downloads** | Direct one-click download of official **Medical Prescription PDFs** and **Appointment Entry Pass Tokens** (`TK-XXXX`). |
 | **⭐ Review Submission** | Rate doctors after completed visits with a 1-5 star score, optional review text, and anonymous toggle (`/patient/reviews`). |
 | **🧾 Financial Ledger** | Transparent view of all pending and cleared consultation bills. |
 
@@ -134,7 +242,22 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 ## 🚦 State Machine & Business Rules
 
 ### Appointment Lifecycle
-The appointment system operates on a strictly enforced state machine, managed exclusively via the `ClinicWorkflowService`.
+
+```mermaid
+stateDiagram-v2
+    [*] --> Pending: Patient Books Slot
+    Pending --> Cancelled: Cancelled by Patient
+    Pending --> Rejected: Rejected by Doctor (With Reason)
+    Pending --> Confirmed: Approved by Doctor
+    Confirmed --> Cancelled: Cancelled (Patient/Doctor)
+    Confirmed --> NoShow: Patient Missed Visit
+    Confirmed --> Consultation: Doctor Starts Visit
+    Consultation --> Completed: Diagnosis & Prescription Issued
+    Completed --> DoctorReview: Patient Rates Doctor (1-5 Stars)
+```
+
+<details>
+<summary><b>Click to view detailed ASCII State Flow</b></summary>
 
 ```text
                           PATIENT
@@ -169,37 +292,24 @@ The appointment system operates on a strictly enforced state machine, managed ex
                                            DOCTOR REVIEW
                                           (Star Rating & Text)
 ```
+</details>
 
 ### Core Business Rules
-The application strictly enforces the following domain logic at the service layer:
 
 | Rule ID | Domain Focus | Enforcement Logic |
 |---|---|---|
 | **BR-1** | **Doctor Availability** | Patients can only book appointments with doctors whose account status is `active`. |
-| **BR-2** | **Patient Collision** | A patient cannot have more than one `pending` or `confirmed` appointment for the exact same date and time, regardless of the doctor. |
+| **BR-2** | **Patient Collision** | A patient cannot have more than one `pending` or `confirmed` appointment for the exact same date and time. |
 | **BR-3** | **Slot Exclusivity** | A doctor's time slot cannot be booked if it already has a `pending`, `confirmed`, or `completed` appointment. |
-| **BR-4** | **Cancellation Window** | Appointments can only be cancelled (by patient or doctor) if their current status is `pending` or `confirmed`. |
+| **BR-4** | **Cancellation Window** | Appointments can only be cancelled if their current status is `pending` or `confirmed`. |
 | **BR-5** | **Strict Approvals** | Only `pending` appointments can be approved or rejected by the assigned doctor. |
-| **BR-6** | **No-Show & Consultations**| Only `confirmed` appointments can transition into `no_show` or proceed to `completed` via a consultation. |
-| **BR-7** | **Consultation Artifacts** | Successfully completing a consultation automatically transitions the appointment to `completed` and synchronously generates a Consultation record, a Digital Prescription, and an `unpaid` Bill. |
-| **BR-8** | **Doctor Reviews & Ratings** | Patients can rate and review doctors after completed appointments. Reviews support optional anonymity (`is_anonymous`), with scores bounded between 1 and 5 stars. |
-| **BR-9** | **Cancellation Attribution** | Whenever an appointment is cancelled by either party, the system permanently records the origin (`cancelled_by: patient | doctor`) and optional cancellation reason. |
-| **BR-10** | **Asynchronous Notifications** | The system automatically dispatches queued email notifications on critical lifecycle events: cancellations (cross-notified to the opposing party), rejections, no-shows, and doctor onboarding. |
+| **BR-6** | **No-Show & Consultations**| Only `confirmed` appointments can transition into `no_show` or proceed to `completed` via consultation. |
+| **BR-7** | **Consultation Artifacts** | Completing a consultation automatically generates a Consultation record, a Digital Prescription, and an `unpaid` Bill. |
+| **BR-8** | **Doctor Reviews & Ratings** | Patients can rate doctors after completed appointments (1-5 stars, optional review, `is_anonymous`). |
+| **BR-9** | **Cancellation Attribution** | Origins are recorded (`cancelled_by: patient | doctor`) along with optional cancellation explanations. |
+| **BR-10** | **Asynchronous Notifications** | System dispatches queued email notifications on cancellations, rejections, no-shows, and onboarding. |
 
 ### Automated Transactional Notifications
-The system integrates asynchronous transactional email notifications (via Laravel Notifications and Brevo/SMTP) triggered on specific lifecycle events:
-
-| Lifecycle Event | Recipient | Notification Class | Action & Behavior |
-|---|---|---|---|
-| **User Registration Verification** | New Patient | `QueuedVerifyEmail` | Sends a signed email verification link upon new patient account signup. |
-| **Password Reset Request** | Account Owner | `ResetPasswordNotification` | Delivers a secure, single-use password recovery link valid for 60 minutes. |
-| **Doctor Account Onboarded** | Doctor | `DoctorCredentialsNotification` | Delivers initial system credentials (email & temp password) to newly onboarded clinical staff. |
-| **Appointment Cancelled (by Patient)** | Doctor | `AppointmentCancelledNotification` | Cross-notifies the doctor immediately with the patient's name, appointment timestamp, and cancellation reason. |
-| **Appointment Cancelled (by Doctor)** | Patient | `AppointmentCancelledNotification` | Cross-notifies the patient immediately with the doctor's name, appointment timestamp, and cancellation reason. |
-| **Appointment Rejected** | Patient | `AppointmentRejectedNotification` | Notifies the patient that their pending request was declined, including the doctor's explanation. |
-| **Appointment Marked No-Show** | Patient | `AppointmentNoShowNotification` | Alerts the patient that they missed a confirmed clinical visit. |
-
-#### Technical Email Execution Flow
 
 ```mermaid
 sequenceDiagram
@@ -222,8 +332,6 @@ sequenceDiagram
 
 ## 💾 Domain Model (Database Schema)
 
-The core domain relies on highly normalized relationships managed by Eloquent ORM.
-
 ```mermaid
 erDiagram
     User ||--o| DoctorProfile : "has (1:1)"
@@ -239,8 +347,6 @@ erDiagram
 ```
 
 ### 🗄 Data Dictionary
-
-Below is the strict structural definition of the core entities, including data types, constraints, and allowed domains (enums).
 
 #### `users`
 | Attribute | Type | Key/Constraint | Domain / Notes |
@@ -341,7 +447,7 @@ Below is the strict structural definition of the core entities, including data t
 | `appointment_id` | bigint | FK (`appointments.id`) | Nullable, Cascade Delete |
 | `rating` | integer | | Score between 1 and 5 stars |
 | `review_text` | text | Nullable | Patient written feedback |
-| `is_anonymous` | boolean | Default: `false` | Whether author identity is hidden |
+| `is_anonymous` | boolean | Default: `false` | Author identity toggle |
 
 ---
 
@@ -351,6 +457,7 @@ Below is the strict structural definition of the core entities, including data t
 - **Framework**: Laravel `v13.17`
 - **Language**: PHP `^8.4`
 - **Database**: SQLite (Default) or MySQL
+- **PDF Engine**: Barryvdh Laravel DomPDF `^3.1`
 - **Authentication**: Laravel Fortify `^1.37`
 - **Developer Tools**: Laravel Telescope, Pint, Larastan, PestPHP
 
@@ -358,10 +465,12 @@ Below is the strict structural definition of the core entities, including data t
 - **Library**: React `^19.2`
 - **Language**: TypeScript `^5.7`
 - **Bridge**: Inertia.js `^3.0`
+- **Route Actions**: Laravel Wayfinder `^0.1`
+- **Data Analytics**: Recharts `^3.8`
 - **Styling**: Tailwind CSS `^4.0`
 - **UI Architecture**: shadcn/ui
 - **Animation & Effects**: Framer Motion, Aceternity UI, Magic UI
-- **Icons & Primitives**: Lucide React, Radix UI
+- **Icons & Primitives**: Lucide React, Radix UI, Tabler Icons
 - **Bundler**: Vite `^8.0`
 
 ### Recommended Local Tools
@@ -372,33 +481,33 @@ Below is the strict structural definition of the core entities, including data t
 
 ## 📂 Project Directory Structure
 
-The repository follows a standard Laravel + React monolithic structure, emphasizing a strict separation of concerns between backend business logic and frontend presentation.
-
 ```text
 MediFlow/
 ├── app/                        # Backend Engine (Laravel)
 │   ├── Http/
-│   │   ├── Controllers/        # API Request Handlers (Admin, Doctor, Patient, Review)
-│   │   ├── Requests/           # Form Request Validation (Patient, Doctor, Admin)
-│   │   └── Resources/          # Eloquent API Resources (AppointmentResource, DoctorReviewResource)
-│   ├── Models/                 # Eloquent Database Models (User, Appointment, DoctorReview, etc.)
-│   └── Policies/               # RBAC Policies (DoctorReviewPolicy, etc.)
+│   │   ├── Controllers/        # Controllers (Admin, Doctor, Patient, Review, Pdf)
+│   │   │   └── Pdf/            # PdfController (Prescription & Token PDF Generators)
+│   │   ├── Requests/           # Form Request Validation
+│   │   └── Resources/          # Eloquent API Resources
+│   ├── Models/                 # Eloquent Database Models
+│   ├── Policies/               # RBAC Policies
+│   └── Services/               # Core Business Logic (ClinicWorkflowService)
 ├── config/                     # Centralized configuration (Database, Mail, Fortify)
 ├── database/                   # Data Layer
 │   ├── migrations/             # Database Schema Definitions
-│   └── seeders/                # Test Data Generation (DatabaseSeeder, DoctorReviewSeeder)
+│   └── seeders/                # Test Data Generation
+├── docs/                       # Screenshot & Visual Documentation Gallery
+│   ├── admin-dashboard-pages/  # Admin Screenshots (1 to 5)
+│   ├── doctor-dashboard-pages/ # Doctor Screenshots (1 to 6)
+│   └── patient-dashboard-pages/# Patient Screenshots (1 to 7)
 ├── public/                     # Publicly accessible assets & entry point
 ├── resources/                  
 │   └── js/                     # Frontend Workspace (React + TypeScript)
-│       ├── components/         # Reusable UI (Pagination, StatusBadge, StarRating, FlickeringGrid)
-│       ├── layouts/            # Shared Page Layouts (AppLayout, AuthSplitLayout)
+│       ├── components/         # Reusable UI (Charts, Pagination, StatusBadge, StarRating)
+│       ├── layouts/            # Shared Page Layouts
 │       └── pages/              # Inertia Page Components
-│           ├── admin/          # Admin Views (Dashboard, Users, Doctors, Doctor Reviews, Reports)
-│           ├── doctor/         # Doctor Views (Dashboard, Appointments, Reviews, Patient History, Schedules)
-│           └── patient/        # Patient Views (Dashboard, My Appointments, Doctors, Reviews, Medical History)
 ├── routes/                     # HTTP Routing
-│   └── web.php                 # Web & Inertia Routes
-├── .env.example                # Environment Configuration Template
+│   └── web.php                 # Web, Inertia & PDF Routes
 ├── composer.json               # PHP Dependencies
 ├── package.json                # Node/NPM Dependencies
 └── vite.config.ts              # Vite Bundler Configuration
@@ -411,10 +520,9 @@ MediFlow/
 Follow these steps to quickly scaffold the application in a local environment. 
 
 > [!NOTE]
-> **Recommended Environment**: If you want to avoid the hassle of manually installing PHP, Node.js, and Composer, we highly recommend using [Laravel Herd](https://herd.laravel.com/). It provides a complete, zero-configuration development environment. We also recommend **DBngin** or **DBeaver** for database management.
+> **Recommended Environment**: If you want to avoid manually installing PHP, Node.js, and Composer, we highly recommend using [Laravel Herd](https://herd.laravel.com/).
 
 ### 1. Prerequisites
-Ensure your local machine has:
 - **PHP** `^8.4`
 - **Composer** (Latest)
 - **Node.js** `^22.0+`
@@ -441,47 +549,89 @@ By default, the application uses **SQLite**, meaning no database server configur
 # Run migrations and seed initial test data (Admin, Doctors, Patients, Reviews)
 php artisan migrate --seed
 ```
-*(If prompted to create the `database.sqlite` file, type `yes`).*
 
 ### 4. Running the Application
 We utilize a custom Composer script to concurrently start the PHP server, the Vite HMR server, and the database queue listener.
 
 ```bash
-# Starts all necessary development servers simultaneously
+# Starts PHP server, Vite HMR, and Queue listener concurrently
 composer run dev
 ```
-*(If using Laravel Herd, the site is served automatically. You only need to run `npm run dev` and `php artisan queue:listen`.)*
+
+---
+
+## 🔄 Upgrading & Maintenance Guide
+
+Follow this guide to update your existing local or production deployment whenever new changes are pulled from the repository.
+
+### 1. Pull Latest Code & Update Dependencies
+```bash
+git pull origin main
+composer install --no-interaction --prefer-dist --optimize-autoloader
+npm ci
+```
+
+### 2. Run Database Migrations
+Apply any new database schema changes or alter statements:
+```bash
+php artisan migrate --force
+```
+
+### 3. Recompile Frontend Assets
+Compile production bundle or launch Vite dev server:
+```bash
+# Production asset compilation
+npm run build
+
+# Local development HMR server
+composer run dev
+```
+
+### 4. Clear & Optimize Application Caches
+Whenever updating routes, configuration, or views, clear existing application caches:
+```bash
+php artisan config:clear
+php artisan route:clear
+php artisan cache:clear
+php artisan view:clear
+```
+
+### 5. Automated System Verification
+Run automated tests and linter to confirm project health:
+```bash
+# Run unit & feature test suite
+php artisan test --compact
+
+# Run PHP code style linter
+composer run lint
+```
 
 ---
 
 ## ⚙️ Environment Configuration
 
-The `.env` file requires the following key variables for proper operation:
-
 | Variable | Description |
 |----------|-------------|
-| `APP_NAME` | Name of the app (e.g., `MediFlow`). Used in UI and email templates. |
+| `APP_NAME` | Name of the app (`MediFlow`). Used in UI and email templates. |
 | `APP_ENV` | `local` for development, `production` for live deployments. |
 | `DB_CONNECTION` | Database driver. Defaults to `sqlite`. |
-| `QUEUE_CONNECTION` | Must be set to `database` to process background jobs. |
+| `QUEUE_CONNECTION` | Set to `database` to process background jobs. |
 | `MAIL_MAILER` | Mail driver. Configured for `brevo`. |
 | `BREVO_API_KEY` | Your Brevo API key for transactional emails. |
-| `MAIL_FROM_ADDRESS` | Address used for system-generated outbound emails. |
+| `MAIL_FROM_ADDRESS` | Outbound system sender email. |
 
 ---
 
 ## 🧑‍💻 Command Reference
 
-A quick reference for commonly used commands in this repository.
-
 | Category | Command | Description |
 |----------|---------|-------------|
 | **Servers** | `composer run dev` | Runs PHP server, Vite, and Queue concurrently. |
-| **Servers** | `npm run build` | Compiles and minifies frontend assets for production. |
-| **Database**| `php artisan migrate:fresh --seed` | Wipes the database, re-runs all migrations, and seeds test data. |
-| **Testing** | `php artisan test --compact` | Executes the PestPHP / PHPUnit test suite. |
-| **Linting** | `composer run lint` | Formats backend PHP code using Laravel Pint. |
-| **Linting** | `npm run lint` | Formats and lints frontend React/TS code via ESLint. |
+| **Build** | `npm run build` | Compiles frontend assets for production. |
+| **Database**| `php artisan migrate:fresh --seed` | Re-builds database and seeds test data. |
+| **Testing** | `php artisan test --compact` | Executes PestPHP / PHPUnit test suite. |
+| **Linting** | `composer run lint` | Formats PHP code using Laravel Pint. |
+| **Linting** | `npm run lint` | Formats frontend React/TS code via ESLint. |
 | **Routing** | `php artisan route:list` | Displays all registered application routes. |
 
 ---
@@ -491,10 +641,10 @@ A quick reference for commonly used commands in this repository.
 | Issue | Common Cause & Solution |
 |-------|-------------------------|
 | **500 Server Error** | Missing `APP_KEY`. Run `php artisan key:generate`. |
-| **Vite Manifest Not Found** | Frontend assets are missing. Run `npm run dev` or `npm run build`. |
-| **Emails Not Sending** | Queue worker is not running. Ensure you are running `php artisan queue:listen`. |
-| **Database Connection Refused** | Ensure `database/database.sqlite` exists and is writable, or verify your MySQL `.env` credentials. |
-| **Type/ESLint Errors** | Outdated Node modules. Run `rm -rf node_modules package-lock.json && npm install`. |
+| **Vite Manifest Not Found** | Assets missing. Run `npm run dev` or `npm run build`. |
+| **Emails Not Sending** | Queue worker not running. Ensure you run `php artisan queue:listen`. |
+| **PDF Download Fails** | Ensure `barryvdh/laravel-dompdf` is installed (`composer install`). |
+| **Database Refused** | Ensure `database/database.sqlite` exists and is writable. |
 
 ---
 

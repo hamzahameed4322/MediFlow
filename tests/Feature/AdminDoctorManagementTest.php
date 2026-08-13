@@ -33,3 +33,21 @@ test('admin can create a doctor and send credential email', function () {
 
     Notification::assertSentTo($doctor, DoctorCredentialsNotification::class);
 });
+
+test('admin can toggle doctor status between active and suspended', function () {
+    $admin = User::factory()->create(['role' => 'admin']);
+    $doctorUser = User::factory()->create(['role' => 'doctor', 'status' => 'active']);
+    $doctorProfile = DoctorProfile::factory()->create(['user_id' => $doctorUser->id]);
+
+    $this->actingAs($admin)
+        ->post(route('admin.doctors.toggle-status', $doctorProfile->id))
+        ->assertRedirect();
+
+    expect($doctorUser->fresh()->status)->toBe('suspended');
+
+    $this->actingAs($admin)
+        ->post(route('admin.doctors.toggle-status', $doctorProfile->id))
+        ->assertRedirect();
+
+    expect($doctorUser->fresh()->status)->toBe('active');
+});

@@ -27,6 +27,28 @@ export default function Schedules({ schedules }: Props) {
 
     function submit(e: FormEvent) {
         e.preventDefault();
+        form.clearErrors();
+
+        const { start_time, end_time } = form.data;
+
+        // Disallow schedule start time between 12:00 AM and 06:00 AM (00:00 to 05:59)
+        if (start_time < '06:00') {
+            form.setError('start_time', 'Schedules are only allowed between 06:00 AM and 12:00 AM midnight (12:00 AM - 06:00 AM is not allowed).');
+            return;
+        }
+
+        // Disallow schedule end time between 12:01 AM and 05:59 AM (00:01 to 05:59)
+        if (end_time > '00:00' && end_time < '06:00') {
+            form.setError('end_time', 'End time cannot be between 12:00 AM and 06:00 AM.');
+            return;
+        }
+
+        // Start time must be before end time
+        if (end_time !== '00:00' && start_time >= end_time) {
+            form.setError('start_time', 'Start time must be before end time.');
+            return;
+        }
+
         form.post('/doctor/schedules', {
             preserveScroll: true,
             onSuccess: () => form.reset('start_time', 'end_time', 'duration'),
@@ -56,7 +78,7 @@ export default function Schedules({ schedules }: Props) {
                     <Card>
                         <CardHeader>
                             <CardTitle className="flex items-center gap-2"><Plus className="size-5 text-(--primary)" />Add schedule</CardTitle>
-                            <CardDescription>Create a recurring weekday slot.</CardDescription>
+                            <CardDescription>Create a recurring weekday slot (allowed 06:00 AM to 12:00 AM).</CardDescription>
                         </CardHeader>
                         <CardContent>
                             <form className="space-y-4" onSubmit={submit}>
@@ -75,12 +97,13 @@ export default function Schedules({ schedules }: Props) {
                                     </div>
                                     <div className="space-y-2">
                                         <Label htmlFor="start_time">Start time</Label>
-                                        <Input id="start_time" type="time" value={form.data.start_time} onChange={(e) => form.setData('start_time', e.target.value)} />
+                                        <Input id="start_time" type="time" min="06:00" max="23:59" value={form.data.start_time} onChange={(e) => form.setData('start_time', e.target.value)} />
+                                        <p className="text-[11px] text-muted-foreground">Allowed window: 06:00 AM - 12:00 AM</p>
                                         <InputError message={form.errors.start_time} />
                                     </div>
                                     <div className="space-y-2">
                                         <Label htmlFor="end_time">End time</Label>
-                                        <Input id="end_time" type="time" value={form.data.end_time} onChange={(e) => form.setData('end_time', e.target.value)} />
+                                        <Input id="end_time" type="time" min="06:00" max="23:59" value={form.data.end_time} onChange={(e) => form.setData('end_time', e.target.value)} />
                                         <InputError message={form.errors.end_time} />
                                     </div>
                                 </div>
@@ -108,7 +131,7 @@ export default function Schedules({ schedules }: Props) {
                                                 <div className="flex flex-wrap items-center gap-2">
                                                     <p className="font-semibold">{schedule.day}</p>
                                                     <Badge variant="outline">{schedule.start_time.slice(0, 5)} - {schedule.end_time.slice(0, 5)}</Badge>
-                                                    <Badge variant="secondary">{schedule.duration} min</Badge>
+                                                    <Badge className="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/15">{schedule.duration} min</Badge>
                                                 </div>
                                                 <p className="mt-1 text-xs text-muted-foreground">Patients can book only inside this window.</p>
                                             </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
+use App\Models\Consultation;
 use App\Models\DoctorProfile;
 use App\Models\DoctorReview;
 use App\Models\PatientProfile;
@@ -20,7 +21,7 @@ class HomeController extends Controller
             ->whereHas('user', function ($query) {
                 $query->where('status', 'active');
             })
-            ->orderByDesc('experience')
+            ->orderBy('id')
             ->limit(3)
             ->get()
             ->map(function ($doctor, $index) {
@@ -79,12 +80,24 @@ class HomeController extends Controller
             })->count(),
             'reviews' => DoctorReview::count(),
             'patients' => PatientProfile::count(),
+            'consultations' => Consultation::count(),
         ];
+
+        $specializations = DoctorProfile::whereHas('user', fn ($q) => $q->where('status', 'active'))
+            ->distinct()
+            ->pluck('specialization')
+            ->filter()
+            ->values()
+            ->toArray();
+
+        $averageRating = round((float) DoctorReview::avg('rating'), 1);
 
         return Inertia::render('welcome', [
             'featuredDoctors' => $doctors,
             'featuredReviews' => $reviews,
             'stats' => $stats,
+            'specializations' => $specializations,
+            'averageRating' => $averageRating,
         ]);
     }
 }

@@ -56,7 +56,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
     store.form = storeForm
 /**
 * @see \App\Http\Controllers\DoctorController::destroy
- * @see app/Http/Controllers/DoctorController.php:215
+ * @see app/Http/Controllers/DoctorController.php:224
  * @route 'http://cms.test/doctor/schedules/{schedule}'
  */
 export const destroy = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -71,7 +71,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::destroy
- * @see app/Http/Controllers/DoctorController.php:215
+ * @see app/Http/Controllers/DoctorController.php:224
  * @route 'http://cms.test/doctor/schedules/{schedule}'
  */
 destroy.url = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -104,7 +104,7 @@ destroy.url = (args: { schedule: number | { id: number } } | [schedule: number |
 
 /**
 * @see \App\Http\Controllers\DoctorController::destroy
- * @see app/Http/Controllers/DoctorController.php:215
+ * @see app/Http/Controllers/DoctorController.php:224
  * @route 'http://cms.test/doctor/schedules/{schedule}'
  */
 destroy.delete = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -114,7 +114,7 @@ destroy.delete = (args: { schedule: number | { id: number } } | [schedule: numbe
 
     /**
 * @see \App\Http\Controllers\DoctorController::destroy
- * @see app/Http/Controllers/DoctorController.php:215
+ * @see app/Http/Controllers/DoctorController.php:224
  * @route 'http://cms.test/doctor/schedules/{schedule}'
  */
     const destroyForm = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -129,7 +129,7 @@ destroy.delete = (args: { schedule: number | { id: number } } | [schedule: numbe
 
             /**
 * @see \App\Http\Controllers\DoctorController::destroy
- * @see app/Http/Controllers/DoctorController.php:215
+ * @see app/Http/Controllers/DoctorController.php:224
  * @route 'http://cms.test/doctor/schedules/{schedule}'
  */
         destroyForm.delete = (args: { schedule: number | { id: number } } | [schedule: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

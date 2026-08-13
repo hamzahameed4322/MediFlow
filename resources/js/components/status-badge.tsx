@@ -6,7 +6,7 @@ import type { AppointmentStatus, BillStatus, CancelledBy } from '@/types';
 const appointmentConfig: Record<AppointmentStatus, { label: string; className: string }> = {
     pending:   { label: 'Pending',   className: 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border-amber-500/30 shadow-2xs' },
     confirmed: { label: 'Confirmed', className: 'bg-blue-500/15 text-blue-700 dark:text-blue-400 border-blue-500/30 shadow-2xs' },
-    completed: { label: 'Completed', className: 'bg-primary text-primary-foreground border-primary shadow-2xs' },
+    completed: { label: 'Completed', className: 'bg-emerald-600 text-white border-emerald-600 shadow-2xs' },
     rejected:  { label: 'Rejected',  className: 'bg-destructive/15 text-destructive border-destructive/30 shadow-2xs' },
     cancelled: { label: 'Cancelled', className: 'bg-slate-500/15 text-slate-700 dark:text-slate-400 border-slate-500/30 shadow-2xs' },
     no_show:   { label: 'No Show',   className: 'bg-destructive/80 text-destructive-foreground border-destructive shadow-2xs' },
@@ -15,14 +15,14 @@ const appointmentConfig: Record<AppointmentStatus, { label: string; className: s
 // ─── Bill Status ────────────────────────────────────────────────────────────
 
 const billConfig: Record<BillStatus, { label: string; className: string }> = {
-    unpaid: { label: 'Unpaid', className: 'bg-destructive/15 text-destructive border-destructive/30 shadow-2xs' },
-    paid:   { label: 'Paid',   className: 'bg-primary/15 text-primary border-primary/30 shadow-2xs' },
+    unpaid: { label: 'Unpaid', className: 'bg-amber-500/15 text-amber-700 border-amber-500/30 dark:text-amber-400 shadow-2xs' },
+    paid:   { label: 'Paid',   className: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/40 shadow-2xs' },
 };
 
 // ─── User Status ────────────────────────────────────────────────────────────
 
 const userStatusConfig: Record<string, { label: string; className: string }> = {
-    active:    { label: 'Active',    className: 'bg-primary/15 text-primary border-primary/30 shadow-2xs' },
+    active:    { label: 'Active',    className: 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800/40 shadow-2xs' },
     inactive:  { label: 'Inactive',  className: 'bg-slate-500/15 text-slate-700 dark:text-slate-400 border-slate-500/30 shadow-2xs' },
     suspended: { label: 'Suspended', className: 'bg-destructive/15 text-destructive border-destructive/30 shadow-2xs' },
 };
@@ -54,7 +54,7 @@ const cancelledByConfig: Record<CancelledBy, { label: string; className: string 
     doctor:  { label: 'Cancelled by Doctor',  className: 'bg-blue-500/15 text-blue-700 border-blue-500/30 dark:bg-blue-500/20 dark:text-blue-400 dark:border-blue-500/30 shadow-2xs' },
 };
 
-export function CancelledByBadge({ cancelledBy }: { cancelledBy: CancelledBy | null }) {
+export function CancelledByBadge({ cancelledBy }: { cancelledBy?: CancelledBy | null }) {
     if (!cancelledBy) return null;
 
     const config = cancelledByConfig[cancelledBy];

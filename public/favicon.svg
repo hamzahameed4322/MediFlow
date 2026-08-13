@@ -1,5 +1,18 @@
-<svg width="166" height="166" viewBox="0 0 166 166" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect x="18" y="18" width="130" height="130" rx="34" fill="#0f766e"/>
-<path d="M47 84h20l10-20 17 35 11-19h14" stroke="white" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M83 44v20M73 54h20" stroke="white" stroke-width="11" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="100%" height="100%">
+    <defs>
+        <linearGradient id="mediflow-primary" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#06b6d4" />
+            <stop offset="100%" stop-color="#0d9488" />
+        </linearGradient>
+    </defs>
+    <!-- Rounded Container matching app-logo rounded-lg ratio -->
+    <rect width="128" height="128" rx="36" fill="url(#mediflow-primary)" />
+
+    <!-- Perfectly centered & padded HeartPulse icon -->
+    <g transform="translate(20, 20) scale(3.666)" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Heart Path -->
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+        <!-- Pulse Wave -->
+        <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" />
+    </g>
 </svg>

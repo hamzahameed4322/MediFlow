@@ -20,7 +20,7 @@ class PatientProfileFactory extends Factory
     {
         return [
             'user_id' => User::factory()->state(['role' => 'patient']),
-            'phone' => fake()->phoneNumber(),
+            'phone' => '03'.fake()->numerify('#########'),
             'gender' => fake()->randomElement(['male', 'female', 'other']),
             'dob' => fake()->date('Y-m-d', '-10 years'), // Patient is at least 10 years old
             'address' => fake()->address(),

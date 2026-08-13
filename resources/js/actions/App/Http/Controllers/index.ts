@@ -5,7 +5,7 @@ import AdminController from './AdminController'
 import DoctorController from './DoctorController'
 import PatientController from './PatientController'
 import ReviewController from './ReviewController'
-import Patient from './Patient'
+import Pdf from './Pdf'
 import Settings from './Settings'
 const Controllers = {
     Auth: Object.assign(Auth, Auth),
@@ -15,7 +15,7 @@ AdminController: Object.assign(AdminController, AdminController),
 DoctorController: Object.assign(DoctorController, DoctorController),
 PatientController: Object.assign(PatientController, PatientController),
 ReviewController: Object.assign(ReviewController, ReviewController),
-Patient: Object.assign(Patient, Patient),
+Pdf: Object.assign(Pdf, Pdf),
 Settings: Object.assign(Settings, Settings),
 }
 

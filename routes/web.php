@@ -5,10 +5,9 @@ use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Patient\PdfController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\Pdf\PdfController;
 use App\Http\Controllers\ReviewController;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -33,9 +32,13 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::post('doctors/{doctor}/toggle-status', [AdminController::class, 'toggleDoctorStatus'])->name('doctors.toggle-status');
 
     Route::get('appointments', [AdminController::class, 'appointments'])->name('appointments');
+    Route::post('appointments/{appointment}/status', [AdminController::class, 'updateAppointmentStatus'])->name('appointments.status');
+
     Route::get('consultations', [AdminController::class, 'consultations'])->name('consultations');
     Route::get('prescriptions', [AdminController::class, 'prescriptions'])->name('prescriptions');
+
     Route::get('bills', [AdminController::class, 'bills'])->name('bills');
+
     Route::get('reports', [AdminController::class, 'reports'])->name('reports');
     Route::get('doctors/{doctor}/reviews', [AdminController::class, 'doctorReviews'])->name('doctors.reviews');
 });
@@ -89,14 +92,3 @@ Route::middleware(['auth', 'verified', 'role:patient'])->prefix('patient')->name
 });
 
 require __DIR__.'/settings.php';
-Route::get('/test-email', function () {
-    try {
-        Mail::raw('Test from production', function ($msg) {
-            $msg->to('hamzahameed4322@gmail.com')->subject('Prod Test');
-        });
-
-        return 'SUCCESS';
-    } catch (Exception $e) {
-        return $e->getMessage();
-    }
-});

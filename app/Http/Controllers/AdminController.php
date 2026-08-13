@@ -124,7 +124,7 @@ class AdminController extends Controller
                 'status' => $request->input('status', 'all'),
             ],
             'patients' => PatientProfileResource::collection(
-                $query->orderByDesc('created_at')->paginate(10)->withQueryString(),
+                $query->orderByDesc('created_at')->paginate(12)->withQueryString(),
             ),
         ]);
     }
@@ -145,13 +145,49 @@ class AdminController extends Controller
     }
 
     /**
-     * List doctors.
+     * List doctors with search, specialization filter, and performance stats.
      */
-    public function doctors(): Response
+    public function doctors(Request $request): Response
     {
+        $query = DoctorProfile::query()
+            ->with(['user', 'schedules'])
+            ->withCount(['appointments', 'appointments as completed_appointments_count' => fn ($q) => $q->where('status', 'completed')])
+            ->withAvg('reviews', 'rating');
+
+        if ($search = trim((string) $request->input('search'))) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('user', function ($uq) use ($search) {
+                    $uq->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%");
+                })
+                    ->orWhere('specialization', 'like', "%{$search}%")
+                    ->orWhere('qualification', 'like', "%{$search}%");
+            });
+        }
+
+        if ($specialization = $request->input('specialization')) {
+            if ($specialization !== 'all') {
+                $query->where('specialization', $specialization);
+            }
+        }
+
+        if ($status = $request->input('status')) {
+            if (in_array($status, ['active', 'suspended'])) {
+                $query->whereHas('user', fn ($uq) => $uq->where('status', $status));
+            }
+        }
+
+        $specializations = DoctorProfile::distinct()->pluck('specialization')->filter()->values();
+
         return Inertia::render('admin/doctors', [
+            'filters' => [
+                'search' => $request->input('search', ''),
+                'specialization' => $request->input('specialization', 'all'),
+                'status' => $request->input('status', 'all'),
+            ],
+            'specializations' => $specializations,
             'doctors' => DoctorProfileResource::collection(
-                DoctorProfile::query()->with(['user', 'schedules'])->orderBy('id')->get(),
+                $query->orderBy('id')->paginate(12)->withQueryString(),
             ),
         ]);
     }
@@ -229,19 +265,99 @@ class AdminController extends Controller
     }
 
     /**
-     * View all appointments.
+     * View all appointments with multi-parameter server-side filtering.
      */
-    public function appointments(): Response
+    public function appointments(Request $request): Response
     {
+        $query = Appointment::query()
+            ->with(['patient.user', 'doctor.user', 'consultation', 'bill']);
+
+        if ($search = trim((string) $request->input('search'))) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('patient.user', fn ($puq) => $puq->where('name', 'like', "%{$search}%")->orWhere('email', 'like', "%{$search}%"))
+                    ->orWhereHas('doctor.user', fn ($duq) => $duq->where('name', 'like', "%{$search}%"))
+                    ->orWhere('reason', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%");
+            });
+        }
+
+        if ($status = $request->input('status')) {
+            if ($status !== 'all' && in_array($status, ['pending', 'confirmed', 'completed', 'cancelled', 'rejected', 'no_show'])) {
+                $query->where('status', $status);
+            }
+        }
+
+        if ($doctorId = $request->input('doctor_id')) {
+            if ($doctorId !== 'all') {
+                $query->where('doctor_id', $doctorId);
+            }
+        }
+
+        if ($dateFrom = $request->input('date_from')) {
+            $query->whereDate('appointment_date', '>=', $dateFrom);
+        }
+
+        if ($dateTo = $request->input('date_to')) {
+            $query->whereDate('appointment_date', '<=', $dateTo);
+        }
+
+        $sortBy = $request->input('sort_by', 'appointment_date');
+        $sortOrder = strtolower((string) $request->input('sort_order', 'desc')) === 'asc' ? 'asc' : 'desc';
+
+        if ($sortBy === 'id') {
+            $query->orderBy('id', $sortOrder);
+        } elseif ($sortBy === 'status') {
+            $query->orderBy('status', $sortOrder);
+        } else {
+            $query->orderBy('appointment_date', $sortOrder)->orderBy('appointment_time', $sortOrder);
+        }
+
+        $doctors = DoctorProfile::with('user:id,name')->get()->map(fn ($d) => [
+            'id' => $d->id,
+            'name' => $d->user?->name ?? 'Doctor',
+            'specialization' => $d->specialization,
+        ]);
+
         return Inertia::render('admin/appointments', [
+            'filters' => [
+                'search' => $request->input('search', ''),
+                'status' => $request->input('status', 'all'),
+                'doctor_id' => $request->input('doctor_id', 'all'),
+                'date_from' => $request->input('date_from', ''),
+                'date_to' => $request->input('date_to', ''),
+                'sort_by' => $sortBy,
+                'sort_order' => $sortOrder,
+            ],
+            'doctors' => $doctors,
             'appointments' => AppointmentResource::collection(
-                Appointment::query()
-                    ->with(['patient.user', 'doctor.user'])
-                    ->orderByDesc('appointment_date')
-                    ->orderByDesc('appointment_time')
-                    ->paginate(10),
+                $query->paginate(12)->withQueryString()
             ),
         ]);
+    }
+
+    /**
+     * Update appointment status directly by Admin.
+     */
+    public function updateAppointmentStatus(Request $request, Appointment $appointment): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'in:pending,confirmed,completed,cancelled,rejected,no_show'],
+            'cancel_reason' => ['nullable', 'string', 'max:500'],
+            'reject_reason' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $data = ['status' => $validated['status']];
+
+        if ($validated['status'] === 'cancelled') {
+            $data['cancelled_by'] = 'doctor';
+            $data['cancel_reason'] = $validated['cancel_reason'] ?? 'Cancelled by Admin';
+        } elseif ($validated['status'] === 'rejected') {
+            $data['reject_reason'] = $validated['reject_reason'] ?? 'Rejected by Admin';
+        }
+
+        $appointment->update($data);
+
+        return redirect()->back()->with('status', 'Appointment status updated successfully!');
     }
 
     /**
@@ -271,43 +387,110 @@ class AdminController extends Controller
     }
 
     /**
-     * View all consultations.
+     * View all consultations with server-side search.
      */
-    public function consultations(): Response
+    public function consultations(Request $request): Response
     {
+        $query = Consultation::query()
+            ->with(['appointment.patient.user', 'appointment.doctor.user', 'prescription.items']);
+
+        if ($search = trim((string) $request->input('search'))) {
+            $query->where(function ($q) use ($search) {
+                $q->where('symptoms', 'like', "%{$search}%")
+                    ->orWhere('diagnosis', 'like', "%{$search}%")
+                    ->orWhere('notes', 'like', "%{$search}%")
+                    ->orWhereHas('appointment.patient.user', fn ($puq) => $puq->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('appointment.doctor.user', fn ($duq) => $duq->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        $sortOrder = strtolower((string) $request->input('sort_order', 'desc')) === 'asc' ? 'asc' : 'desc';
+
         return Inertia::render('admin/consultations', [
+            'filters' => [
+                'search' => $request->input('search', ''),
+                'sort_order' => $sortOrder,
+            ],
             'consultations' => ConsultationResource::collection(
-                Consultation::with(['appointment.patient.user', 'appointment.doctor.user'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10)
+                $query->orderBy('consultations.id', $sortOrder)->paginate(12)->withQueryString()
             ),
         ]);
     }
 
     /**
-     * View all prescriptions.
+     * View all prescriptions with medicine search.
      */
-    public function prescriptions(): Response
+    public function prescriptions(Request $request): Response
     {
+        $query = Prescription::query()
+            ->with(['consultation.appointment.patient.user', 'consultation.appointment.doctor.user', 'items']);
+
+        if ($search = trim((string) $request->input('search'))) {
+            $query->where(function ($q) use ($search) {
+                $q->where('instructions', 'like', "%{$search}%")
+                    ->orWhereHas('items', fn ($iq) => $iq->where('medicine_name', 'like', "%{$search}%"))
+                    ->orWhereHas('consultation.appointment.patient.user', fn ($puq) => $puq->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('consultation.appointment.doctor.user', fn ($duq) => $duq->where('name', 'like', "%{$search}%"));
+            });
+        }
+
         return Inertia::render('admin/prescriptions', [
+            'filters' => [
+                'search' => $request->input('search', ''),
+            ],
             'prescriptions' => PrescriptionResource::collection(
-                Prescription::with(['consultation.appointment.patient.user', 'consultation.appointment.doctor.user', 'items'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10)
+                $query->orderByDesc('created_at')->paginate(12)->withQueryString()
             ),
         ]);
     }
 
     /**
-     * View all bills.
+     * View all bills with financial summary and status filtering.
      */
-    public function bills(): Response
+    public function bills(Request $request): Response
     {
+        $query = Bill::query()
+            ->with(['appointment.patient.user', 'appointment.doctor.user']);
+
+        if ($search = trim((string) $request->input('search'))) {
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%{$search}%")
+                    ->orWhere('amount', 'like', "%{$search}%")
+                    ->orWhereHas('appointment.patient.user', fn ($puq) => $puq->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('appointment.doctor.user', fn ($duq) => $duq->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        if ($status = $request->input('status')) {
+            if ($status !== 'all' && in_array($status, ['paid', 'unpaid'])) {
+                $query->where('status', $status);
+            }
+        }
+
+        $sortOrder = strtolower((string) $request->input('sort_order', 'desc')) === 'asc' ? 'asc' : 'desc';
+        $query->orderBy('bills.id', $sortOrder);
+
+        $totalRevenue = (float) Bill::sum('amount');
+        $paidRevenue = (float) Bill::where('status', 'paid')->sum('amount');
+        $unpaidRevenue = (float) Bill::where('status', 'unpaid')->sum('amount');
+        $paidCount = Bill::where('status', 'paid')->count();
+        $unpaidCount = Bill::where('status', 'unpaid')->count();
+
         return Inertia::render('admin/bills', [
+            'filters' => [
+                'search' => $request->input('search', ''),
+                'status' => $request->input('status', 'all'),
+                'sort_order' => $sortOrder,
+            ],
+            'stats' => [
+                'totalRevenue' => $totalRevenue,
+                'paidRevenue' => $paidRevenue,
+                'unpaidRevenue' => $unpaidRevenue,
+                'paidCount' => $paidCount,
+                'unpaidCount' => $unpaidCount,
+            ],
             'bills' => BillResource::collection(
-                Bill::with(['appointment.patient.user', 'appointment.doctor.user'])
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10)
+                $query->paginate(12)->withQueryString()
             ),
         ]);
     }

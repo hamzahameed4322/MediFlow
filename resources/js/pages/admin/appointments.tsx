@@ -1,4 +1,5 @@
-import { Head } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
+import { motion } from 'framer-motion';
 import { Pagination } from '@/components/pagination';
 import {
     ArrowDown,
@@ -9,6 +10,7 @@ import {
     Clock,
     Filter,
     type LucideIcon,
+    RotateCw,
     Search,
     Stethoscope,
     UserCheck,
@@ -32,18 +34,25 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { appointments as adminAppointments } from '@/routes/admin';
+import { dashboard as adminDashboard, appointments as adminAppointments } from '@/routes/admin';
 import type { Appointment, AppointmentStatus } from '@/types';
 
 type Props = {
+    filters?: {
+        search?: string;
+        status?: string;
+        doctor_id?: string;
+        date_from?: string;
+        date_to?: string;
+        sort_by?: string;
+        sort_order?: string;
+    };
     appointments: {
         data: Appointment[];
         links: any;
         meta: any;
     };
 };
-
-type SortOrder = 'asc' | 'desc';
 
 const FILTERS: { key: AppointmentStatus | 'all'; label: string }[] = [
     { key: 'all', label: 'All' },
@@ -55,105 +64,91 @@ const FILTERS: { key: AppointmentStatus | 'all'; label: string }[] = [
     { key: 'no_show', label: 'No Show' },
 ];
 
-export default function AppointmentsIndex({ appointments }: Props) {
-    const [filter, setFilter] = useState<AppointmentStatus | 'all'>('all');
-    const [query, setQuery] = useState('');
+export default function AppointmentsIndex({ appointments, filters }: Props) {
+    const appointmentData = appointments?.data ?? [];
+    const [filter, setFilter] = useState<AppointmentStatus | 'all'>((filters?.status as any) ?? 'all');
+    const [query, setQuery] = useState(filters?.search ?? '');
+    const [sortBy, setSortBy] = useState<string>(filters?.sort_by ?? 'appointment_date');
+    const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>((filters?.sort_order as any) ?? 'desc');
     const [isSearching, setIsSearching] = useState(false);
-    const [sortSchedule, setSortSchedule] = useState<SortOrder | null>(null);
 
-    // Handle debounced search / filter loading skeleton state
-    useEffect(() => {
-        if (!query.trim() && filter === 'all') {
-            setIsSearching(false);
-            return;
-        }
-
+    const triggerSearch = (searchVal: string, statusVal: string, sortVal: string, orderVal: string) => {
         setIsSearching(true);
+        router.get(
+            adminAppointments.url(),
+            {
+                search: searchVal || undefined,
+                status: statusVal !== 'all' ? statusVal : undefined,
+                sort_by: sortVal,
+                sort_order: orderVal,
+            },
+            {
+                preserveState: true,
+                preserveScroll: true,
+                replace: true,
+                onFinish: () => setIsSearching(false),
+            }
+        );
+    };
+
+    // 400ms Debounce to reduce excessive search request hits and prevent system lag
+    useEffect(() => {
         const timer = setTimeout(() => {
-            setIsSearching(false);
-        }, 250);
+            if (
+                query !== (filters?.search ?? '') ||
+                filter !== (filters?.status ?? 'all') ||
+                sortBy !== (filters?.sort_by ?? 'appointment_date') ||
+                sortOrder !== (filters?.sort_order ?? 'desc')
+            ) {
+                triggerSearch(query, filter, sortBy, sortOrder);
+            }
+        }, 400);
 
         return () => clearTimeout(timer);
-    }, [query, filter]);
+    }, [query, filter, sortBy, sortOrder]);
 
-    // Single inline Schedule sorting (toggle: asc -> desc -> null)
-    const toggleScheduleSort = () => {
-        if (sortSchedule === null) {
-            setSortSchedule('asc');
-        } else if (sortSchedule === 'asc') {
-            setSortSchedule('desc');
+    const handleSortToggle = (column: string) => {
+        if (sortBy === column) {
+            const nextOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+            setSortOrder(nextOrder);
+            triggerSearch(query, filter, column, nextOrder);
         } else {
-            setSortSchedule(null);
+            setSortBy(column);
+            setSortOrder('desc');
+            triggerSearch(query, filter, column, 'desc');
         }
     };
 
-    const filtered = useMemo(() => {
-        const list = appointments?.data ?? [];
-        let result = list.filter((appointment) => {
-            const matchesStatus = filter === 'all' || appointment.status === filter;
-            const searchableText = [
-                appointment.patient?.user?.name,
-                appointment.doctor?.user?.name,
-                appointment.reason,
-                appointment.cancel_reason,
-                appointment.reject_reason,
-            ]
-                .filter(Boolean)
-                .join(' ')
-                .toLowerCase();
+    const counts = useMemo(() => {
+        return {
+            pending: appointmentData.filter((a) => a.status === 'pending').length,
+            confirmed: appointmentData.filter((a) => a.status === 'confirmed').length,
+            completed: appointmentData.filter((a) => a.status === 'completed').length,
+            cancelled: appointmentData.filter((a) => a.status === 'cancelled').length,
+            rejected: appointmentData.filter((a) => a.status === 'rejected').length,
+            noShow: appointmentData.filter((a) => a.status === 'no_show').length,
+        };
+    }, [appointmentData]);
 
-            return matchesStatus && searchableText.includes(query.toLowerCase());
-        });
-
-        if (sortSchedule) {
-            result = [...result].sort((a, b) => {
-                const valA = `${a.appointment_date} ${a.appointment_time}`;
-                const valB = `${b.appointment_date} ${b.appointment_time}`;
-
-                if (valA < valB) return sortSchedule === 'asc' ? -1 : 1;
-                if (valA > valB) return sortSchedule === 'asc' ? 1 : -1;
-                return 0;
-            });
-        }
-
-        return result;
-    }, [appointments, filter, query, sortSchedule]);
-
-    const counts = useMemo(
-        () => {
-            const list = appointments?.data ?? [];
-            return {
-                pending: list.filter((a) => a.status === 'pending').length,
-                confirmed: list.filter((a) => a.status === 'confirmed').length,
-                completed: list.filter((a) => a.status === 'completed').length,
-                cancelled: list.filter((a) => a.status === 'cancelled').length,
-                rejected: list.filter((a) => a.status === 'rejected').length,
-                noShow: list.filter((a) => a.status === 'no_show').length,
-            };
-        },
-        [appointments],
-    );
-
-    const hasActiveFilter = filter !== 'all' || query.trim() !== '' || sortSchedule !== null;
+    const hasActiveFilter = filter !== 'all' || query.trim() !== '';
 
     return (
         <>
             <Head title="Appointments" />
 
             <div className="flex flex-col gap-6 p-6">
-                <section className="rounded-[1.75rem] border border-border bg-card p-8 shadow-sm">
+                <section className="rounded-[1.75rem] border border-border bg-card p-5 sm:p-8 shadow-sm">
                     <div className="space-y-3">
                         <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium tracking-wide text-primary">
                             <Filter className="size-3.5" />
                             Operations monitoring
                         </div>
                         <div>
-                            <h1 className="text-3xl font-semibold tracking-tight text-foreground">
+                            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
                                 Appointments
                             </h1>
                             <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                                Track appointment states across the clinic workflow and audit the
-                                consultation pipeline.
+                                Track appointment states across the clinic workflow and audit the consultation pipeline.
                             </p>
                         </div>
                     </div>
@@ -175,8 +170,22 @@ export default function AppointmentsIndex({ appointments }: Props) {
                                 value={query}
                                 onChange={(event) => setQuery(event.target.value)}
                                 placeholder="Search patient, doctor, reason..."
-                                className="border-0 pl-9 shadow-none focus-visible:ring-0"
+                                className="border-0 pl-9 pr-8 shadow-none focus-visible:ring-0"
                             />
+                            {isSearching ? (
+                                <RotateCw className="absolute right-3 top-1/2 -translate-y-1/2 size-3.5 animate-spin text-muted-foreground" />
+                            ) : query ? (
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        setQuery('');
+                                        triggerSearch('', filter, sortBy, sortOrder);
+                                    }}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full p-1 text-muted-foreground hover:bg-muted transition-colors cursor-pointer"
+                                >
+                                    <X className="size-3.5" />
+                                </button>
+                            ) : null}
                         </div>
                         <Select value={filter} onValueChange={(value) => setFilter(value as AppointmentStatus | 'all')}>
                             <SelectTrigger>
@@ -192,7 +201,6 @@ export default function AppointmentsIndex({ appointments }: Props) {
                         </Select>
                     </div>
 
-                    {/* Professional Active Filter Chips Bar */}
                     {hasActiveFilter && (
                         <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
                             {filter !== 'all' && (
@@ -221,25 +229,12 @@ export default function AppointmentsIndex({ appointments }: Props) {
                                     </button>
                                 </span>
                             )}
-                            {sortSchedule && (
-                                <span className="inline-flex items-center gap-1.5 rounded-full border border-primary/25 bg-primary/10 px-3 py-1 font-medium text-primary shadow-2xs">
-                                    Schedule: {sortSchedule === 'asc' ? 'Earliest first' : 'Latest first'}
-                                    <button
-                                        type="button"
-                                        onClick={() => setSortSchedule(null)}
-                                        className="ml-0.5 rounded-full p-0.5 hover:bg-primary/20 transition-colors cursor-pointer"
-                                        aria-label="Remove schedule sorting"
-                                    >
-                                        <X className="size-3" />
-                                    </button>
-                                </span>
-                            )}
                             <button
                                 type="button"
                                 onClick={() => {
                                     setFilter('all');
                                     setQuery('');
-                                    setSortSchedule(null);
+                                    triggerSearch('', 'all', 'appointment_date', 'desc');
                                 }}
                                 className="ml-1 text-xs font-semibold text-muted-foreground hover:text-destructive transition-colors underline-offset-4 hover:underline cursor-pointer"
                             >
@@ -257,54 +252,90 @@ export default function AppointmentsIndex({ appointments }: Props) {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <div className="overflow-x-auto rounded-xl border border-border">
-                            <Table className="min-w-[800px] table-fixed">
+                        <motion.div
+                            className="overflow-x-auto rounded-xl border border-border"
+                            animate={{ opacity: isSearching ? 0.45 : 1 }}
+                            transition={{ duration: 0.18, ease: 'easeInOut' }}
+                            style={{ pointerEvents: isSearching ? 'none' : 'auto' }}
+                        >
+                            <Table className="min-w-[850px] table-fixed">
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead className="w-[18%]">Patient</TableHead>
-                                        <TableHead className="w-[18%]">Doctor</TableHead>
                                         <TableHead
-                                            className="w-[16%] cursor-pointer select-none transition-colors hover:text-foreground"
-                                            onClick={toggleScheduleSort}
+                                            className="w-[10%] cursor-pointer select-none transition-colors hover:text-foreground"
+                                            onClick={() => handleSortToggle('id')}
                                         >
-                                            <div className="flex items-center gap-1.5">
-                                                <span>Schedule</span>
-                                                {sortSchedule === 'asc' ? (
-                                                    <ArrowUp className="size-3.5 text-primary shrink-0" />
-                                                ) : sortSchedule === 'desc' ? (
-                                                    <ArrowDown className="size-3.5 text-primary shrink-0" />
+                                            <div className="flex items-center gap-1 font-semibold text-xs uppercase">
+                                                <span>ID</span>
+                                                {sortBy === 'id' && isSearching ? (
+                                                    <RotateCw className="size-3 animate-spin text-primary" />
+                                                ) : sortBy === 'id' ? (
+                                                    sortOrder === 'asc' ? <ArrowUp className="size-3 text-primary" /> : <ArrowDown className="size-3 text-primary" />
                                                 ) : (
-                                                    <ArrowUpDown className="size-3.5 text-muted-foreground/50 shrink-0" />
+                                                    <ArrowUpDown className="size-3 text-muted-foreground/40" />
                                                 )}
                                             </div>
                                         </TableHead>
-                                        <TableHead className="w-[13%]">Status</TableHead>
-                                        <TableHead className="w-[35%]">Reason / Notes</TableHead>
+                                        <TableHead className="w-[18%]">Patient</TableHead>
+                                        <TableHead className="w-[18%]">Doctor</TableHead>
+                                        <TableHead
+                                            className="w-[18%] cursor-pointer select-none transition-colors hover:text-foreground"
+                                            onClick={() => handleSortToggle('appointment_date')}
+                                        >
+                                            <div className="flex items-center gap-1.5 font-semibold text-xs uppercase">
+                                                <span>Schedule</span>
+                                                {sortBy === 'appointment_date' && isSearching ? (
+                                                    <RotateCw className="size-3.5 animate-spin text-primary" />
+                                                ) : sortBy === 'appointment_date' ? (
+                                                    sortOrder === 'asc' ? <ArrowUp className="size-3.5 text-primary" /> : <ArrowDown className="size-3.5 text-primary" />
+                                                ) : (
+                                                    <ArrowUpDown className="size-3.5 text-muted-foreground/40" />
+                                                )}
+                                            </div>
+                                        </TableHead>
+                                        <TableHead
+                                            className="w-[14%] cursor-pointer select-none transition-colors hover:text-foreground"
+                                            onClick={() => handleSortToggle('status')}
+                                        >
+                                            <div className="flex items-center gap-1 font-semibold text-xs uppercase">
+                                                <span>Status</span>
+                                                {sortBy === 'status' && isSearching ? (
+                                                    <RotateCw className="size-3 animate-spin text-primary" />
+                                                ) : sortBy === 'status' ? (
+                                                    sortOrder === 'asc' ? <ArrowUp className="size-3 text-primary" /> : <ArrowDown className="size-3 text-primary" />
+                                                ) : (
+                                                    <ArrowUpDown className="size-3 text-muted-foreground/40" />
+                                                )}
+                                            </div>
+                                        </TableHead>
+                                        <TableHead className="w-[22%]">Reason / Notes</TableHead>
                                     </TableRow>
                                 </TableHeader>
-                                {isSearching ? (
-                                    <TableSkeleton />
-                                ) : filtered.length === 0 ? (
+                                {appointmentData.length === 0 && !isSearching ? (
                                     <TableBody>
                                         <TableRow>
-                                            <TableCell colSpan={5} className="py-8 text-center">
+                                            <TableCell colSpan={6} className="py-8 text-center">
                                                 <EmptyState
                                                     icon={Calendar}
-                                                    title={query || filter !== 'all' ? "No matching appointments" : "No appointments found"}
+                                                    title={query || filter !== 'all' ? 'No matching appointments' : 'No appointments found'}
                                                     description="There are no records matching your current filter or search criteria."
+                                                    variant={query || filter !== 'all' ? 'no-results' : 'no-data'}
                                                 />
                                             </TableCell>
                                         </TableRow>
                                     </TableBody>
                                 ) : (
                                     <TableBody>
-                                        {filtered.map((appointment) => (
+                                        {appointmentData.map((appointment) => (
                                             <TableRow key={appointment.id}>
+                                                <TableCell className="align-top font-mono text-xs text-muted-foreground">
+                                                    #{appointment.id}
+                                                </TableCell>
                                                 <TableCell className="align-top">
-                                                    <p className="truncate font-medium">
-                                                        {appointment.patient?.user?.name}
+                                                    <p className="truncate font-medium text-xs text-foreground">
+                                                        {appointment.patient?.user?.name || 'Patient'}
                                                     </p>
-                                                    <p className="truncate text-xs text-muted-foreground">
+                                                    <p className="truncate text-[11px] text-muted-foreground">
                                                         {appointment.patient?.phone}
                                                     </p>
                                                 </TableCell>
@@ -351,7 +382,7 @@ export default function AppointmentsIndex({ appointments }: Props) {
                                     </TableBody>
                                 )}
                             </Table>
-                        </div>
+                        </motion.div>
                         <Pagination links={appointments?.meta?.links || []} meta={appointments?.meta} />
                     </CardContent>
                 </Card>
@@ -363,8 +394,9 @@ export default function AppointmentsIndex({ appointments }: Props) {
 function TableSkeleton() {
     return (
         <TableBody>
-            {Array.from({ length: 5 }).map((_, index) => (
-                <TableRow key={index}>
+            {Array.from({ length: 7 }).map((_, index) => (
+                <TableRow key={index} className="animate-pulse">
+                    <TableCell><Skeleton className="h-4 w-10" /></TableCell>
                     <TableCell><Skeleton className="mb-1 h-4 w-28" /><Skeleton className="h-3 w-20" /></TableCell>
                     <TableCell><Skeleton className="mb-1 h-4 w-28" /><Skeleton className="h-3 w-20" /></TableCell>
                     <TableCell><Skeleton className="mb-1 h-4 w-24" /><Skeleton className="h-3 w-16" /></TableCell>
@@ -408,5 +440,8 @@ function MiniStat({
 }
 
 AppointmentsIndex.layout = {
-    breadcrumbs: [{ title: 'Appointments', href: adminAppointments.url() }],
+    breadcrumbs: [
+        { title: 'Admin Dashboard', href: adminDashboard.url() },
+        { title: 'Appointments', href: adminAppointments.url() },
+    ],
 };

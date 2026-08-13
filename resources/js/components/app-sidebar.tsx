@@ -37,7 +37,6 @@ import {
     prescriptions as adminPrescriptions,
     bills as adminBills,
     reports as adminReports,
-    reviews as adminReviews,
 } from '@/routes/admin';
 import {
     dashboard as doctorDashboard,

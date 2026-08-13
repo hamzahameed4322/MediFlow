@@ -176,7 +176,16 @@ class DoctorController extends Controller
         $start = Carbon::parse($validated['start_time'])->format('H:i:s');
         $end = Carbon::parse($validated['end_time'])->format('H:i:s');
 
-        if ($start >= $end) {
+        // Enforce clinic schedule window (06:00 AM to 12:00 AM midnight; 12:00 AM to 06:00 AM is forbidden)
+        if ($start < '06:00:00') {
+            return redirect()->back()->withErrors(['start_time' => 'Schedules are only allowed between 06:00 AM and 12:00 AM midnight (12:00 AM to 06:00 AM is not allowed).']);
+        }
+
+        if ($end > '00:00:00' && $end < '06:00:00') {
+            return redirect()->back()->withErrors(['end_time' => 'Schedule end time cannot be between 12:00 AM and 06:00 AM.']);
+        }
+
+        if ($end !== '00:00:00' && $start >= $end) {
             return redirect()->back()->withErrors(['start_time' => 'Start time must be before end time.']);
         }
 

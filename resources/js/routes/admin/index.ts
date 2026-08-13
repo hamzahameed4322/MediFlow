@@ -1,6 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 import users48860f from './users'
 import doctorsD3dd26 from './doctors'
+import appointments40eafc from './appointments'
 /**
 * @see \App\Http\Controllers\AdminController::dashboard
  * @see app/Http/Controllers/AdminController.php:37
@@ -237,7 +238,7 @@ doctors.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     doctors.form = doctorsForm
 /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
 export const appointments = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -252,7 +253,7 @@ appointments.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
 appointments.url = (options?: RouteQueryOptions) => {
@@ -261,7 +262,7 @@ appointments.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
 appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -270,7 +271,7 @@ appointments.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
 appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -280,7 +281,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
     const appointmentsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -290,7 +291,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
         appointmentsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -299,7 +300,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\AdminController::appointments
- * @see app/Http/Controllers/AdminController.php:234
+ * @see app/Http/Controllers/AdminController.php:270
  * @route 'http://cms.test/admin/appointments'
  */
         appointmentsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -315,7 +316,7 @@ appointments.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     appointments.form = appointmentsForm
 /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
 export const consultations = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -330,7 +331,7 @@ consultations.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
 consultations.url = (options?: RouteQueryOptions) => {
@@ -339,7 +340,7 @@ consultations.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
 consultations.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -348,7 +349,7 @@ consultations.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
 consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -358,7 +359,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
     /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
     const consultationsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -368,7 +369,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
             /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
         consultationsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -377,7 +378,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
         })
             /**
 * @see \App\Http\Controllers\AdminController::consultations
- * @see app/Http/Controllers/AdminController.php:276
+ * @see app/Http/Controllers/AdminController.php:392
  * @route 'http://cms.test/admin/consultations'
  */
         consultationsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -393,7 +394,7 @@ consultations.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     consultations.form = consultationsForm
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
 export const prescriptions = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -408,7 +409,7 @@ prescriptions.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
 prescriptions.url = (options?: RouteQueryOptions) => {
@@ -417,7 +418,7 @@ prescriptions.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
 prescriptions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -426,7 +427,7 @@ prescriptions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
 prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -436,7 +437,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
     /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
     const prescriptionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -446,7 +447,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
 
             /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
         prescriptionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -455,7 +456,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
         })
             /**
 * @see \App\Http\Controllers\AdminController::prescriptions
- * @see app/Http/Controllers/AdminController.php:290
+ * @see app/Http/Controllers/AdminController.php:423
  * @route 'http://cms.test/admin/prescriptions'
  */
         prescriptionsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -471,7 +472,7 @@ prescriptions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => (
     prescriptions.form = prescriptionsForm
 /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
 export const bills = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -486,7 +487,7 @@ bills.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
 bills.url = (options?: RouteQueryOptions) => {
@@ -495,7 +496,7 @@ bills.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
 bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -504,7 +505,7 @@ bills.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
 bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -514,7 +515,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
     const billsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -524,7 +525,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
         billsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -533,7 +534,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\AdminController::bills
- * @see app/Http/Controllers/AdminController.php:304
+ * @see app/Http/Controllers/AdminController.php:450
  * @route 'http://cms.test/admin/bills'
  */
         billsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -549,7 +550,7 @@ bills.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     bills.form = billsForm
 /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
 export const reports = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -564,7 +565,7 @@ reports.definition = {
 
 /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
 reports.url = (options?: RouteQueryOptions) => {
@@ -573,7 +574,7 @@ reports.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
 reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -582,7 +583,7 @@ reports.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
 reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -592,7 +593,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
     /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
     const reportsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -602,7 +603,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
             /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
         reportsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -611,7 +612,7 @@ reports.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
         })
             /**
 * @see \App\Http\Controllers\AdminController::reports
- * @see app/Http/Controllers/AdminController.php:318
+ * @see app/Http/Controllers/AdminController.php:501
  * @route 'http://cms.test/admin/reports'
  */
         reportsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -629,7 +630,7 @@ const admin = {
     dashboard: Object.assign(dashboard, dashboard),
 users: Object.assign(users, users48860f),
 doctors: Object.assign(doctors, doctorsD3dd26),
-appointments: Object.assign(appointments, appointments),
+appointments: Object.assign(appointments, appointments40eafc),
 consultations: Object.assign(consultations, consultations),
 prescriptions: Object.assign(prescriptions, prescriptions),
 bills: Object.assign(bills, bills),

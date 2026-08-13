@@ -3,6 +3,7 @@ import { Pagination } from '@/components/pagination';
 import { ReceiptText, CircleDollarSign, CheckCircle2, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { EmptyState } from '@/components/empty-state';
+import { BillStatusBadge } from '@/components/status-badge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -172,7 +173,7 @@ export default function Bills({ bills, filters }: Props) {
                                                     {bill.appointment?.appointment_date} • {bill.appointment?.appointment_time.slice(0, 5)}
                                                 </p>
                                             </div>
-                                            <Badge variant={bill.status === 'paid' ? 'default' : 'secondary'}>{bill.status}</Badge>
+                                            <BillStatusBadge status={bill.status} />
                                         </div>
                                         <div className="flex items-center justify-between rounded-2xl border bg-muted/30 p-4">
                                             <div>

@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
 export const downloadPrescription = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -15,8 +15,8 @@ downloadPrescription.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
 downloadPrescription.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -48,8 +48,8 @@ downloadPrescription.url = (args: { appointment: number | { id: number } } | [ap
 }
 
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
 downloadPrescription.get = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -57,8 +57,8 @@ downloadPrescription.get = (args: { appointment: number | { id: number } } | [ap
     method: 'get',
 })
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
 downloadPrescription.head = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -67,8 +67,8 @@ downloadPrescription.head = (args: { appointment: number | { id: number } } | [a
 })
 
     /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
     const downloadPrescriptionForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -77,8 +77,8 @@ downloadPrescription.head = (args: { appointment: number | { id: number } } | [a
     })
 
             /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
         downloadPrescriptionForm.get = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -86,8 +86,8 @@ downloadPrescription.head = (args: { appointment: number | { id: number } } | [a
             method: 'get',
         })
             /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadPrescription
- * @see app/Http/Controllers/Patient/PdfController.php:15
+* @see \App\Http\Controllers\Pdf\PdfController::downloadPrescription
+ * @see app/Http/Controllers/Pdf/PdfController.php:15
  * @route 'http://cms.test/patient/appointments/{appointment}/prescription/pdf'
  */
         downloadPrescriptionForm.head = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -102,8 +102,8 @@ downloadPrescription.head = (args: { appointment: number | { id: number } } | [a
     
     downloadPrescription.form = downloadPrescriptionForm
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
 export const downloadToken = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -117,8 +117,8 @@ downloadToken.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
 downloadToken.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -150,8 +150,8 @@ downloadToken.url = (args: { appointment: number | { id: number } } | [appointme
 }
 
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
 downloadToken.get = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -159,8 +159,8 @@ downloadToken.get = (args: { appointment: number | { id: number } } | [appointme
     method: 'get',
 })
 /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
 downloadToken.head = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -169,8 +169,8 @@ downloadToken.head = (args: { appointment: number | { id: number } } | [appointm
 })
 
     /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
     const downloadTokenForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -179,8 +179,8 @@ downloadToken.head = (args: { appointment: number | { id: number } } | [appointm
     })
 
             /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
         downloadTokenForm.get = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -188,8 +188,8 @@ downloadToken.head = (args: { appointment: number | { id: number } } | [appointm
             method: 'get',
         })
             /**
-* @see \App\Http\Controllers\Patient\PdfController::downloadToken
- * @see app/Http/Controllers/Patient/PdfController.php:60
+* @see \App\Http\Controllers\Pdf\PdfController::downloadToken
+ * @see app/Http/Controllers/Pdf/PdfController.php:60
  * @route 'http://cms.test/patient/appointments/{appointment}/token/pdf'
  */
         downloadTokenForm.head = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

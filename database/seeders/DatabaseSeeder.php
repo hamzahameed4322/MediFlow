@@ -98,11 +98,11 @@ class DatabaseSeeder extends Seeder
 
         // 4. Create Patients and Profiles
         $patientData = [
-            ['name' => 'Alice Green', 'email' => 'alice@example.com', 'gender' => 'female', 'dob' => '1995-05-15', 'phone' => '123-456-7890', 'allergies' => 'Penicillin', 'diseases' => 'None'],
-            ['name' => 'Charlie Brown', 'email' => 'charlie@example.com', 'gender' => 'male', 'dob' => '1990-08-20', 'phone' => '987-654-3210', 'allergies' => 'None', 'diseases' => 'Asthma'],
-            ['name' => 'John Doe', 'email' => 'john@example.com', 'gender' => 'male', 'dob' => '1985-02-10', 'phone' => '555-019-2834', 'allergies' => 'Sulfa drugs', 'diseases' => 'Hypertension'],
-            ['name' => 'Emily Watson', 'email' => 'emily@example.com', 'gender' => 'female', 'dob' => '1988-11-30', 'phone' => '444-203-9182', 'allergies' => 'Aspirin', 'diseases' => 'Diabetes Type II'],
-            ['name' => 'David Miller', 'email' => 'david@example.com', 'gender' => 'male', 'dob' => '2000-07-04', 'phone' => '333-892-1029', 'allergies' => 'None', 'diseases' => 'None'],
+            ['name' => 'Alice Green', 'email' => 'alice@example.com', 'gender' => 'female', 'dob' => '1995-05-15', 'phone' => '03001234567', 'allergies' => 'Penicillin', 'diseases' => 'None'],
+            ['name' => 'Charlie Brown', 'email' => 'charlie@example.com', 'gender' => 'male', 'dob' => '1990-08-20', 'phone' => '03019876543', 'allergies' => 'None', 'diseases' => 'Asthma'],
+            ['name' => 'John Doe', 'email' => 'john@example.com', 'gender' => 'male', 'dob' => '1985-02-10', 'phone' => '03025550192', 'allergies' => 'Sulfa drugs', 'diseases' => 'Hypertension'],
+            ['name' => 'Emily Watson', 'email' => 'emily@example.com', 'gender' => 'female', 'dob' => '1988-11-30', 'phone' => '03034442039', 'allergies' => 'Aspirin', 'diseases' => 'Diabetes Type II'],
+            ['name' => 'David Miller', 'email' => 'david@example.com', 'gender' => 'male', 'dob' => '2000-07-04', 'phone' => '03043338921', 'allergies' => 'None', 'diseases' => 'None'],
         ];
 
         $patientProfiles = [];

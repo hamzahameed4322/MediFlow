@@ -1,4 +1,4 @@
-import { Head, useForm, router } from '@inertiajs/react';
+import { Deferred, Head, useForm, router } from '@inertiajs/react';
 import { Users, Star, Stethoscope, Clock, Calendar, CalendarDays, ChevronRight, DollarSign, MessageSquare, TriangleAlert } from 'lucide-react';
 import { useDeferredValue, useMemo, useState, useEffect } from 'react';
 import { toast } from 'sonner';
@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import type { DoctorProfile } from '@/types';
 
@@ -50,24 +51,42 @@ export default function Doctors({ doctors, filters }: Props) {
         }
     };
 
+    const [isSearching, setIsSearching] = useState(false);
+
     // Server-side search with debounce
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (query !== (filters.search || '')) {
-                router.get('/patient/doctors', { search: query }, { preserveState: true, replace: true });
+                setIsSearching(true);
+                router.get('/patient/doctors', { search: query }, {
+                    preserveState: true,
+                    replace: true,
+                    onFinish: () => setIsSearching(false),
+                });
             }
         }, 300);
         return () => clearTimeout(timeoutId);
     }, [query]);
 
-    const { data, setData, post, processing, errors, reset } = useForm({
+    const { data, setData, post, processing, errors, reset, clearErrors } = useForm({
         doctor_id: '',
         appointment_date: '',
         appointment_time: '',
         reason: '',
     });
 
+    const handleBookingModalChange = (open: boolean) => {
+        setBookingOpen(open);
+        if (!open) {
+            clearErrors();
+            reset();
+            setSlots([]);
+        }
+    };
+
     const openBooking = (doctor: DoctorProfile) => {
+        clearErrors();
+        reset();
         setSelectedDoctor(doctor);
         setData({ doctor_id: String(doctor.id), appointment_date: '', appointment_time: '', reason: '' });
         setSlots([]);
@@ -96,6 +115,7 @@ return;
 
     const handleDateChange = (date: string) => {
         setData('appointment_date', date);
+        clearErrors('appointment_date', 'appointment_time');
         fetchSlots(date);
     };
 
@@ -104,8 +124,7 @@ return;
         post('/patient/appointments', {
             onSuccess: () => {
                 toast.success('Appointment booked successfully!');
-                setBookingOpen(false);
-                reset();
+                handleBookingModalChange(false);
             },
             onError: () => toast.error('Failed to book appointment. Please check your inputs.'),
         });
@@ -162,11 +181,14 @@ return;
                 </div>
 
                 {/* Doctor Grid */}
-                {doctors?.total === 0 && !query ? (
-                    <EmptyState icon={Users} title="No doctors available" description="No active doctors are registered yet. Please check back later." />
-                ) : doctorData.length === 0 ? (
-                    <EmptyState icon={Users} title="No doctors matched your search" description="Try a different name, specialty, or qualification." />
-                ) : (
+                <Deferred data="doctors" fallback={<DoctorsSkeleton />}>
+                    {isSearching ? (
+                        <DoctorsSkeleton />
+                    ) : !doctors || (doctors?.total === 0 && !query) ? (
+                        <EmptyState icon={Users} title="No doctors available" description="No active doctors are registered yet. Please check back later." />
+                    ) : doctorData.length === 0 ? (
+                        <EmptyState icon={Users} title="No doctors matched your search" description="Try a different name, specialty, or qualification." />
+                    ) : (
                     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                         {doctorData.map((doctor) => (
                             <Card key={doctor.id} className="flex flex-col hover:shadow-md transition-shadow">
@@ -197,7 +219,7 @@ return;
                                                 onClick={() => setSelectedDoctorReviews(doctor)}
                                                 className="flex items-center gap-1.5 text-left hover:underline cursor-pointer"
                                             >
-                                                <Star className="size-3.5 fill-amber-400 text-amber-400 shrink-0" />
+                                                <Star className="size-3.5 fill-primary text-primary shrink-0" />
                                                 <span className="text-sm font-semibold">
                                                     {Number(doctor.average_rating ?? 0).toFixed(1)}
                                                 </span>
@@ -260,8 +282,8 @@ return;
                                                     <div key={rev.id} className="text-muted-foreground">
                                                         <div className="flex items-center justify-between gap-1 mb-0.5">
                                                             <span className="font-medium text-foreground truncate">{rev.patient?.user?.name || 'Patient'}</span>
-                                                            <span className="flex items-center text-[10px] font-semibold text-amber-600 dark:text-amber-400 shrink-0">
-                                                                <Star className="size-2.5 fill-amber-400 text-amber-400 mr-0.5" />
+                                                            <span className="flex items-center text-[10px] font-semibold text-primary shrink-0">
+                                                                <Star className="size-2.5 fill-primary text-primary mr-0.5" />
                                                                 {rev.rating}
                                                             </span>
                                                         </div>
@@ -282,7 +304,7 @@ return;
                                             className="w-full"
                                             size="sm"
                                             onClick={() => openBooking(doctor)}
-                                            disabled={doctor.status === 'suspended'}
+                                            disabled={doctor.user?.status === 'suspended'}
                                         >
                                             <Calendar className="mr-1.5 size-3.5" />
                                             Book Appointment
@@ -292,24 +314,25 @@ return;
                             </Card>
                         ))}
                     </div>
-                )}
+                    )}
+                </Deferred>
             </div>
 
             {/* Booking Dialog Modal */}
-            <Dialog open={bookingOpen} onOpenChange={setBookingOpen}>
-                <DialogContent className="max-w-md">
+            <Dialog open={bookingOpen} onOpenChange={handleBookingModalChange}>
+                <DialogContent className="max-w-md max-h-[85vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>Book Appointment</DialogTitle>
                         <DialogDescription>
-                            Schedule a consultation with Dr. {selectedDoctor?.user?.name} ({selectedDoctor?.specialization})
+                            Schedule a consultation with {selectedDoctor?.user?.name?.startsWith('Dr') ? selectedDoctor.user.name : `Dr. ${selectedDoctor?.user?.name}`} ({selectedDoctor?.specialization})
                         </DialogDescription>
                     </DialogHeader>
 
-                    <form onSubmit={handleBook} className="space-y-4">
+                    <form onSubmit={handleBook} className="space-y-3.5">
 
                         {/* Available Days Info Banner */}
                         {availableDays.length > 0 && (
-                            <div className="flex flex-col gap-2 rounded-xl border border-primary/20 bg-primary/5 px-4 py-3">
+                            <div className="flex flex-col gap-2 rounded-xl border border-primary/20 bg-primary/5 px-3.5 py-2.5">
                                 <div className="flex items-center gap-2 text-xs font-semibold text-primary">
                                     <CalendarDays className="size-3.5 shrink-0" />
                                     Doctor is available on
@@ -351,14 +374,21 @@ return;
                                     </span>
                                 </div>
                             )}
-                            {errors.appointment_date && <p className="text-xs text-destructive">{errors.appointment_date}</p>}
+                            {errors.appointment_date && (
+                                <div className="flex items-start gap-1.5 rounded-lg border border-destructive/20 bg-destructive/10 px-3 py-2 text-xs font-medium text-destructive">
+                                    <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
+                                    <span>{errors.appointment_date}</span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="space-y-1.5">
                             <Label>Available Time Slot</Label>
                             {loadingSlots ? (
-                                <div className="flex items-center gap-2 text-xs text-muted-foreground py-2">
-                                    <Spinner className="size-4" /> Loading available slots...
+                                <div className="grid grid-cols-3 gap-2 max-h-36 overflow-y-auto p-1">
+                                    {Array.from({ length: 6 }).map((_, idx) => (
+                                        <Skeleton key={idx} className="h-8 w-full rounded-md" />
+                                    ))}
                                 </div>
                             ) : !data.appointment_date ? (
                                 <p className="text-xs text-muted-foreground italic">Please select a date first</p>
@@ -373,14 +403,22 @@ return;
                                             variant={data.appointment_time === slot ? 'default' : 'outline'}
                                             size="sm"
                                             className="text-xs"
-                                            onClick={() => setData('appointment_time', slot)}
+                                            onClick={() => {
+                                                setData('appointment_time', slot);
+                                                clearErrors('appointment_time');
+                                            }}
                                         >
                                             {slot.slice(0, 5)}
                                         </Button>
                                     ))}
                                 </div>
                             )}
-                            {errors.appointment_time && <p className="text-xs text-destructive">{errors.appointment_time}</p>}
+                            {errors.appointment_time && (
+                                <div className="flex items-start gap-1.5 rounded-lg border border-destructive/20 bg-destructive/10 px-3 py-2 text-xs font-medium text-destructive">
+                                    <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
+                                    <span>{errors.appointment_time}</span>
+                                </div>
+                            )}
                         </div>
 
                         <div className="space-y-1.5">
@@ -389,14 +427,22 @@ return;
                                 id="reason"
                                 placeholder="e.g. Regular checkup, Follow-up consultation"
                                 value={data.reason}
-                                onChange={(e) => setData('reason', e.target.value)}
+                                onChange={(e) => {
+                                    setData('reason', e.target.value);
+                                    clearErrors('reason');
+                                }}
                                 required
                             />
-                            {errors.reason && <p className="text-xs text-destructive">{errors.reason}</p>}
+                            {errors.reason && (
+                                <div className="flex items-start gap-1.5 rounded-lg border border-destructive/20 bg-destructive/10 px-3 py-2 text-xs font-medium text-destructive">
+                                    <TriangleAlert className="mt-0.5 size-3.5 shrink-0" />
+                                    <span>{errors.reason}</span>
+                                </div>
+                            )}
                         </div>
 
                         <DialogFooter>
-                            <Button type="button" variant="outline" onClick={() => setBookingOpen(false)}>Cancel</Button>
+                            <Button type="button" variant="outline" onClick={() => handleBookingModalChange(false)}>Cancel</Button>
                             <Button type="submit" disabled={processing || !data.appointment_time}>
                                 {processing && <Spinner className="mr-2 size-4" />}
                                 Confirm Booking
@@ -470,6 +516,51 @@ return;
                 </DialogContent>
             </Dialog>
         </>
+    );
+}
+
+function DoctorsSkeleton() {
+    return (
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 6 }).map((_, index) => (
+                <Card key={index} className="flex flex-col">
+                    <CardHeader className="pb-3">
+                        <div className="flex items-center gap-3">
+                            <Skeleton className="size-12 rounded-full shrink-0" />
+                            <div className="min-w-0 flex-1 space-y-1.5">
+                                <Skeleton className="h-4 w-3/4 rounded" />
+                                <Skeleton className="h-3 w-1/2 rounded" />
+                            </div>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="flex flex-col flex-1 gap-4">
+                        <div className="flex items-center gap-2">
+                            <Skeleton className="size-4 rounded shrink-0" />
+                            <Skeleton className="h-4 w-1/2 rounded" />
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                            <Skeleton className="h-4 w-24 rounded" />
+                        </div>
+                        <div className="grid grid-cols-2 gap-3">
+                            <Skeleton className="h-14 rounded-lg" />
+                            <Skeleton className="h-14 rounded-lg" />
+                        </div>
+                        <div className="space-y-1.5">
+                            <Skeleton className="h-3 w-24 rounded" />
+                            <div className="flex gap-1">
+                                <Skeleton className="h-5 w-10 rounded-full" />
+                                <Skeleton className="h-5 w-10 rounded-full" />
+                                <Skeleton className="h-5 w-10 rounded-full" />
+                            </div>
+                        </div>
+                        <Skeleton className="h-16 w-full rounded-lg" />
+                        <div className="pt-2 border-t border-border mt-auto">
+                            <Skeleton className="h-9 w-full rounded-md" />
+                        </div>
+                    </CardContent>
+                </Card>
+            ))}
+        </div>
     );
 }
 

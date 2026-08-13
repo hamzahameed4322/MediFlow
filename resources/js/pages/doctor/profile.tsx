@@ -85,7 +85,7 @@ export default function Profile({ doctor }: Props) {
         <>
             <Head title="Doctor Profile" />
             
-            <div className="mx-auto max-w-6xl space-y-6 p-4 sm:p-6 lg:p-8">
+            <div className="mx-auto w-full max-w-6xl space-y-6 p-4 sm:p-6 lg:p-8">
                 
                 {/* Profile Header Banner */}
                 <div className="relative overflow-hidden rounded-2xl border bg-background shadow-sm">
@@ -114,11 +114,12 @@ export default function Profile({ doctor }: Props) {
                             </div>
                             
                             <div className="mb-2 flex items-center gap-2">
-                                <Badge variant="secondary" className="px-3 py-1 font-medium shadow-sm flex items-center gap-1.5">
-                                    <Sparkles className="h-3.5 w-3.5 text-amber-500" />
+                                <Badge className="bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 px-3 py-1 font-medium shadow-xs flex items-center gap-1.5 transition-colors">
+                                    <Sparkles className="h-3.5 w-3.5 text-primary" />
                                     {doctor.experience} Years Exp.
                                 </Badge>
-                                <Badge className="bg-primary/15 text-primary hover:bg-primary/25 dark:bg-primary/20 dark:text-primary border-none px-3 py-1">
+                                <Badge className="bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 px-3 py-1 font-medium flex items-center gap-1.5">
+                                    <CheckCircle2 className="h-3.5 w-3.5" />
                                     On Duty
                                 </Badge>
                             </div>
@@ -135,7 +136,7 @@ export default function Profile({ doctor }: Props) {
                     </TabsList>
                     
                     {/* OVERVIEW TAB */}
-                    <TabsContent value="overview" className="space-y-6">
+                    <TabsContent value="overview" className="w-full space-y-6">
                         
                         {/* Stats Grid */}
                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -222,8 +223,8 @@ export default function Profile({ doctor }: Props) {
                     </TabsContent>
 
                     {/* SETTINGS TAB */}
-                    <TabsContent value="settings">
-                        <Card className="shadow-sm">
+                    <TabsContent value="settings" className="w-full space-y-6">
+                        <Card className="w-full shadow-sm">
                             <CardHeader>
                                 <CardTitle>Profile Settings</CardTitle>
                                 <CardDescription>
@@ -236,7 +237,7 @@ export default function Profile({ doctor }: Props) {
                                     {/* Personal Info Section */}
                                     <div className="space-y-4">
                                         <h3 className="text-sm font-semibold tracking-wider text-muted-foreground uppercase flex items-center gap-2">
-                                            <User className="h-4 w-4" /> Personal Details
+                                            <User className="h-4 w-4 text-primary" /> Personal Details
                                         </h3>
                                         <div className="grid gap-6 sm:grid-cols-2">
                                             <div className="space-y-2.5">
@@ -268,7 +269,7 @@ export default function Profile({ doctor }: Props) {
                                     {/* Professional Info Section */}
                                     <div className="space-y-4">
                                         <h3 className="text-sm font-semibold tracking-wider text-muted-foreground uppercase flex items-center gap-2">
-                                            <BriefcaseMedical className="h-4 w-4" /> Professional Credentials
+                                            <BriefcaseMedical className="h-4 w-4 text-primary" /> Professional Credentials
                                         </h3>
                                         <div className="grid gap-6 sm:grid-cols-2">
                                             <div className="space-y-2.5">
@@ -333,8 +334,6 @@ export default function Profile({ doctor }: Props) {
                                 </CardFooter>
                             </form>
                         </Card>
-
-
                     </TabsContent>
                 </Tabs>
             </div>

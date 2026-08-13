@@ -43,6 +43,9 @@ class DoctorProfileResource extends JsonResource
                     'duration' => $schedule->duration,
                 ]);
             }),
+            'appointments_count' => $this->appointments_count ?? $this->whenCounted('appointments'),
+            'reviews_count' => $this->reviews_count ?? $this->whenCounted('reviews'),
+            'avg_rating' => isset($this->reviews_avg_rating) ? round((float) $this->reviews_avg_rating, 1) : null,
             'created_at' => $this->created_at?->toDateTimeString(),
             'updated_at' => $this->updated_at?->toDateTimeString(),
         ];

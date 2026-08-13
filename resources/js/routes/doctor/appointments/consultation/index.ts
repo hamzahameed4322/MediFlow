@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\DoctorController::store
- * @see app/Http/Controllers/DoctorController.php:318
+ * @see app/Http/Controllers/DoctorController.php:327
  * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
  */
 export const store = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\DoctorController::store
- * @see app/Http/Controllers/DoctorController.php:318
+ * @see app/Http/Controllers/DoctorController.php:327
  * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
  */
 store.url = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions) => {
@@ -49,7 +49,7 @@ store.url = (args: { appointment: number | { id: number } } | [appointment: numb
 
 /**
 * @see \App\Http\Controllers\DoctorController::store
- * @see app/Http/Controllers/DoctorController.php:318
+ * @see app/Http/Controllers/DoctorController.php:327
  * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
  */
 store.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -59,7 +59,7 @@ store.post = (args: { appointment: number | { id: number } } | [appointment: num
 
     /**
 * @see \App\Http\Controllers\DoctorController::store
- * @see app/Http/Controllers/DoctorController.php:318
+ * @see app/Http/Controllers/DoctorController.php:327
  * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
  */
     const storeForm = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -69,7 +69,7 @@ store.post = (args: { appointment: number | { id: number } } | [appointment: num
 
             /**
 * @see \App\Http\Controllers\DoctorController::store
- * @see app/Http/Controllers/DoctorController.php:318
+ * @see app/Http/Controllers/DoctorController.php:327
  * @route 'http://cms.test/doctor/appointments/{appointment}/consultation'
  */
         storeForm.post = (args: { appointment: number | { id: number } } | [appointment: number | { id: number } ] | number | { id: number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
