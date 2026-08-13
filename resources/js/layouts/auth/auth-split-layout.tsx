@@ -10,12 +10,12 @@ export default function AuthSplitLayout({
     description,
 }: AuthLayoutProps) {
     return (
-        <div className="relative flex min-h-screen lg:h-screen w-full flex-col justify-start overflow-x-hidden lg:overflow-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+        <div className="relative flex min-h-screen w-full flex-col justify-start overflow-x-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
             {/* Ambient Background Radial Glow */}
             <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[320px] bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,hsl(var(--primary)/0.15),transparent)]" />
 
             {/* Top Navigation Header */}
-            <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-2 sm:py-2.5 sm:px-8 shrink-0">
+            <header className="relative z-20 mx-auto flex w-full max-w-7xl items-center justify-between px-6 pt-4 pb-2 sm:pt-6 sm:pb-3 sm:px-8 shrink-0">
                 <Link
                     href={home()}
                     className="flex items-center gap-3 transition-transform hover:scale-[1.01]"
@@ -30,8 +30,8 @@ export default function AuthSplitLayout({
             </header>
 
             {/* Main Content Area */}
-            <main className="relative z-20 flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-12 py-4 min-h-0">
-                <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+            <main className="relative z-20 flex-1 flex items-start lg:items-center justify-center px-4 sm:px-6 lg:px-12 pt-2 sm:pt-4 lg:pt-2 pb-8 sm:pb-12 min-h-0">
+                <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-14 items-center">
                     {/* Left Brand Showcase Section (Generous Y-Axis Spacing) */}
                     <motion.div
                         initial={{ opacity: 0, x: -20 }}
@@ -64,8 +64,16 @@ export default function AuthSplitLayout({
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: 0.1 }}
-                        className="w-full lg:col-span-6 flex justify-center"
+                        className="w-full lg:col-span-6 flex flex-col items-center justify-center"
                     >
+                        {/* Mobile Brand Pill Badge (ABOVE CARD - Image 1) */}
+                        <div className="lg:hidden mb-3.5 flex justify-center">
+                            <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3.5 py-1 text-xs font-semibold tracking-wide text-primary shadow-sm">
+                                <Activity className="h-3.5 w-3.5 animate-pulse" />
+                                <span>Clinical Care Connected</span>
+                            </div>
+                        </div>
+
                         <div className="w-full max-w-md rounded-2xl sm:rounded-3xl border border-border/80 bg-card p-4 sm:p-5.5 shadow-2xl backdrop-blur-xl transition-all">
                             {/* Streamlined Card Header */}
                             {(title || description) && (
@@ -85,6 +93,16 @@ export default function AuthSplitLayout({
 
                             {/* Form Slot */}
                             <div>{children}</div>
+                        </div>
+
+                        {/* Mobile Brand Headline (BELOW CARD - Image 2) */}
+                        <div className="lg:hidden mt-5 text-center px-2 max-w-xs sm:max-w-sm">
+                            <h3 className="text-base font-extrabold tracking-tight text-primary">
+                                Smart clinical workflow.
+                            </h3>
+                            <p className="mt-1 text-[11px] text-muted-foreground leading-relaxed">
+                                MediFlow unifies patient records, digital prescriptions, and instant scheduling.
+                            </p>
                         </div>
                     </motion.div>
                 </div>

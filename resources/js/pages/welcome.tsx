@@ -6,7 +6,6 @@ import {
     Receipt,
     HeartPulse,
     UserPlus,
-    LogIn,
     Activity,
     CheckCircle,
     Star,
@@ -770,25 +769,20 @@ export default function Welcome({
                                 initial={{ opacity: 0, y: 15 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
-                                className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row"
+                                className="mt-8 flex justify-center"
                             >
                                 <Link href={register()}>
                                     <ShimmerButton
                                         shimmerColor="var(--color-primary)"
                                         background="var(--color-primary)"
-                                        className="h-12 w-full px-6 font-semibold sm:w-auto"
+                                        borderRadius="9999px"
+                                        className="h-12 px-8 font-semibold shadow-md transition-all duration-300 hover:shadow-lg"
                                     >
-                                        <span className="flex items-center text-white">
+                                        <span className="flex items-center text-white font-semibold text-base">
                                             Book an Appointment
                                             <UserPlus className="ml-2 h-5 w-5" />
                                         </span>
                                     </ShimmerButton>
-                                </Link>
-                                <Link
-                                    href={login()}
-                                    className="inline-flex h-12 w-full items-center justify-center rounded-xl border border-border bg-background px-6 py-3 font-semibold text-foreground transition-shadow duration-300 hover:bg-accent hover:text-accent-foreground active:scale-95 sm:w-auto"
-                                >
-                                    Sign In <LogIn className="ml-2 h-5 w-5" />
                                 </Link>
                             </motion.div>
                         </div>
@@ -900,13 +894,15 @@ export default function Welcome({
                                                 key={stat.label}
                                                 initial={initialAnim}
                                                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                                                viewport={{ once: true, margin: '-20px' }}
+                                                viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
                                                 transition={{
-                                                    duration: 0.5,
+                                                    duration: 0.6,
                                                     delay: index * 0.08,
-                                                    ease: [0.25, 0.1, 0.25, 1.0],
+                                                    ease: [0.16, 1, 0.3, 1],
                                                 }}
-                                                className="relative overflow-hidden rounded-2xl border border-border bg-card p-6 text-center sm:p-8 hover:shadow-md transition-shadow duration-300"
+                                                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                                                className="transform-gpu relative overflow-hidden rounded-2xl border border-border bg-card p-6 text-center sm:p-8 hover:shadow-md transition-shadow duration-300"
+                                                style={{ willChange: 'transform, opacity' }}
                                             >
                                                 <div className="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-muted">
                                                     {stat.icon}
@@ -956,13 +952,15 @@ export default function Welcome({
                                                 key={doc.name}
                                                 initial={initialAnim}
                                                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                                                viewport={{ once: true, margin: '-20px' }}
+                                                viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
                                                 transition={{
-                                                    duration: 0.5,
+                                                    duration: 0.6,
                                                     delay: index * 0.1,
-                                                    ease: [0.25, 0.1, 0.25, 1.0],
+                                                    ease: [0.16, 1, 0.3, 1],
                                                 }}
-                                                className="flex flex-col items-center rounded-2xl border border-border bg-card p-6 text-center text-card-foreground transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg"
+                                                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                                                className="transform-gpu flex flex-col items-center rounded-2xl border border-border bg-card p-6 text-center text-card-foreground transition-shadow duration-300 hover:border-primary/40 hover:shadow-lg"
+                                                style={{ willChange: 'transform, opacity' }}
                                             >
                                                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground shadow-md">
                                                     {doc.initials}
@@ -1064,13 +1062,15 @@ export default function Welcome({
                                                 key={step.num}
                                                 initial={initialAnim}
                                                 whileInView={{ opacity: 1, x: 0, y: 0 }}
-                                                viewport={{ once: true, margin: '-20px' }}
+                                                viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
                                                 transition={{
-                                                    duration: 0.5,
+                                                    duration: 0.6,
                                                     delay: index * 0.1,
-                                                    ease: [0.25, 0.1, 0.25, 1.0],
+                                                    ease: [0.16, 1, 0.3, 1],
                                                 }}
-                                                className="relative flex-1 overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground hover:shadow-md transition-shadow duration-300 sm:p-8"
+                                                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                                                className="transform-gpu relative flex-1 overflow-hidden rounded-2xl border border-border bg-card p-6 text-card-foreground hover:shadow-md transition-shadow duration-300 sm:p-8"
+                                                style={{ willChange: 'transform, opacity' }}
                                             >
                                                 <div className="flex items-center gap-3">
                                                     <span className="text-3xl font-extrabold text-primary sm:text-4xl">
