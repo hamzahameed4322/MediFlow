@@ -25,4 +25,5 @@ yarn-error.log
 /.vscode
 /.zed
 .agents/
+AGENTS.md
 database/migrations/*telescope*

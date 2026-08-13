@@ -244,16 +244,31 @@ The system operates on a strictly compartmentalized architecture governed by Lar
 ### Appointment Lifecycle
 
 ```mermaid
-stateDiagram-v2
-    [*] --> Pending: Patient Books Slot
-    Pending --> Cancelled: Cancelled by Patient
-    Pending --> Rejected: Rejected by Doctor (With Reason)
-    Pending --> Confirmed: Approved by Doctor
-    Confirmed --> Cancelled: Cancelled (Patient/Doctor)
-    Confirmed --> NoShow: Patient Missed Visit
-    Confirmed --> Consultation: Doctor Starts Visit
-    Consultation --> Completed: Diagnosis & Prescription Issued
-    Completed --> DoctorReview: Patient Rates Doctor (1-5 Stars)
+flowchart TD
+    Start(["🏁 Patient Booking Request"]) -->|Books Available Slot| Pending["⏳ PENDING"]
+    
+    Pending -->|Patient Cancels| Cancelled["❌ CANCELLED"]
+    Pending -->|Doctor Declines| Rejected["⛔ REJECTED"]
+    Pending -->|Doctor Approves| Confirmed["✅ CONFIRMED"]
+    
+    Confirmed -->|Patient/Doctor Cancels| Cancelled
+    Confirmed -->|Patient Misses Visit| NoShow["⚠️ NO-SHOW"]
+    Confirmed -->|Doctor Starts Visit| Consult["🩺 CONSULTATION"]
+    
+    Consult -->|Issue Diagnosis| Presc["💊 PRESCRIPTION & BILL"]
+    Presc --> Completed["🎉 COMPLETED"]
+    Completed --> Review["⭐ DOCTOR REVIEW & RATING"]
+
+    classDef default fill:#F8FAFC,stroke:#334155,stroke-width:1.5px,color:#0F172A;
+    classDef startNode fill:#F1F5F9,stroke:#475569,stroke-width:2px,color:#0F172A;
+    classDef primaryState fill:#EFF6FF,stroke:#2563EB,stroke-width:2px,color:#1E40AF;
+    classDef successState fill:#F0FDF4,stroke:#16A34A,stroke-width:2px,color:#166534;
+    classDef dangerState fill:#FEF2F2,stroke:#DC2626,stroke-width:1.5px,color:#991B1B;
+    
+    class Start startNode;
+    class Pending,Consult,Presc primaryState;
+    class Confirmed,Completed successState;
+    class Cancelled,Rejected,NoShow dangerState;
 ```
 
 <details>
@@ -333,17 +348,46 @@ sequenceDiagram
 ## 💾 Domain Model (Database Schema)
 
 ```mermaid
-erDiagram
-    User ||--o| DoctorProfile : "has (1:1)"
-    User ||--o| PatientProfile : "has (1:1)"
-    DoctorProfile ||--o{ DoctorSchedule : "defines (1:N)"
-    DoctorProfile ||--o{ Appointment : "assigned to (1:N)"
-    PatientProfile ||--o{ Appointment : "books (1:N)"
-    Appointment ||--o| Consultation : "results in (1:1)"
-    Appointment ||--o| Bill : "generates (1:1)"
-    Appointment ||--o| DoctorReview : "reviewed in (0:1)"
-    Consultation ||--o| Prescription : "receives (1:1)"
-    Prescription ||--o{ PrescriptionItem : "contains (1:N)"
+flowchart TD
+    subgraph CoreUsers [" 👥 User Accounts "]
+        User["👤 User (Base Account)"]
+    end
+
+    subgraph Profiles [" 📋 Profiles (1:1 Relationships) "]
+        DocProfile["🩺 Doctor Profile"]
+        PatProfile["🧑‍⚕️ Patient Profile"]
+    end
+
+    subgraph Scheduling [" 📅 Schedules & Bookings "]
+        DocSchedule["📆 Doctor Schedule (1:N)"]
+        Appt["⏱️ Appointment (1:N)"]
+    end
+
+    subgraph Clinical [" ⚕️ Consultations & Artifacts "]
+        Consult["🩺 Consultation (1:1)"]
+        Presc["💊 Prescription (1:1)"]
+        PrescItems["💊 Prescription Items (1:N)"]
+        Bill["🧾 Bill (1:1)"]
+        Review["⭐ Doctor Review (0:1)"]
+    end
+
+    User -->|1:1 Has| DocProfile
+    User -->|1:1 Has| PatProfile
+    DocProfile -->|1:N Defines| DocSchedule
+    DocProfile -->|1:N Assigned To| Appt
+    PatProfile -->|1:N Books| Appt
+    Appt -->|1:1 Results In| Consult
+    Appt -->|1:1 Generates| Bill
+    Appt -->|0:1 Reviewed In| Review
+    Consult -->|1:1 Receives| Presc
+    Presc -->|1:N Contains| PrescItems
+
+    classDef default fill:#F8FAFC,stroke:#475569,stroke-width:1.5px,color:#0F172A;
+    classDef mainEntity fill:#EEF2FF,stroke:#4F46E5,stroke-width:2px,color:#312E81;
+    classDef clinicalEntity fill:#F0F9FF,stroke:#0284C7,stroke-width:1.5px,color:#075985;
+    
+    class User mainEntity;
+    class DocProfile,PatProfile,Appt,Consult clinicalEntity;
 ```
 
 ### 🗄 Data Dictionary
